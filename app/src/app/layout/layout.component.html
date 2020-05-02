@@ -1,0 +1,81 @@
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate" [nzBreakpoint]="'lg'">
+    <div class="logo">
+      <img *ngIf="!isCollapsed" src="../../assets/img/menu-large-logo.png">
+      <img *ngIf="isCollapsed" src="../../assets/img/menu-small-logo.png">
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item (click)="router.navigate(['/home'])">
+        <span title>
+          <i class="anticon anticon-home"></i>
+          <span class="nav-text">{{ 'LAYOUT.HOME' | translate }}</span>
+        </span>
+      </li>
+      <li nz-submenu>
+        <span title>
+          <i class="anticon anticon-setting"></i>
+          <span class="nav-text">{{ 'LAYOUT.SETTINGS' | translate}}</span>
+        </span>
+        <ul>
+          <li nz-menu-item (click)="router.navigate(['/admin-settings/profiles/list'])">
+            <i class="anticon anticon-profile"></i>
+            {{ 'LAYOUT.PROFILES' | translate }}
+          </li>
+          <li nz-menu-item (click)="router.navigate(['/admin-settings/users/list'])">
+            <i class="anticon anticon-user"></i>
+            {{ 'LAYOUT.USERS' | translate }}
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu>
+        <span title>
+          <i class="anticon anticon-setting"></i>
+          <span class="nav-text">{{ 'LAYOUT.PAGES' | translate}}</span>
+        </span>
+        <ul>
+          <li nz-menu-item (click)="router.navigate(['/pages/institutions/list'])">
+            <i class="anticon anticon-profile"></i>
+            {{ 'LAYOUT.INSTITUTIONS' | translate }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header style="background: #fff;">
+      <div class="wrap">
+        <i class="anticon trigger" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
+        <ul class="menu">
+          <li>
+            <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomRight'">
+              <div class="item d-flex align-items-center px-sm ant-dropdown-trigger" nz-dropdown>
+                <nz-avatar nzIcon="anticon anticon-user" nzSrc="../../assets/img/nouser.png"></nz-avatar>
+                <span>{{ user.username }}</span>
+              </div>
+              <ul nz-menu>
+                <li nz-menu-item>
+                  <i class="anticon anticon-setting"></i>{{ 'LAYOUT.PREFERENCES' | translate }}</li>
+                <li nz-menu-divider></li>
+                <li nz-menu-item (click)="logout()">
+                  <i class="anticon anticon-logout"></i>{{ 'LAYOUT.QUIT' | translate }}</li>
+              </ul>
+            </nz-dropdown>
+          </li>
+        </ul>
+      </div>
+    </nz-header>
+    <nz-content style="margin:16px 16px;">
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer class="layout-footer">
+      <a target="_blank" rel="noopener noreferrer" href="">
+        <img src="../../../assets/img/login-logo.png">
+      </a>
+      <span>Copyright &copy; Social Voucher 2018. {{ 'SECURITY.LOGIN.ALL_RIGHTS_RESERVED' | translate }}
+      </span>
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+<ng-template #trigger>
+  <i class="anticon anticon-up"></i>
+</ng-template>

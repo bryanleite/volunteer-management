@@ -1,0 +1,39 @@
+<div *ngIf="route.children.length === 0">
+  <nz-breadcrumb>
+    <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item>{{ 'ADMIN_SETTINGS.TITLE' | translate }}</nz-breadcrumb-item>
+    <nz-breadcrumb-item>{{ 'ADMIN_SETTINGS.USERS.TITLE' | translate }}</nz-breadcrumb-item>
+  </nz-breadcrumb>
+
+  <nz-card [nzTitle]="'ADMIN_SETTINGS.USERS.REGISTERED_USERS' | translate">
+    <div nz-row class="table-top-group">
+    </div>
+    <nz-table #usersTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="tableParams.dataset" [nzTotal]="tableParams.total"
+      [(nzPageIndex)]="tableParams.pageIndex" [(nzPageSize)]="tableParams.pageSize" (nzPageIndexChange)="getUsers()" (nzPageSizeChange)="getUsers(true)">
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th nzShowSort nzSortKey="username">{{ 'ADMIN_SETTINGS.USERS.USERNAME' | translate }}</th>
+          <th nzShowSort nzSortKey="name">{{ 'ADMIN_SETTINGS.USERS.NAME' | translate }}</th>
+          <th nzShowSort nzSortKey="email">{{ 'ADMIN_SETTINGS.USERS.EMAIL' | translate }}</th>
+          <th nzShowSort nzSortKey="profiles">{{ 'ADMIN_SETTINGS.USERS.PROFILES' | translate }}</th>
+          <th nzShowSort nzSortKey="actions">{{ 'ADMIN_SETTINGS.USERS.ACTIONS' | translate }}</th>
+          <th>{{ 'ADMIN_SETTINGS.USERS.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usersTable.data">
+          <td>{{ user.username }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ getProfilesSeparatedByComma(user) }}</td>
+          <td>{{ (user.active ? 'ADMIN_SETTINGS.USERS.YES' : 'ADMIN_SETTINGS.USERS.NO') | translate }}</td>
+          <td class="action-column">
+            <button nz-button nzType="default" (click)="edit(user)"><i class="anticon anticon-edit"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</div>
+
+<router-outlet></router-outlet>

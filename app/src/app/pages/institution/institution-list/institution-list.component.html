@@ -1,0 +1,38 @@
+<div *ngIf="route.children.length === 0">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item>{{ 'PAGES.TITLE' | translate }}</nz-breadcrumb-item>
+      <nz-breadcrumb-item>{{ 'PAGES.INSTITUTION.TITLE' | translate }}</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  
+    <nz-card [nzTitle]="'PAGES.INSTITUTION.REGISTERED_INSTITUTIONS' | translate">
+      <div nz-row class="table-top-group">
+        <div nz-col nzMd="12">
+          <button nz-button nzType="primary" (click)="addInstitution()">{{ 'PAGES.INSTITUTION.ADD' | translate }}</button>
+        </div> 
+      </div>
+      <nz-table #institutionsTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="tableParams.dataset" [nzTotal]="tableParams.total"
+        [(nzPageIndex)]="tableParams.pageIndex" [(nzPageSize)]="tableParams.pageSize" (nzPageIndexChange)="getInstitutions()" (nzPageSizeChange)="getInstitutions(true)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+          <tr>
+            <th nzShowSort nzSortKey="name">{{ 'PAGES.INSTITUTION.NAME' | translate }}</th>
+            <th nzShowSort nzSortKey="descri">{{ 'PAGES.INSTITUTION.DESCRI' | translate }}</th>
+            <th nzShowSort nzSortKey="city">{{ 'PAGES.INSTITUTION.CITY' | translate }}</th>
+            <th>{{ 'ADMIN_SETTINGS.PROFILES.ACTIONS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let institution of institutionsTable.data">
+            <td>{{ institution.name }}</td>
+            <td>{{ institution.descri }}</td>
+            <td>{{ institution.city }}</td>
+            <td class="action-column">
+              <button nz-button nzType="default" (click)="edit(institution)"><i class="anticon anticon-edit"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+  
+  <router-outlet></router-outlet>

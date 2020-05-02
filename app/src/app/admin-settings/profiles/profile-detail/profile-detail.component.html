@@ -1,0 +1,36 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>{{ 'ADMIN_SETTINGS.TITLE' | translate }}</nz-breadcrumb-item>
+  <nz-breadcrumb-item><a [routerLink]="['..']">{{ 'ADMIN_SETTINGS.PROFILES.TITLE' | translate }}</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>{{ formOperation == FormOperation.ADD ? ('ADMIN_SETTINGS.PROFILES.PROFILE_DETAIL.ADD_PROFILE' | translate)
+    : profile ? profile.name : '' }}</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<form nz-form nzLayout="'vertical'" [formGroup]="profileForm">
+  <nz-card [nzTitle]="'ADMIN_SETTINGS.PROFILES.PROFILE_DETAIL.PROFILE_INFO' | translate">
+    <div nz-row>
+      <div nz-col nzMd="12">
+        <nz-form-item>
+          <nz-form-label [nzRequired]="true" nzFor="name">{{ 'ADMIN_SETTINGS.PROFILES.PROFILE_DETAIL.NAME' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            <input type="text" id="name" nz-input formControlName="name">
+            <nz-form-explain *ngIf="isInputInvalid('name')">{{ getInputMsgError('name') }}</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzMd="12">
+        <nz-form-item>
+          <label nz-checkbox formControlName="active">{{ 'ADMIN_SETTINGS.PROFILES.PROFILE_DETAIL.ACTIVE' | translate }}
+          </label>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+
+  <button nz-button nzType="primary" (click)="save()">{{ 'ADMIN_SETTINGS.PROFILES.PROFILE_DETAIL.SAVE' | translate }}</button>
+  <button nz-button nzType="default" (click)="cancel()">{{ 'ADMIN_SETTINGS.PROFILES.PROFILE_DETAIL.CANCEL' | translate }}
+  </button>
+</form>

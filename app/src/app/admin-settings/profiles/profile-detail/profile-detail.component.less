@@ -1,0 +1,35 @@
+@import 'src/theme.less';
+[nz-button] {
+    margin-right: 8px;
+}
+
+.ant-card {
+    margin-bottom: 24px;
+}
+
+.authorities {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -8px;
+    .authorities-item {
+        display: flex;
+        padding: 0 8px 24px 8px;
+        width: 100%;
+        .authorities-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 0;
+        }
+    }
+    @media (min-width: @screen-md) {
+        .authorities-item {
+            width: 50%;
+        }
+    }
+    @media (min-width: @screen-lg) {
+        .authorities-item {
+            width: 33.33%;
+        }
+    }
+}

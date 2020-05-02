@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="wrap">
+    <div class="header">
+      <img class="logo" src="./assets/img/login-logo.png">
+    </div>
+    <div class="content">     
+      <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-user">
+              <input type="text" nz-input formControlName="username" placeholder="{{ 'SECURITY.LOGIN.USERNAME' | translate }}">
+            </nz-input-group>
+            <nz-form-explain *ngIf="isInputInvalid('username')">{{ getInputMsgError('username') }}</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-lock">
+              <input type="password" nz-input formControlName="password" placeholder="{{ 'SECURITY.LOGIN.PASSWORD' | translate }}">
+            </nz-input-group>
+            <nz-form-explain *ngIf="isInputInvalid('password')">{{ getInputMsgError('password') }}</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <label nz-checkbox formControlName="remember">
+              <span>{{ 'SECURITY.LOGIN.REMEMBER_PASSWORD' | translate }}</span>
+            </label>
+            <a class="login-form-forgot" class="login-form-forgot">{{ 'SECURITY.LOGIN.FORGOT_PASSWORD' | translate }}</a>
+            <button nz-button class="login-form-button" [nzType]="'primary'">{{ 'SECURITY.LOGIN.SUBMIT' | translate }}</button>
+            {{ 'SECURITY.LOGIN.OR' | translate }}
+            <a href="">{{ 'SECURITY.LOGIN.REGISTER_NOW' | translate }}</a>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+    <div class="footer">
+      <span>Copyright &copy; Social Voucher 2018. {{ 'SECURITY.LOGIN.ALL_RIGHTS_RESERVED' | translate }}</span>
+    </div>
+  </div>
+
+</div>

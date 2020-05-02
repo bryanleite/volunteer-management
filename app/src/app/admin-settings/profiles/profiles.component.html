@@ -1,0 +1,37 @@
+<div *ngIf="route.children.length === 0">
+  <nz-breadcrumb>
+    <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item>{{ 'ADMIN_SETTINGS.TITLE' | translate }}</nz-breadcrumb-item>
+    <nz-breadcrumb-item>{{ 'ADMIN_SETTINGS.PROFILES.TITLE' | translate }}</nz-breadcrumb-item>
+  </nz-breadcrumb>
+
+  <nz-card [nzTitle]="'ADMIN_SETTINGS.PROFILES.REGISTERED_PROFILES' | translate">
+    <div nz-row class="table-top-group">
+      <div nz-col nzMd="12">
+        <button nz-button nzType="primary" (click)="addProfile()">{{ 'ADMIN_SETTINGS.PROFILES.ADD_PROFILE' | translate }}</button>
+      </div>
+    </div>
+    <nz-table #profilesTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="tableParams.dataset" [nzTotal]="tableParams.total"
+      [(nzPageIndex)]="tableParams.pageIndex" [(nzPageSize)]="tableParams.pageSize" (nzPageIndexChange)="getProfiles()" (nzPageSizeChange)="getProfiles(true)">
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th nzShowSort nzSortKey="name">{{ 'ADMIN_SETTINGS.PROFILES.NAME' | translate }}</th>
+          <th nzShowSort nzSortKey="active">{{ 'ADMIN_SETTINGS.PROFILES.ACTIVE' | translate }}</th>
+          <th>{{ 'ADMIN_SETTINGS.PROFILES.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let profile of profilesTable.data">
+          <td>{{ profile.name }}</td>
+          <td>{{ (profile.active ? 'ADMIN_SETTINGS.PROFILES.YES' : 'ADMIN_SETTINGS.PROFILES.NO') | translate }}</td>
+          <td class="action-column">
+            <button nz-button nzType="default" (click)="edit(profile)"><i class="anticon anticon-edit"></i></button>
+            <button nz-button nzType="danger" (click)="remove(profile)"><i class="anticon anticon-delete"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</div>
+
+<router-outlet></router-outlet>

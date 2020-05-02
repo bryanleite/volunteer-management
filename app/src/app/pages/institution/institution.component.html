@@ -1,0 +1,63 @@
+<form nz-form [formGroup]="formGroup">
+    <nz-card nzTitle="Instituição" *ngIf="formGroup">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Nome</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="name" id="name">
+                <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').errors">O nome é invalido!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="descri">Descrição</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="descri" id="descri">
+                <nz-form-explain *ngIf="formGroup.get('descri').dirty && formGroup.get('descri').errors">A descrição é invalida!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cep">CEP</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="cep" id="cep">
+                <nz-form-explain *ngIf="formGroup.get('cep').dirty && formGroup.get('cep').errors">O CEP é invalido!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="number">Número</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="number" id="number">
+                <nz-form-explain *ngIf="formGroup.get('number').dirty && formGroup.get('number').errors">O número é inválido!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="street">Rua</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="street" id="street">
+                <nz-form-explain *ngIf="formGroup.get('street').dirty && formGroup.get('street').errors">A rua é inválida!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="complement">Complemento</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="complement" id="complement">
+                <nz-form-explain *ngIf="formGroup.get('complement').dirty && formGroup.get('complement').errors">O complemento é inválido!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city">Cidade</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="city" id="city">
+                <nz-form-explain *ngIf="formGroup.get('city').dirty && formGroup.get('city').errors">A cidade é inválida!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">Estado</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input nz-input formControlName="state" id="state">
+                <nz-form-explain *ngIf="formGroup.get('state').dirty && formGroup.get('state').errors">O estado é inválido!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-divider></nz-divider>
+        <button nz-button nzType="primary" (click)="save()" [disabled]="formGroup.invalid">Salvar</button>
+        <button *ngIf="formGroup.get('id').value" nz-button nzType="danger" (click)="delete()">Excluir</button>
+    </nz-card>
+</form>

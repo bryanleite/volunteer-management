@@ -1,0 +1,55 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>{{ 'ADMIN_SETTINGS.TITLE' | translate }}</nz-breadcrumb-item>
+  <nz-breadcrumb-item><a [routerLink]="['..']">{{ 'ADMIN_SETTINGS.USERS.TITLE' | translate }}</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>{{ user ? user.name : '' }}</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<form nz-form nzLayout="'vertical'" [formGroup]="userForm">
+  <nz-card [nzTitle]="'ADMIN_SETTINGS.USERS.USER_DETAIL.USER_INFO' | translate">
+    <div nz-row>
+      <div nz-col nzMd="6">
+        <nz-form-item>
+          <nz-form-label>{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.USER' | translate }}</nz-form-label>
+          <p>{{ user ? user.username : '' }}</p>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="6">
+        <nz-form-item>
+          <nz-form-label>{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.NAME' | translate }}</nz-form-label>
+          <p>{{ user ? user.name : '' }}</p>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="6">
+        <nz-form-item>
+          <nz-form-label>{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.EMAIL' | translate }}</nz-form-label>
+          <p>{{ user ? user.email : '' }}</p>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzMd="6">
+        <nz-form-item>
+          <label nz-checkbox formControlName="active">{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.ACTIVE' | translate }}</label>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzMd="12">
+        <nz-form-item>
+          <nz-form-label [nzRequired]="true" nzFor="profiles">{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.PROFILE' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select id="profiles" nzMode="multiple" [nzPlaceHolder]="'ADMIN_SETTINGS.USERS.USER_DETAIL.SELECT_PROFILES' | translate" formControlName="profiles" [nzAllowClear]="true" [compareWith]="compareProfiles">
+              <nz-option  *ngFor="let profile of profiles$ | async" [nzLabel]="profile.name" [nzValue]="profile"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="isInputInvalid('profiles')">{{ getInputMsgError('profiles') }}</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+
+  <button nz-button nzType="primary" (click)="save()">{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.SAVE' | translate }}</button>
+  <button nz-button nzType="default" (click)="cancel()">{{ 'ADMIN_SETTINGS.USERS.USER_DETAIL.CANCEL' | translate }}
+  </button>
+</form>

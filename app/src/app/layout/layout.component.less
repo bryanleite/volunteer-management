@@ -1,0 +1,97 @@
+@import 'src/theme.less';
+:host ::ng-deep .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color .3s;
+    display: flex;
+}
+
+:host ::ng-deep .trigger:hover {
+    color: @primary-color;
+}
+
+:host ::ng-deep .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, .2);
+    margin: 16px;
+}
+
+.ant-layout-header {
+    padding: 0 16px;
+}
+
+.wrap {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    ul.menu {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        list-style: none;
+        li {
+            vertical-align: middle;
+            margin-right: 8px;
+            .item {
+                text-align: center;
+                line-height: 100%;
+                padding: 8px 2px;
+                min-width: 50px;
+                transition: color .3s;
+                cursor: pointer;
+                nz-avatar {
+                    margin-right: 8px;
+                }
+            }
+            &:hover {
+                color: @primary-color;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+ul.ant-dropdown-menu {
+    .title {
+        padding: 5px 12px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .45);
+        white-space: nowrap;
+        line-height: 22px;
+    }
+}
+
+.logo {
+    text-align: center;
+    background: transparent;
+    img {
+        height: 32px;
+        vertical-align: middle;
+    }
+}
+
+
+
+.ant-menu-item-selected {
+    color: #fff;
+    &:hover {
+        color: #fff;
+    }
+}
+
+
+.layout-footer {
+    display: block;
+    text-align: center;
+    img {
+        vertical-align: middle;
+        width: 130px;
+        margin-right: 8px;
+    }
+}
