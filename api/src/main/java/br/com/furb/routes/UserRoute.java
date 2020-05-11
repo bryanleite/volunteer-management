@@ -19,30 +19,30 @@ import br.com.furb.service.UserService;
 @RestController
 @RequestMapping(value="/users")
 public class UserRoute {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> save(@RequestBody User user) {
 		return ResponseEntity.ok(userService.save(user));
 	}
-	
+
 	@PutMapping(path="/:id")
 	public ResponseEntity<?> update(@RequestParam("id") Long id, @RequestBody User user) {
 		return ResponseEntity.ok(userService.save(user));
-	} 
-	
+	}
+
 	@GetMapping
 	public ResponseEntity<?> findAll() {
 		return ResponseEntity.ok(userService.findAll());
 	}
-	
+
 	@GetMapping(path="/{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(userService.findById(id));
 	}
-	
+
 	@PostMapping(path="/delete/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
 		userService.deleteById(id);

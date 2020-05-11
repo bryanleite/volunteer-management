@@ -1,5 +1,8 @@
 package br.com.furb.security.config;
 
+import br.com.furb.security.authentication.JWTAuthenticationFilter;
+import br.com.furb.security.authentication.JWTUtil;
+import br.com.furb.security.authorization.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +15,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import br.com.furb.security.authentication.JWTAuthenticationFilter;
-import br.com.furb.security.authentication.JWTUtil;
-import br.com.furb.security.authorization.JWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		"/eventsConsult/**",
 		"/h2/**",
 		"/favicon.ico",
-		"/app/**"
+		"/app/**",
+		"/users/**",
+		"/volunteer/**"
 	};
 	
 	@Override

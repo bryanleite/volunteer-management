@@ -1,0 +1,41 @@
+<nz-steps [nzCurrent]="currentStep">
+  <nz-step nzTitle="Usuário"></nz-step>
+  <nz-step nzTitle="Informações cadastrais"></nz-step>
+  <nz-step nzTitle="Habilidades"></nz-step>
+</nz-steps>
+
+<div class="steps-content">
+  <form nz-form [formGroup]="fgUser" *ngIf="fgUser && currentStep == 0">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">Usuário</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="username" id="username">
+        <nz-form-explain *ngIf="formGroup.get('username').dirty && formGroup.get('name').errors">O usuário é invalido!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">Senha</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="password" id="password" type="password">
+        <nz-form-explain *ngIf="formGroup.get('password').dirty && formGroup.get('password').errors">A senha é inválida!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="email" id="email">
+        <nz-form-explain *ngIf="formGroup.get('email').dirty && formGroup.get('email').errors">O e-mail é invalido!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <form nz-form [formGroup]="fgVolunteer" *ngIf="fgUser && currentStep == 1">
+
+  </form>
+  <form nz-form [formGroup]="fgVolunteerSkills" *ngIf="fgVolunteerSkills && currentStep == 2">
+    <div formArrayName="values">
+    </div>
+  </form>
+</div>

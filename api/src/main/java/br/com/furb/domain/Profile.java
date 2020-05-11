@@ -1,10 +1,10 @@
 package br.com.furb.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -15,9 +15,14 @@ public class Profile extends IdentityCommonObject{
 	@Column(name = "PRO_NAME", nullable = false)
     private String name;
 
-    @Column(name = "PRO_ADM")
-    private boolean admin;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PRO_TYPE")
+    private ProfileType profileType;
 
     @Column(name = "PRO_ACTIVE")
     private boolean active;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<UserProfile> userProfiles;
 }

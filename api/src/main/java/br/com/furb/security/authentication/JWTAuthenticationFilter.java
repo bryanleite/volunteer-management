@@ -1,21 +1,23 @@
 package br.com.furb.security.authentication;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import br.com.furb.domain.dto.AuthenticationResponseDTO;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Classe responsável por interceptar o envio da autenticação para o Response.
@@ -31,6 +33,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	
 	private JWTUtil jwtUtil;
 	private AuthenticationManager authenticationManager;
+
+	private static final String AUTH_PATH = "/login";
+	private static final String MESSAGE_AUTH_SUCCESS = "Autenticação realizada com sucesso";
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
@@ -58,25 +63,26 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	 */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-		String username = ((UserSV) authResult.getPrincipal()).getUsername();
-		if(StringUtils.isNotBlank(username)) {
-			String token = jwtUtil.generateToken(username);
-			response.setStatus(HttpServletResponse.SC_OK);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().append(jsonSuccess(token, username));
+		UserSV user = ((UserSV) authResult.getPrincipal());
+		if(user != null && StringUtils.isNotBlank(user.getUsername())) {
+			String token = jwtUtil.generateToken(user.getUsername());
+
+			response.getWriter().append(generateAuthenticationSuccessResponse(token, (List<GrantedAuthorirtyImpl>) user.getAuthorities()));
 		}
 	}
-	
-    private String jsonSuccess(String token, String username) {
-        long date = new Date().getTime();
-        return "{\"timestamp\": " + date + ", "
-            + "\"status\": " + HttpServletResponse.SC_OK + ", "
-            + "\"token\": \"" + token + "\", "
-            + "\"username\": \"" + username + "\", "
-            + "\"message\": \"Autenticação realizada com sucesso\", "
-            + "\"path\": \"/login\"}";
-    }
+
+	private String generateAuthenticationSuccessResponse(String token, List<GrantedAuthorirtyImpl> authorities) {
+		AuthenticationResponseDTO response = new AuthenticationResponseDTO(
+			new Date().getTime(),
+			HttpServletResponse.SC_OK,
+			MESSAGE_AUTH_SUCCESS,
+			AUTH_PATH,
+			token,
+			authorities
+		);
+
+		return new JSONObject(response).toString();
+	}
 
 	/**
 	 * Classe privada utilizada para tratar erro de falha de autenticação, pois no Spring Boot 2, quando é lançado erro de autenticação ele envia o status 403 (Forbidden), 

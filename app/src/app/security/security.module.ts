@@ -11,6 +11,7 @@ import { NotFoundComponent } from './http/not-found/not-found.component';
 import { RolesService } from './roles/roles.service';
 import { HttpErrorHandler } from './http/http-error.handler';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
   declarations: [
     LoginComponent,
     ForbiddenComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SignupComponent,
   ],
   providers: [
     AuthService,

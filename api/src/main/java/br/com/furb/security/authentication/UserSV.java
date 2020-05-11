@@ -1,7 +1,9 @@
 package br.com.furb.security.authentication;
 
 import java.util.Collection;
+import java.util.List;
 
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +13,9 @@ private static final long serialVersionUID = 1L;
 	
 	private String username;
 	private String password;
+
+	@Setter
+	private List<GrantedAuthorirtyImpl> grantedAuthorirties;
 	
 	public UserSV() {
 	}
@@ -23,7 +28,7 @@ private static final long serialVersionUID = 1L;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return grantedAuthorirties;
 	}
 
 	@Override

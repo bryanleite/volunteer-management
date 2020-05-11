@@ -5,6 +5,7 @@ import { InstitutionListComponent } from './institution/institution-list/institu
 import { SecurityModule } from '../security/security.module';
 import { PagesRoutingModule } from './pages.routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { VolunteerComponent } from './volunteer/volunteer.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   declarations: [
     InstitutionComponent,
-    InstitutionListComponent
+    InstitutionListComponent,
+    VolunteerComponent
   ]
 })
 export class PagesModule { }

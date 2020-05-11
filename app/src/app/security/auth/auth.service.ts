@@ -58,37 +58,4 @@ export class AuthService {
     userStored(): boolean {
         return this._storageService.getToken() ? true : false;
     }
-
-    mockUser(): User {
-        let user = new User();
-        user.username = 'Carlos Alberto de Nobrega';
-        user.email = 'carlinhos.huehue@gmail.com';
-        user.profiles = new Array();
-        let profile = new Profile();
-        profile.name = 'Administrador';
-        profile.authorities = new Array();
-        let authority = new Authority();
-        authority.name = 'home';
-        authority.authorityGroup = 'HOME';
-        profile.authorities.push(authority);
-
-        let authority2 = new Authority();
-        authority2.name = 'users-view';
-        authority2.authorityGroup = 'USERS';
-        profile.authorities.push(authority2);
-
-        let authority3 = new Authority();
-        authority3.name = 'profiles-view';
-        authority3.authorityGroup = 'PROFILES';
-        profile.authorities.push(authority3);
-
-        let authority4 = new Authority();
-        authority4.name = 'roles-view';
-        authority4.authorityGroup = 'ROLES';
-        profile.authorities.push(authority4);
-
-        user.profiles.push(profile);
-        user.currentProfile = profile;
-        return user;
-    }
 }

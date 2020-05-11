@@ -19,6 +19,10 @@ export class UsersService {
       )
   }
 
+  createUser(user: User): Observable<User> {
+    return this._http.post<User>(`${environment.api}/users/`, user);
+  }
+
   updateUser(user: User): Observable<User> {
     return this._http.put(`${environment.api}/users/` + user.id, user)
       .pipe(
