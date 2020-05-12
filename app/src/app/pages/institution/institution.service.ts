@@ -15,7 +15,7 @@ export class InstitutionService {
     constructor(private http: HttpClient) { }
 
     save(institution: Institution): Observable<Institution> {
-		  return this.http.post<Institution>(InstitutionService.API, institution);
+        return this.http.post<Institution>(InstitutionService.API, institution);
     }
 
     update(institution: Institution): Observable<Institution> {
@@ -36,11 +36,11 @@ export class InstitutionService {
 
     getInstitutionsByFilter(pageIndex: number, pageSize: number, sortKey: string, sortValue: string, searchValue: string): Observable<Institution[]> {
         return this.http.get(InstitutionService.API)
-          .pipe(
-            map(r => {
-              return <Institution[]>r;
-            })
-          )
-      }
+            .pipe(
+                map(r => {
+                    return <Institution[]>r;
+                })
+            )
+    }
 
 }

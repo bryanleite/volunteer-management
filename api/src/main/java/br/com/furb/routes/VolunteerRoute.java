@@ -1,9 +1,11 @@
 package br.com.furb.routes;
 
 import br.com.furb.domain.Volunteer;
+import br.com.furb.domain.VolunteerSkill;
 import br.com.furb.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.MediaType;
@@ -17,6 +19,11 @@ public class VolunteerRoute {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> save(@RequestBody Volunteer volunteer) {
+		if(volunteer != null && !CollectionUtils.isEmpty(volunteer.getVolunteerSkills())) {
+			for(VolunteerSkill v: volunteer.getVolunteerSkills()) {
+				v.setVolunteer(volunteer);
+			}
+		}
 		return ResponseEntity.ok(volunteerService.save(volunteer));
 	}
 

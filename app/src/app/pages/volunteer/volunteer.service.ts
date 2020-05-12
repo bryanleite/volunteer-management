@@ -13,7 +13,10 @@ export class VolunteerService {
 
     constructor(private http: HttpClient) { }
 
-    save(volunteer: Volunteer): Observable<Volunteer> {
-        return this.http.post<Volunteer>(VolunteerService.API, volunteer);
+    save(volunteer: Volunteer, isNoAuth?: boolean): Observable<Volunteer> {
+        let headers = isNoAuth ? {'No-Auth': 'True'} : {};
+        return this.http.post<Volunteer>(VolunteerService.API, volunteer, {
+            headers: headers
+        });
     }
 }

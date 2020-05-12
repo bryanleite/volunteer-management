@@ -8,34 +8,37 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class UsersService {
 
-  constructor(private _http: HttpClient) { }
+	constructor(private _http: HttpClient) { }
 
-  getUsers(pageIndex: number, pageSize: number, sortKey: number, sortValue: number, searchValue: string): Observable<User[]> {
-    return this._http.get(`${environment.api}/users`)
-      .pipe(
-        map(r => {
-          return <User[]>r;
-        })
-      )
-  }
+	getUsers(pageIndex: number, pageSize: number, sortKey: number, sortValue: number, searchValue: string): Observable<User[]> {
+		return this._http.get(`${environment.api}/users`)
+			.pipe(
+				map(r => {
+					return <User[]>r;
+				})
+			)
+	}
 
-  createUser(user: User): Observable<User> {
-    return this._http.post<User>(`${environment.api}/users/`, user);
-  }
+	createUser(user: User, isNoAuth?: boolean): Observable<User> {
+		let headers = isNoAuth ? { 'No-Auth': 'True' } : {};
+		return this._http.post<User>(`${environment.api}/users/`, user, {
+			headers: headers
+		});
+	}
 
-  updateUser(user: User): Observable<User> {
-    return this._http.put(`${environment.api}/users/` + user.id, user)
-      .pipe(
-        map(r => {
-          return <User>r;
-        })
-      )
-  }
+	updateUser(user: User): Observable<User> {
+		return this._http.put(`${environment.api}/users/` + user.id, user)
+			.pipe(
+				map(r => {
+					return <User>r;
+				})
+			)
+	}
 
-  getUserById(userId: string): Observable<User> {
-    return this._http.get(`${environment.api}/users/` + userId)
-      .pipe(
-        map(r => <User>r)
-      )
-  } 
+	getUserById(userId: string): Observable<User> {
+		return this._http.get(`${environment.api}/users/` + userId)
+			.pipe(
+				map(r => <User>r)
+			)
+	}
 }

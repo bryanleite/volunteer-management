@@ -41,6 +41,6 @@ public class Volunteer extends IdentityCommonObject{
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "volunteer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<VolunteerSkill> volunterSkills;
+	private Set<VolunteerSkill> volunteerSkills;
 
 }

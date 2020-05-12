@@ -29,7 +29,7 @@
             <a class="login-form-forgot" class="login-form-forgot">{{ 'SECURITY.LOGIN.FORGOT_PASSWORD' | translate }}</a>
             <button nz-button class="login-form-button" [nzType]="'primary'">{{ 'SECURITY.LOGIN.SUBMIT' | translate }}</button>
             {{ 'SECURITY.LOGIN.OR' | translate }}
-            <a href="" onclick="">{{ 'SECURITY.LOGIN.REGISTER_NOW' | translate }}</a>
+            <a on-click="redirectToSignup()">{{ 'SECURITY.LOGIN.REGISTER_NOW' | translate }}</a>
           </nz-form-control>
         </nz-form-item>
       </form>

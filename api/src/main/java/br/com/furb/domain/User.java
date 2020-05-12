@@ -26,7 +26,6 @@ public class User extends IdentityCommonObject{
     @Column(name = "USU_LOGIN", unique = true)
     private String login;
 
-    @JsonIgnore
     @Column(name = "USU_PASSWORD", unique = true)
     private String password;
 

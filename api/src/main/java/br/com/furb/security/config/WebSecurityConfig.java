@@ -34,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		"/favicon.ico",
 		"/app/**",
 		"/users/**",
-		"/volunteer/**"
+		"/volunteer/**",
+		"/skill/**"
 	};
 	
 	@Override

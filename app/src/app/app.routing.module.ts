@@ -6,7 +6,6 @@ import { AdminSettingsModule } from './admin-settings/admin-settings.module';
 import { SecurityModule } from './security/security.module';
 import { HomeComponent } from './home/home.component';
 import { RolesGuard } from './security/roles/roles.guard';
-import { InstitutionComponent } from './pages/institution/institution.component';
 import { PagesModule } from './pages/pages.module';
 
 
@@ -47,8 +46,6 @@ const routes: Routes = [
     pathMatch: 'full'
   }
 ];
-
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],

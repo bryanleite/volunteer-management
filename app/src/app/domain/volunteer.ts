@@ -1,4 +1,5 @@
 import { User } from "../security/auth/user";
+import { VolunteerSkill } from "./volunteer-skill";
 
 export class Volunteer {
     id: number;
@@ -7,4 +8,5 @@ export class Volunteer {
     birthDate: Date;
     occupation: string;
     description: string;
+    volunteerSkills: Array<VolunteerSkill>;    
 }
