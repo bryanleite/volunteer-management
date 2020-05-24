@@ -6,6 +6,8 @@ import { SecurityModule } from '../security/security.module';
 import { PagesRoutingModule } from './pages.routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { VolunteerComponent } from './volunteer/volunteer.component';
+import { SocialProjectComponent } from './social-project/social-project.component';
+import { SocialProjectListComponent } from './social-project/social-project-list/social-project-list.component';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { VolunteerComponent } from './volunteer/volunteer.component';
   declarations: [
     InstitutionComponent,
     InstitutionListComponent,
-    VolunteerComponent
+    VolunteerComponent,
+    SocialProjectComponent,
+    SocialProjectListComponent
   ]
 })
 export class PagesModule { }

@@ -67,18 +67,22 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		if(user != null && StringUtils.isNotBlank(user.getUsername())) {
 			String token = jwtUtil.generateToken(user.getUsername());
 
-			response.getWriter().append(generateAuthenticationSuccessResponse(token, (List<GrantedAuthorirtyImpl>) user.getAuthorities()));
+			response.getWriter().append(generateAuthenticationSuccessResponse(token, user));
 		}
 	}
 
-	private String generateAuthenticationSuccessResponse(String token, List<GrantedAuthorirtyImpl> authorities) {
+	private String generateAuthenticationSuccessResponse(String token, UserSV user) {
 		AuthenticationResponseDTO response = new AuthenticationResponseDTO(
+			user.getUserId(),
+			user.getUsername(),
 			new Date().getTime(),
 			HttpServletResponse.SC_OK,
 			MESSAGE_AUTH_SUCCESS,
 			AUTH_PATH,
 			token,
-			authorities
+			(List<GrantedAuthorirtyImpl>) user.getAuthorities(),
+			user.getInstitution(),
+			user.getVolunteer()
 		);
 
 		return new JSONObject(response).toString();

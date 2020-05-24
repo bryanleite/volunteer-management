@@ -1,46 +1,53 @@
 import { Injectable } from '@angular/core';
 import { StorageKeys } from './storage-keys.enum';
+import { User } from 'src/app/security/auth/user';
 
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class StorageService {
 
-  constructor() { }
+	constructor() { }
 
-  getToken(): string {
-    return window.localStorage.getItem(StorageKeys.TOKEN_KEY);
-  }
+	getToken(): string {
+		return window.localStorage.getItem(StorageKeys.TOKEN_KEY);
+	}
 
-  removeToken() {
-    window.localStorage.removeItem(StorageKeys.TOKEN_KEY);
-  }
+	removeToken() {
+		window.localStorage.removeItem(StorageKeys.TOKEN_KEY);
+	}
 
-  setToken(token: string) {
-    window.localStorage.setItem(StorageKeys.TOKEN_KEY, token);
-  }
+	setToken(token: string) {
+		window.localStorage.setItem(StorageKeys.TOKEN_KEY, token);
+	}
 
-  getLocalItem(key: string) {
-    return window.localStorage.getItem(key);
-  }
+	getUser() {
+		return JSON.parse(window.localStorage.getItem(StorageKeys.USER_KEY));
+	}
 
-  setLocalItem(key: string, value: any): void {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  }
+	getLocalItem(key: string) {
+		return window.localStorage.getItem(key);
+	}
 
-  removeLocalItem(key: string): void {
-    window.localStorage.removeItem(key);
-  }
+	setLocalItem(key: string, value: any): void {
+		window.localStorage.setItem(key, JSON.stringify(value));
+	}
 
-  getSessionItem(key: string) {
-    return JSON.parse(window.sessionStorage.getItem(key));
-  }
+	removeLocalItem(key: string): void {
+		window.localStorage.removeItem(key);
+	}
 
-  setSessionItem(key: string, value: any) {
-    return window.sessionStorage.setItem(key, JSON.stringify(value));
-  }
+	getSessionItem(key: string) {
+		return JSON.parse(window.sessionStorage.getItem(key));
+	}
 
-  removeSessionItem(key: string): void {
-    window.sessionStorage.removeItem(key);
-  }
+	setSessionItem(key: string, value: any) {
+		return window.sessionStorage.setItem(key, JSON.stringify(value));
+	}
+
+	removeSessionItem(key: string): void {
+		window.sessionStorage.removeItem(key);
+	}
 
 }

@@ -12,7 +12,7 @@ import { UsersService } from 'src/app/admin-settings/users/users.service';
 import { VolunteerService } from 'src/app/pages/volunteer/volunteer.service';
 import { AuthService } from '../auth/auth.service';
 import { Login } from '../login/login';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-signup',
@@ -131,25 +131,27 @@ export class SignupComponent implements OnInit, OnDestroy {
 
 		this._userService.createUser(this.getUserFromForm(), true).subscribe(user => {
 			const volunteer = this.getVolunteerFromForm();
-			volunteer.user = user;
-			this._volunteerService.save(volunteer, true).subscribe(v => {
-				this._translateService.get('SECURITY.SIGNUP.REGISTER_SUCCESS').subscribe(msg => {
-					this._messageService.success(msg);
-				});
-
-				const login: Login = new Login();
-				login.username = user.username;
-				login.password = user.password;
-
-				this._authService.login(login).subscribe(
-					(res) => {
-						this._router.navigate(['/home']);
-					}, (e) => {
-						this._translateService.get('SECURITY.LOGIN.INVALID_CREDENTIALS').subscribe(msg => {
-							this._messageService.error(msg);
+			setTimeout(() => {
+				volunteer.user = user;
+				this._volunteerService.save(volunteer, true).subscribe(v => {
+					this._translateService.get('SECURITY.SIGNUP.REGISTER_SUCCESS').subscribe(msg => {
+						this._messageService.success(msg);
+					});
+					
+					const login: Login = new Login();
+					login.username = user.username;
+					login.password = user.password;
+					
+					this._authService.login(login).subscribe(
+						(res) => {
+							this._router.navigate(['/home']);
+						}, (e) => {
+							this._translateService.get('SECURITY.LOGIN.INVALID_CREDENTIALS').subscribe(msg => {
+								this._messageService.error(msg);
+							});
 						});
 					});
-			});
+			}, 10);
 		})
 	}
 
@@ -210,11 +212,12 @@ export class SignupComponent implements OnInit, OnDestroy {
 					}
 				}
 			}
+			
 		}
-
 		return volunteerSkills;
 	}
 
+	
 	ngOnDestroy(): void {
 		this._obsTrans$.unsubscribe();
 	}

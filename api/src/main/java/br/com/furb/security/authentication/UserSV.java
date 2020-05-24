@@ -1,11 +1,14 @@
 package br.com.furb.security.authentication;
 
-import java.util.Collection;
-import java.util.List;
-
+import br.com.furb.domain.Institution;
+import br.com.furb.domain.Volunteer;
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 public class UserSV implements UserDetails{
 	
@@ -13,6 +16,18 @@ private static final long serialVersionUID = 1L;
 	
 	private String username;
 	private String password;
+
+	@Getter
+	@Setter
+	private Long userId;
+
+	@Getter
+	@Setter
+	private Institution institution;
+
+	@Getter
+	@Setter
+	private Volunteer volunteer;
 
 	@Setter
 	private List<GrantedAuthorirtyImpl> grantedAuthorirties;

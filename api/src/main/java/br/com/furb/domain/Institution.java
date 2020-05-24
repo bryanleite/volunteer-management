@@ -1,10 +1,10 @@
 package br.com.furb.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -35,5 +35,9 @@ public class Institution extends IdentityCommonObject{
 	
 	@Column(name = "INT_STATE")
 	private String state;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "institution", fetch = FetchType.LAZY)
+	private Set<User> users;
 	
 }

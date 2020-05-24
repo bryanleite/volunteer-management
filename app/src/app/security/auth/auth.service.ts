@@ -34,7 +34,10 @@ export class AuthService {
                     }
 
                     const user: User = new User();
+                    user.id = res['id'];
                     user.username = res['username'];
+                    user.institution = res['institution'];
+                    user.volunteer = res['volunteer'];
                     this._storageService.setLocalItem(StorageKeys.USER_KEY, JSON.stringify(user));
                 }
                 return null;

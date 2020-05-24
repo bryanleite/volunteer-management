@@ -1,0 +1,55 @@
+<nz-card [nzTitle]="'PAGES.INSTITUTION.TITLE' | translate" *ngIf="institution">
+	<div nz-row nzGutter="16">
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<label class='page-view-label'>{{ 'PAGES.INSTITUTION.NAME' | translate }}</label>
+			<p class='page-view-value'>{{ institution.name }}</p>
+		</div>
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<label class='page-view-label'>{{ 'PAGES.SOCIAL_PROJECT.STATE' | translate }}</label>
+			<p class='page-view-value'>{{ institution.state }}</p>
+		</div>
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<label class='page-view-label'>{{ 'PAGES.SOCIAL_PROJECT.CITY' | translate }}</label>
+			<p class='page-view-value'>{{ institution.city }}</p>
+		</div>
+	</div>
+	<div nz-row nzGutter="16">
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<label class='page-view-label'>{{ 'PAGES.SOCIAL_PROJECT.CEP' | translate }}</label>
+			<p class='page-view-value'>{{ institution.cep }}</p>
+		</div>
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<label class='page-view-label'>{{ 'PAGES.SOCIAL_PROJECT.STREET' | translate }}</label>
+			<p class='page-view-value'>{{ institution.street }}</p>
+		</div>
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<label class='page-view-label'>{{ 'PAGES.SOCIAL_PROJECT.NUMBER' | translate }}</label>
+			<p class='page-view-value'>{{ institution.number }}</p>
+		</div>
+	</div>
+</nz-card>
+<br>
+<form nz-form [formGroup]="fgSp" *ngIf="fgSp">
+	<nz-card [nzTitle]="'PAGES.SOCIAL_PROJECT.TITLE' | translate">
+		<nz-form-item>
+			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'PAGES.SOCIAL_PROJECT.NAME' | translate }}</nz-form-label>
+			<nz-form-control [nzSm]="14" [nzXs]="24">
+				<input nz-input formControlName="name" id="name" [readonly]="!isManager()">
+				<nz-form-explain *ngIf="fgSp.get('name').dirty && fgSp.get('name').errors">
+					{{ 'PAGES.SOCIAL_PROJECT.NAME_INVALID' | translate }}
+				</nz-form-explain>
+			</nz-form-control>
+		</nz-form-item>
+		<nz-form-item>
+			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION' | translate }}</nz-form-label>
+			<nz-form-control [nzSm]="14" [nzXs]="24">
+				<input nz-input formControlName="description" id="description" [readonly]="!isManager()">
+				<nz-form-explain *ngIf="fgSp.get('description').dirty && fgSp.get('description').errors">
+					{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION_INVALID' | translate }}
+				</nz-form-explain>
+			</nz-form-control>
+		</nz-form-item>
+		<nz-divider *ngIf="isManager()"></nz-divider>
+		<button nz-button nzType="primary" *ngIf="isManager()" (click)="saveSp()" [disabled]="fgSp.invalid">Salvar</button>
+	</nz-card>
+</form>

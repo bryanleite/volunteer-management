@@ -1,7 +1,9 @@
 import { Profile } from "./profile";
+import { Institution } from "src/app/domain/institution";
+import { Volunteer } from "src/app/domain/volunteer";
 
 export class User {
-    id: string;
+    id: number;
     username: string;
     login: string;
     name: string;
@@ -10,4 +12,6 @@ export class User {
     profiles: Profile[];
     currentProfile: Profile;
     active: boolean;
+    institution: Institution;
+    volunteer: Volunteer;
 }

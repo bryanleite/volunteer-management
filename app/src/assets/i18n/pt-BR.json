@@ -131,6 +131,24 @@
             "NAME": "Nome",
             "DESCRI": "Descrição",
             "CITY": "Cidade"
+        },
+        "SOCIAL_PROJECT": {
+            "TITLE": "Projeto social",
+            "STATE": "Estado",
+            "CITY": "Cidade",
+            "CEP": "CEP",
+            "STREET": "Rua",
+            "NUMBER": "Número",
+            "SOCIAL_ROJECT": "Projeto social",
+            "NAME": "Nome do projeto social",
+            "NAME_INVALID": "O nome do projeto é inválido!",
+            "DESCRIPTION": "Descrição",
+            "DESCRIPTION_INVALID": "A descrição do projeto é inválido!",
+            "FIELDS_REQUIRED": "Existem campos obrigatórios (*) não preenchidos!"
         }
+    },
+    "ALERTS": {
+        "FIELDS_REQUIRED": "Existem campos obrigatórios (*) não preenchidos!",
+        "SAVE_SUCCESS": "Os registros foram gravados com sucesso!"
     }
 }

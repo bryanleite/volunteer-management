@@ -37,3 +37,35 @@ nz-breadcrumb.ant-breadcrumb {
 .width-100 {
     width: 100% !important;
 }
+
+.page-view-label,
+.page-view-value {
+  display: block;
+  text-align: left;
+  color: black;
+  &:not(.no-border) {
+    border-left: 1px #e5eaea solid;
+    padding-left: 12px !important;
+  }
+}
+
+.page-view-label {
+  font-weight: normal;
+  :after {
+    margin: 0 !important;
+  }
+}
+
+.page-view-value {
+  font-weight: @font-weight-medium;
+  padding-bottom: 15px;
+  min-height: 36px;
+  white-space: normal !important;
+  :after {
+    content: none !important;
+  }
+}
+
+.page-view-value.p-b-0 {
+  min-height: 21px;
+}

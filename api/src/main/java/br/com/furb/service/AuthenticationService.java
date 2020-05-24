@@ -1,9 +1,13 @@
 package br.com.furb.service;
 
+import br.com.furb.domain.Institution;
 import br.com.furb.domain.ProfileType;
 import br.com.furb.domain.User;
+import br.com.furb.domain.Volunteer;
+import br.com.furb.repository.InstitutionRepository;
 import br.com.furb.repository.ProfileRepository;
 import br.com.furb.repository.UserRepository;
+import br.com.furb.repository.VolunteerRepository;
 import br.com.furb.security.authentication.GrantedAuthorirtyImpl;
 import br.com.furb.security.authentication.UserSV;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,12 @@ public class AuthenticationService {
 
 	@Autowired
 	private ProfileRepository profileRepository;
+
+	@Autowired
+	private InstitutionRepository institutionRepository;
+
+	@Autowired
+	private VolunteerRepository volunteerRepository;
 	
 	/**
 	 * Busca o usuário através do username para autenticação do Spring Security
@@ -40,6 +50,15 @@ public class AuthenticationService {
 					userSv.setGrantedAuthorirties(profileTypes.stream()
 						.map(pt -> pt != null ? new GrantedAuthorirtyImpl(pt.toString()) : null)
 						.collect(Collectors.toList()));
+				}
+
+				userSv.setUserId(user.get().getId());
+				Optional<Institution> institution = institutionRepository.getInstitutionByUserId(user.get().getId());
+				userSv.setInstitution(institution.orElse(null));
+				Optional<Volunteer> volunteer = volunteerRepository.getVolunteerByUserId(user.get().getId());
+				if(volunteer.isPresent()) {
+					volunteer.get().setUser(null);
+					userSv.setVolunteer(volunteer.get());
 				}
 			}
 		} catch (Exception e) {

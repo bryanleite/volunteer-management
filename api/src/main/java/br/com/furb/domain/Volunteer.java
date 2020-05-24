@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "TB_VOLUNTEER")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Volunteer extends IdentityCommonObject{
+public class Volunteer extends IdentityCommonObject {
 
 	@JsonManagedReference
 	@JoinColumn(name = "VOL_USUID", nullable = false)
