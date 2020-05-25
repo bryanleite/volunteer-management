@@ -8,8 +8,9 @@ import { SocialProject } from 'src/app/domain/social-project';
 import { TranslateService } from '@ngx-translate/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SocialProjectService } from './social-project.service';
-import { User } from 'src/app/security/auth/user';
 import { SocialProjectVolunteer } from 'src/app/domain/socialProjectVolunteer';
+import { SocialProjectVolunteerService } from './social-project-volunteer.service';
+import { SocialProjectVolunteerType } from 'src/app/domain/socialProjectVolunteerType';
 
 @Component({
 	selector: 'app-social-project',
@@ -18,8 +19,7 @@ import { SocialProjectVolunteer } from 'src/app/domain/socialProjectVolunteer';
 })
 export class SocialProjectComponent implements OnInit {
 
-	private static MANAGER = "MANAGER";
-	public accessType: string; // MANAGER / VOLUNTEER / CANDIDATE / NO_VOLUNTEER
+	public socialProjectVolunteerType: SocialProjectVolunteerType; // MANAGER / VOLUNTEER / CANDIDATE / INVITED / NO_VOLUNTEER
 	
 	public institution: Institution;
 	private currentVolunteer: Volunteer;
@@ -31,6 +31,7 @@ export class SocialProjectComponent implements OnInit {
 				private _translateService: TranslateService,
 				private _messageService: NzMessageService,
 				private socialProjectService: SocialProjectService,
+				private socialProjectVolunteerService: SocialProjectVolunteerService,
 				private _router: Router) { 
 
 		this.fgSp = new FormGroup({
@@ -45,15 +46,9 @@ export class SocialProjectComponent implements OnInit {
 		this.currentVolunteer = user.volunteer;
 		this._activatedRouter.params.subscribe(p => {
 			if (p.id) {
-				this.socialProjectService.edit(p.id).subscribe(socialProject => {
-					this.institution = socialProject.institution;
-					this.buildForm(socialProject);
-					this.socialProjectService.getSocialProjectVolunteerType(user.id, p.id).subscribe(socialProjectVolunteerType => {
-						this.accessType = socialProjectVolunteerType;
-					});
-				});
+				this.buildSocialProjectById(p.id);
 			} else {
-				this.accessType = SocialProjectComponent.MANAGER;
+				this.socialProjectVolunteerType = SocialProjectVolunteerType.MANAGER;
 				this.institution = user.institution;
 				if(!this.institution || !this.institution.id) {
 					this._translateService.get('SECURITY.ROLES.FORBIDDEN.DESCRIPTION').subscribe(msg => {
@@ -63,6 +58,23 @@ export class SocialProjectComponent implements OnInit {
 				}
 			}
 		});
+	}
+
+	private buildSocialProjectById(id: number) {
+		this.socialProjectService.edit(id).subscribe(socialProject => {
+			this.institution = socialProject.institution;
+			this.buildForm(socialProject);
+
+			this.socialProjectVolunteerService.getSocialProjectVolunteers(id).subscribe((volunteers: Volunteer[]) => {
+				this.volunteers = volunteers;
+				this.identifySocialProjectVolunteerTypeByCurrentVolunteer();
+			});
+		});
+	}
+
+	private identifySocialProjectVolunteerTypeByCurrentVolunteer() {
+		let volunteer = this.volunteers.find(v => v.id == this.currentVolunteer.id);
+		this.socialProjectVolunteerType = volunteer ? volunteer.socialProjectVolunteerType : SocialProjectVolunteerType.NO_VOLUNTEER;
 	}
 
 	private buildForm(socialProject: SocialProject) {
@@ -76,23 +88,29 @@ export class SocialProjectComponent implements OnInit {
 	saveSp() {
 		if(this.isValidSocialProject() && this.institution) {
 			const socialProject = this.getSocialProjectFromForm();
-
+			const isEdit = socialProject && socialProject.id;
 			this.socialProjectService.save(this.getSocialProjectFromForm()).subscribe(socialProject => {
-				if(socialProject && this.currentVolunteer) {
-					const socialProjectVolunteer: SocialProjectVolunteer = new SocialProjectVolunteer();
-					socialProjectVolunteer.socialProjectVolunteerType = 'MANAGER';
-					socialProjectVolunteer.socialProject = new SocialProject();
-					socialProjectVolunteer.socialProject.id = socialProject.id;
-					socialProjectVolunteer.volunteer = new Volunteer();
-					socialProjectVolunteer.volunteer.id = this.currentVolunteer.id;
-
-					this.socialProjectService.saveManager(socialProjectVolunteer).subscribe(res => {
+				if(socialProject) {
+					if(!isEdit && this.currentVolunteer) {
+						const socialProjectVolunteer: SocialProjectVolunteer = new SocialProjectVolunteer();
+						socialProjectVolunteer.socialProjectVolunteerType = SocialProjectVolunteerType.MANAGER;
+						socialProjectVolunteer.socialProject = new SocialProject();
+						socialProjectVolunteer.socialProject.id = socialProject.id;
+						socialProjectVolunteer.volunteer = new Volunteer();
+						socialProjectVolunteer.volunteer.id = this.currentVolunteer.id;
+	
+						this.socialProjectVolunteerService.save(socialProjectVolunteer).subscribe(res => {
+							this._translateService.get('ALERTS.SAVE_SUCCESS').subscribe(msg => {
+								this._messageService.success(msg);
+							});
+						});
+					} else {
 						this._translateService.get('ALERTS.SAVE_SUCCESS').subscribe(msg => {
 							this._messageService.success(msg);
 						});
-					});
+					}
 
-					this.buildForm(socialProject);
+					this.buildSocialProjectById(socialProject.id);
 				}
 			});
 		}
@@ -119,8 +137,60 @@ export class SocialProjectComponent implements OnInit {
 		return true;
 	}
 
+	removeVolunteer(volunteer: Volunteer, index: number) {
+		if(volunteer) {
+			this.socialProjectVolunteerService.delete(volunteer.id).subscribe(res => {
+				this._translateService.get('ALERTS.SAVE_SUCCESS').subscribe(msg => {
+					this._messageService.success(msg);
+				});
+				if(index) {
+					this.volunteers.splice(index, 1);
+				}
+			}); 
+		}
+	}
+
+	makeManager(volunteer: Volunteer) {
+		if(volunteer) {
+			const socialProjectVolunteer: SocialProjectVolunteer = new SocialProjectVolunteer();
+			socialProjectVolunteer.socialProjectVolunteerType = SocialProjectVolunteerType.MANAGER;
+			socialProjectVolunteer.socialProject = new SocialProject();
+			socialProjectVolunteer.socialProject.id = this.fgSp.get('id') ? this.fgSp.get('id').value : undefined;
+			socialProjectVolunteer.volunteer = new Volunteer();
+			socialProjectVolunteer.volunteer.id = volunteer.id;
+	
+			this.socialProjectVolunteerService.save(socialProjectVolunteer).subscribe(res => {
+				this._translateService.get('ALERTS.SAVE_SUCCESS').subscribe(msg => {
+					this._messageService.success(msg);
+				});
+			});
+	
+			volunteer.socialProjectVolunteerType = SocialProjectVolunteerType.MANAGER;
+		}
+	}
+
 	isManager(): boolean {
-		return this.accessType == SocialProjectComponent.MANAGER;
+		return this.socialProjectVolunteerType == SocialProjectVolunteerType.MANAGER;
+	}
+
+	getActiveVolunteers(): Volunteer[] {
+		return this.volunteers ? this.volunteers.filter(v => this.isActiveVolunteer(v.socialProjectVolunteerType)) : new Volunteer[0];
+	}
+
+	getPossibleVolunteers(): Volunteer[] {
+		return this.volunteers ? this.volunteers.filter(v => !this.isActiveVolunteer(v.socialProjectVolunteerType)) : new Volunteer[0];
+	}
+
+	isActiveVolunteer(socialProjectVolunteerType: SocialProjectVolunteerType): boolean {
+		return socialProjectVolunteerType && (socialProjectVolunteerType == SocialProjectVolunteerType.MANAGER || socialProjectVolunteerType == SocialProjectVolunteerType.VOLUNTEER);
+	}
+
+	getSocialProjectVolunteerTypeName(socialProjectVolunteerType: SocialProjectVolunteerType): string {
+		return SocialProjectVolunteerType.getSocialProjectVolunteerTypeName(socialProjectVolunteerType);
+	}
+
+	getSocialProjectVolunteerTypeColor(socialProjectVolunteerType: SocialProjectVolunteerType): string {
+		return SocialProjectVolunteerType.getSocialProjectVolunteerTypeColor(socialProjectVolunteerType);
 	}
 
 }

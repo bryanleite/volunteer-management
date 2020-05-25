@@ -32,7 +32,8 @@
 <form nz-form [formGroup]="fgSp" *ngIf="fgSp">
 	<nz-card [nzTitle]="'PAGES.SOCIAL_PROJECT.TITLE' | translate">
 		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'PAGES.SOCIAL_PROJECT.NAME' | translate }}</nz-form-label>
+			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'PAGES.SOCIAL_PROJECT.NAME' | translate }}
+			</nz-form-label>
 			<nz-form-control [nzSm]="14" [nzXs]="24">
 				<input nz-input formControlName="name" id="name" [readonly]="!isManager()">
 				<nz-form-explain *ngIf="fgSp.get('name').dirty && fgSp.get('name').errors">
@@ -41,7 +42,8 @@
 			</nz-form-control>
 		</nz-form-item>
 		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION' | translate }}</nz-form-label>
+			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">
+				{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION' | translate }}</nz-form-label>
 			<nz-form-control [nzSm]="14" [nzXs]="24">
 				<input nz-input formControlName="description" id="description" [readonly]="!isManager()">
 				<nz-form-explain *ngIf="fgSp.get('description').dirty && fgSp.get('description').errors">
@@ -50,6 +52,70 @@
 			</nz-form-control>
 		</nz-form-item>
 		<nz-divider *ngIf="isManager()"></nz-divider>
-		<button nz-button nzType="primary" *ngIf="isManager()" (click)="saveSp()" [disabled]="fgSp.invalid">Salvar</button>
+		<button nz-button nzType="primary" *ngIf="isManager()" (click)="saveSp()"
+			[disabled]="fgSp.invalid">Salvar</button>
 	</nz-card>
 </form>
+
+<nz-card [nzTitle]="'PAGES.SOCIAL_PROJECT.VOLUNTEERS' | translate" *ngIf="volunteers">
+	<nz-tabset>
+		<nz-tab [nzTitle]="'PAGES.SOCIAL_PROJECT.VOLUNTEERS_ACTIVE' | translate">
+			<nz-list class="volunteers-list">
+				<nz-list-item *ngFor="let volunteer of getActiveVolunteers(); let i = index">
+					<ng-container>
+						<nz-list-item-meta nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+							[nzDescription]="volunteer.occupation">
+							<nz-list-item-meta-title>
+								<a href="">{{ volunteer.formalName }}</a>
+							</nz-list-item-meta-title>
+						</nz-list-item-meta>
+						<!-- Content -->
+						<nz-tag [nzColor]="getSocialProjectVolunteerTypeColor(volunteer.socialProjectVolunteerType)">{{getSocialProjectVolunteerTypeName(volunteer.socialProjectVolunteerType)}}</nz-tag>
+						<!-- Actions -->
+						<ul nz-list-item-actions *ngIf="isManager()">
+							<nz-list-item-action>
+								<button nz-popconfirm (nzOnConfirm)="makeManager(volunteer)" nzPopconfirmPlacement="top"
+									nzPopconfirmTitle="{{'PAGES.SOCIAL_PROJECT.MAKE_MANAGER_CONFIRM' | translate}}">
+								</button>
+							</nz-list-item-action>
+							<nz-list-item-action>
+								<button nz-popconfirm (nzOnConfirm)="removeVolunteer(volunteer, i)" nzPopconfirmPlacement="top"
+									nzPopconfirmTitle="{{'PAGES.SOCIAL_PROJECT.REMOVE_VOLUNTEER_CONFIRM' | translate}}">
+								</button>
+							</nz-list-item-action>
+						</ul>
+					</ng-container>
+				</nz-list-item>
+			</nz-list>
+		</nz-tab>
+		<nz-tab [nzTitle]="'PAGES.SOCIAL_PROJECT.VOLUNTEERS_INACTIVE' | translate">
+			<nz-list class="volunteers-list">
+				<nz-list-item *ngFor="let volunteer of getPossibleVolunteers(); let i = index">
+					<ng-container>
+						<nz-list-item-meta nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+							[nzDescription]="volunteer.occupation">
+							<nz-list-item-meta-title>
+								<a href="">{{ volunteer.formalName }}</a>
+							</nz-list-item-meta-title>
+						</nz-list-item-meta>
+						<!-- Content -->
+						<nz-tag [nzColor]="getSocialProjectVolunteerTypeColor(volunteer.socialProjectVolunteerType)">{{getSocialProjectVolunteerTypeName(volunteer.socialProjectVolunteerType)}}</nz-tag>
+						<!-- Actions -->
+						<ul nz-list-item-actions *ngIf="isManager()">
+							<!-- <nz-list-item-action>
+								<button nz-popconfirm (nzOnConfirm)="makeManager(volunteer)" nzPopconfirmPlacement="top"
+									nzPopconfirmTitle="Deseja tornar este voluntário um Gerente do Projeto?">
+								</button>
+							</nz-list-item-action>
+							<nz-list-item-action>
+								<button nz-popconfirm (nzOnConfirm)="removeVolunteer(volunteer, i)" nzPopconfirmPlacement="top"
+									nzPopconfirmTitle="Deseja realmente remover este voluntário do projeto?">
+								</button>
+							</nz-list-item-action> -->
+						</ul>
+					</ng-container>
+				</nz-list-item>
+			</nz-list>
+		</nz-tab>		
+	</nz-tabset>
+</nz-card>

@@ -49,4 +49,9 @@ public class SocialProjectVolunteerRoute {
 		return ResponseEntity.ok(socialProjectVolunteerType.orElse(SocialProjectVolunteerType.NO_VOLUNTEER));
 	}
 
+	@GetMapping("/volunteers")
+	public ResponseEntity<?> getSocialProjectVolunteers(@RequestParam("socialProjectId") Long socialProjectId) {
+		return ResponseEntity.ok(socialProjectVolunteerService.getSocialProjectVolunteers(socialProjectId));
+	}
+
 }

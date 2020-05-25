@@ -5,6 +5,7 @@ public enum SocialProjectVolunteerType {
 	MANAGER,
 	VOLUNTEER,
 	CANDIDATE,
+	INVITED,
 	NO_VOLUNTEER
 
 }

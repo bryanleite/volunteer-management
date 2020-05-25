@@ -19,7 +19,7 @@ public class SocialProjectVolunteer extends IdentityCommonObject{
 	@JoinColumn(name = "SVL_SPTID", nullable = false)
 	private SocialProject socialProject;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SVL_VOLID", nullable = false)
 	private Volunteer volunteer;
 
