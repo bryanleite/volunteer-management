@@ -30,7 +30,7 @@ public class SocialProjectVolunteerService extends AbstractService<SocialProject
 
 		if(!CollectionUtils.isEmpty(socialProjectVolunteers)) {
 			volunteers = socialProjectVolunteers.stream().map(spv ->
-					new SocialProjectVolunteerDTO(spv.getId(),
+					new SocialProjectVolunteerDTO(spv.getVolunteer().getId(),
 						spv.getVolunteer().getFormalName(),
 						spv.getVolunteer().getOccupation(),
 						spv.getSocialProjectVolunteerType(),

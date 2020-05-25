@@ -25,8 +25,8 @@
           <td>{{ profile.name }}</td>
           <td>{{ (profile.active ? 'ADMIN_SETTINGS.PROFILES.YES' : 'ADMIN_SETTINGS.PROFILES.NO') | translate }}</td>
           <td class="action-column">
-            <button nz-button nzType="default" (click)="edit(profile)"><i class="anticon anticon-edit"></i></button>
-            <button nz-button nzType="danger" (click)="remove(profile)"><i class="anticon anticon-delete"></i></button>
+            <button nz-button nzType="default" (click)="edit(profile)"><i nz-icon type="edit" theme="outline"></i></button>
+            <button nz-button nzType="danger" (click)="remove(profile)"><i nz-icon type="delete" theme="outline"></i></button>
           </td>
         </tr>
       </tbody>

@@ -169,6 +169,14 @@ export class SocialProjectComponent implements OnInit {
 		}
 	}
 
+	approveCandidate(volunteer: Volunteer) {
+
+	}
+
+	cancelInvite(volunteer: Volunteer) {
+		
+	}
+
 	isManager(): boolean {
 		return this.socialProjectVolunteerType == SocialProjectVolunteerType.MANAGER;
 	}

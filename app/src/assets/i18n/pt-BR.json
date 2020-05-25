@@ -149,7 +149,9 @@
             "VOLUNTEERS_ACTIVE": "Voluntários ativos",
             "VOLUNTEERS_INACTIVE": "Possíveis voluntários",
             "MAKE_MANAGER_CONFIRM": "Deseja tornar este voluntário um Gerente do Projeto?",
-            "REMOVE_VOLUNTEER_CONFIRM": "Deseja realmente remover este voluntário do projeto?"
+            "REMOVE_VOLUNTEER_CONFIRM": "Deseja realmente remover este voluntário do projeto?",
+            "APPROVE_CANDIDATE_CONFIRM": "Deseja realmente aprovar este candidato?",
+            "CANCEL_INVITE_CONFIRM": "Deseja realmente cancelar o convite?"
         }
     },
     "ALERTS": {

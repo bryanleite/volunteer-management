@@ -28,7 +28,7 @@
           <td>{{ getProfilesSeparatedByComma(user) }}</td>
           <td>{{ (user.active ? 'ADMIN_SETTINGS.USERS.YES' : 'ADMIN_SETTINGS.USERS.NO') | translate }}</td>
           <td class="action-column">
-            <button nz-button nzType="default" (click)="edit(user)"><i class="anticon anticon-edit"></i></button>
+            <button nz-button nzType="default" (click)="edit(user)"><<i nz-icon type="edit" theme="outline"></i></button>
           </td>
         </tr>
       </tbody>

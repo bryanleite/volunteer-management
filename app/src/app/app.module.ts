@@ -20,6 +20,12 @@ import { HomeComponent } from './home/home.component';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { PagesModule } from './pages/pages.module';
 
+import { IconDefinition } from '@ant-design/icons-angular';
+import { NgZorroAntdModule, NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd';
+import { EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline } from '@ant-design/icons-angular/icons';
+
+const icons: IconDefinition[] = [ EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline ];
+
 registerLocaleData(pt);
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminSettingsModule,
     PagesModule,
     NgHttpLoaderModule,
+    NgZorroAntdModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -55,7 +62,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: NZ_I18N,
       useValue: pt_BR
-    }
+    },
+    { provide: NZ_ICON_DEFAULT_TWOTONE_COLOR, useValue: '#00ff00' }, // If not provided, Ant Design's official blue would be used
+    { provide: NZ_ICONS, useValue: icons }
   ],
   bootstrap: [AppComponent]
 })
