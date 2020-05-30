@@ -41,4 +41,8 @@ public class SocialProjectRoute {
 		return ResponseEntity.ok(String.format("Projeto social de id %d removido com sucesso!", id));
 	}
 
+	@GetMapping("/by-volunteer")
+	public ResponseEntity<?> findSocialProjectsByVolunteerId(@RequestParam("volunteerId") Long volunteerId) {
+		return ResponseEntity.ok(socialProjectService.findSocialProjectsByVolunteerId(volunteerId));
+	}
 }

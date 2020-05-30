@@ -1,0 +1,15 @@
+<nz-card nzTitle="Meus projetos sociais">
+	<nz-list [nzDataSource]="socialProjects" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
+		<ng-template #item let-item>
+			<nz-list-item [nzContent]="item.description" [nzExtra]="extra">
+				<nz-list-item-meta nzAvatar="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg" 
+					[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
+					<ng-template #nzTitle><a (click)="edit(item.id)">{{item.name}}</a></ng-template>
+				</nz-list-item-meta>
+				<ng-template #extra>
+					<img width="272" alt="logo" src="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg">
+				</ng-template>
+			</nz-list-item>
+		</ng-template>
+	</nz-list>
+</nz-card>

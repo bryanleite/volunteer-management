@@ -58,6 +58,8 @@ public class AuthenticationService {
 				Optional<Volunteer> volunteer = volunteerRepository.getVolunteerByUserId(user.get().getId());
 				if(volunteer.isPresent()) {
 					volunteer.get().setUser(null);
+					volunteer.get().setVolunteerSkills(null);
+					volunteer.get().setSocialProjectVolunteers(null);
 					userSv.setVolunteer(volunteer.get());
 				}
 			}

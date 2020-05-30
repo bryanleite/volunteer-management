@@ -1,3 +1,31 @@
+<div *ngIf="isInvited()">
+	<label>Você está há um passo de apoiar em uma causa social!</label>
+	<div nz-row nzGutter="8">
+		<br>
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<button nz-button nzType="primary" (click)="acceptInvite()">Aceitar convite</button>
+			&nbsp;
+			<button nz-button nzType="danger" (click)="declineInvitation()">Recusar convite</button>
+		</div>
+	</div>
+	<br>
+</div>
+<div *ngIf="isNoVolunteer()">
+	<label>Você está há um passo de apoiar em uma causa social!</label>
+	<div nz-row nzGutter="8">
+		<br>
+		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+			<button nz-button nzType="primary" (click)="applyForSocialProject()">Candidatar-se como voluntário</button>
+		</div>
+	</div>
+	<br>
+</div>
+<div *ngIf="isCandidate()">
+	<nz-alert nzType="info" nzMessage="Candidato"
+		nzDescription="Seu perfil está sendo analisado pelos gerentes do projeto social.">
+	</nz-alert>
+	<br>
+</div>
 <nz-card [nzTitle]="'PAGES.INSTITUTION.TITLE' | translate" *ngIf="institution">
 	<div nz-row nzGutter="16">
 		<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
@@ -31,53 +59,84 @@
 <br>
 <form nz-form [formGroup]="fgSp" *ngIf="fgSp">
 	<nz-card [nzTitle]="'PAGES.SOCIAL_PROJECT.TITLE' | translate">
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'PAGES.SOCIAL_PROJECT.NAME' | translate }}
-			</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="name" id="name" [readonly]="!isManager()">
-				<nz-form-explain *ngIf="fgSp.get('name').dirty && fgSp.get('name').errors">
-					{{ 'PAGES.SOCIAL_PROJECT.NAME_INVALID' | translate }}
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">
-				{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION' | translate }}</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="description" id="description" [readonly]="!isManager()">
-				<nz-form-explain *ngIf="fgSp.get('description').dirty && fgSp.get('description').errors">
-					{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION_INVALID' | translate }}
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
+		<div nz-row nzGutter="16">
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<nz-form-item>
+					<nz-form-label nzRequired nzFor="name">{{ 'PAGES.SOCIAL_PROJECT.NAME' | translate }}
+					</nz-form-label>
+					<nz-form-control>
+						<input nz-input formControlName="name" id="name" [readonly]="!isManager()">
+						<nz-form-explain *ngIf="fgSp.get('name').dirty && fgSp.get('name').errors">
+							{{ 'PAGES.SOCIAL_PROJECT.NAME_INVALID' | translate }}
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<nz-form-item>
+					<nz-form-label nzRequired nzFor="initialDate">
+						{{ 'PAGES.SOCIAL_PROJECT.INITIAL_DATE' | translate }}</nz-form-label>
+					<nz-form-control>
+						<nz-date-picker nzFormat="dd/MM/yyyy" [nzDisabled]="!isManager()" formControlName="initialDate" id="initialDate"></nz-date-picker>
+						<nz-form-explain *ngIf="fgSp.get('initialDate').dirty && fgSp.get('initialDate').errors">
+							{{ 'PAGES.SOCIAL_PROJECT.INITIAL_DATE_INVALID' | translate }}
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<nz-form-item>
+					<nz-form-label nzFor="finalDate">{{ 'PAGES.SOCIAL_PROJECT.FINAL_DATE' | translate }}</nz-form-label>
+					<nz-date-picker nzFormat="dd/MM/yyyy" [nzDisabled]="!isManager()" formControlName="finalDate" id="finalDate"></nz-date-picker>
+				</nz-form-item>
+			</div>
+		</div>
+		<div nz-row nzGutter="16">
+			<div nz-col [nzXs]="96" [nzSm]="48" [nzMd]="48" [nzLg]="24">
+				<nz-form-item>
+					<nz-form-label nzRequired nzFor="description">
+						{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION' | translate }}</nz-form-label>
+					<nz-form-control>
+						<textarea nz-input rows="4" formControlName="description" id="description" [readonly]="!isManager()"></textarea>
+						<nz-form-explain *ngIf="fgSp.get('description').dirty && fgSp.get('description').errors">
+							{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION_INVALID' | translate }}
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+		</div>
 		<nz-divider *ngIf="isManager()"></nz-divider>
 		<button nz-button nzType="primary" *ngIf="isManager()" (click)="saveSp()"
 			[disabled]="fgSp.invalid">Salvar</button>
 	</nz-card>
 </form>
 <br>
-<nz-card [nzTitle]="'PAGES.SOCIAL_PROJECT.VOLUNTEERS' | translate" *ngIf="volunteers">
+<nz-card [nzTitle]="'PAGES.SOCIAL_PROJECT.VOLUNTEERS' | translate" *ngIf="volunteers" [nzExtra]="buscarVoluntarios">
+	<ng-template #buscarVoluntarios>
+		<a *ngIf="isManager()" (click)="showModal()">Convidar voluntários</a>
+	</ng-template>
 	<nz-tabset>
 		<nz-tab [nzTitle]="'PAGES.SOCIAL_PROJECT.VOLUNTEERS_ACTIVE' | translate">
 			<nz-list class="volunteers-list" [nzDataSource]="getActiveVolunteers()" [nzItemLayout]="'horizontal'"
 				[nzRenderItem]="volunteer">
 				<ng-template #volunteer let-volunteer>
-					<nz-list-item [nzContent]="content" [nzActions]="[makeManager,removeVolunteer]">
+					<nz-list-item [nzContent]="content" [nzActions]="[promove,deleteVolunteer]">
 						<!-- Actions -->
-						<ng-template #makeManager>
-							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType != 'MANAGER'" nz-popconfirm (nzOnConfirm)="makeManager(volunteer)"
-								nzPopconfirmPlacement="top"
+						<ng-template #promove>
+							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType != 'MANAGER'" nz-popconfirm
+								(nzOnConfirm)="makeManager(volunteer)" nzPopconfirmPlacement="top"
 								[nzTitle]="'PAGES.SOCIAL_PROJECT.MAKE_MANAGER_CONFIRM' | translate">Tornar gerente
 							</a>
-							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType == 'MANAGER'" class="disabled">Tornar gerente</a>
+							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType == 'MANAGER'"
+								class="disabled">Tornar gerente</a>
 						</ng-template>
-						<ng-template #removeVolunteer>
-							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType != 'MANAGER'" nz-popconfirm (nzOnConfirm)="removeVolunteer(volunteer, i)"
-								nzPopconfirmPlacement="top"
+						<ng-template #deleteVolunteer>
+							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType != 'MANAGER'" nz-popconfirm
+								(nzOnConfirm)="removeVolunteer(volunteer)" nzPopconfirmPlacement="top"
 								[nzTitle]="'PAGES.SOCIAL_PROJECT.REMOVE_VOLUNTEER_CONFIRM' | translate">Remover
 							</a>
-							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType == 'MANAGER'" class="disabled">Remover</a>
+							<a *ngIf="isManager() && volunteer.socialProjectVolunteerType == 'MANAGER'"
+								class="disabled">Remover</a>
 						</ng-template>
 						<!-- Avatar -->
 						<nz-list-item-meta [nzTitle]="nzTitle"
@@ -114,7 +173,8 @@
 						<ng-template #contentInactive>
 							<nz-tag
 								[nzColor]="getSocialProjectVolunteerTypeColor(volunteerInactive.socialProjectVolunteerType)">
-								{{getSocialProjectVolunteerTypeName(volunteerInactive.socialProjectVolunteerType)}}</nz-tag>
+								{{getSocialProjectVolunteerTypeName(volunteerInactive.socialProjectVolunteerType)}}
+							</nz-tag>
 						</ng-template>
 						<!-- Actions -->
 						<ng-template #actionInactive>
@@ -124,7 +184,7 @@
 								candidato
 							</a>
 							<a *ngIf="volunteerInactive.socialProjectVolunteerType == 'INVITED'" nz-popconfirm
-								(nzOnConfirm)="cancelInvite(volunteerInactive)" nzPopconfirmPlacement="top"
+								(nzOnConfirm)="removeVolunteer(volunteerInactive)" nzPopconfirmPlacement="top"
 								[nzTitle]="'PAGES.SOCIAL_PROJECT.CANCEL_INVITE_CONFIRM' | translate">Cancelar convite
 							</a>
 						</ng-template>
@@ -134,3 +194,57 @@
 		</nz-tab>
 	</nz-tabset>
 </nz-card>
+
+<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Convidar voluntários" (nzOnCancel)="hideModal()" nzWidth="1000"
+	[nzFooter]="modalFooter" [nzStyle]="{ top: '10px' }">
+	<form nz-form [formGroup]="fgVs">
+		<div nz-row nzGutter="16">
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<label>Nome completo</label>
+				<input nz-input formControlName="formalName" />
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<label>Habilidade</label>
+				<nz-select formControlName="skill" nzPlaceHolder="Busque por uma habilidade" nzAllowClear>
+					<nz-option *ngFor="let option of skills" [nzValue]="option" [nzLabel]="option.skillName">
+					</nz-option>
+				</nz-select>
+			</div>
+			<div>
+				<button style="margin-top: 20px;" nz-button nzType="primary" (click)="searchVolunteersToInvite()">
+					<i nz-icon type="search"></i>Buscar
+				</button>
+			</div>
+		</div>
+	</form>
+	<ng-template #modalFooter>
+		<button nz-button nzType="secondary" (click)="hideModal()">Fechar</button>
+	</ng-template>
+	<nz-divider *ngIf="volunteersToInvite" nzText="Resultados"></nz-divider>
+	<nz-list *ngIf="volunteersToInvite" class="volunteers-list" [nzDataSource]="volunteersToInvite"
+		[nzItemLayout]="'horizontal'" [nzRenderItem]="volInvite">
+		<ng-template #volInvite let-volInvite>
+			<nz-list-item [nzContent]="contentInvite" [nzActions]="[invite]">
+				<!-- Actions -->
+				<ng-template #invite>
+					<a nz-popconfirm (nzOnConfirm)="inviteVolunteer(volInvite)" nzPopconfirmPlacement="top"
+						[nzTitle]="'PAGES.SOCIAL_PROJECT.INVITE_CONFIRM' | translate">Enviar convite
+					</a>
+				</ng-template>
+				<!-- Avatar -->
+				<nz-list-item-meta [nzTitle]="nzTitle"
+					nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+					[nzDescription]="volInvite.occupation">
+					<ng-template #nzTitle>
+						<a href="">{{ volInvite.formalName }}</a>
+					</ng-template>
+				</nz-list-item-meta>
+				<!-- Content -->
+				<ng-template #contentInvite>
+					<label>{{ volInvite.description }}</label>
+				</ng-template>
+			</nz-list-item>
+		</ng-template>
+	</nz-list>
+
+</nz-modal>

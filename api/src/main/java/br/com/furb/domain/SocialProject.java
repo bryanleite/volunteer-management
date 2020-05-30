@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,6 +17,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SocialProject extends IdentityCommonObject {
+
+	public SocialProject(Long id) {
+		this.setId(id);
+	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SPT_INTID", nullable = false)
@@ -25,5 +31,15 @@ public class SocialProject extends IdentityCommonObject {
 
 	@Column(name = "SPT_DESCRIPTION")
 	private String description;
+
+	@Column(name = "SPT_INIDATE")
+	private LocalDate initialDate;
+
+	@Column(name = "SPT_FINDATE")
+	private LocalDate finalDate;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "socialProject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<SocialProjectVolunteer> socialProjectVolunteers;
 
 }

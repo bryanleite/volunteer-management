@@ -1,5 +1,6 @@
 package br.com.furb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Volunteer extends IdentityCommonObject {
+
+	public Volunteer(Long id) {
+		this.setId(id);
+	}
 
 	@JsonManagedReference
 	@JoinColumn(name = "VOL_USUID", nullable = false)
@@ -43,4 +48,7 @@ public class Volunteer extends IdentityCommonObject {
 	@OneToMany(mappedBy = "volunteer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<VolunteerSkill> volunteerSkills;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "volunteer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<SocialProjectVolunteer> socialProjectVolunteers;
 }

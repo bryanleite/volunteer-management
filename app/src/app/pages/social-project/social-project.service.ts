@@ -3,6 +3,7 @@ import { environment } from "src/environments/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { SocialProject } from "src/app/domain/social-project";
+import { SocialProjectDTO } from "src/app/domain/social-project-dto";
 
 @Injectable({
 	providedIn: 'root'
@@ -19,6 +20,13 @@ export class SocialProjectService {
 
     edit(id: number): Observable<SocialProject> {
         return this.http.get<SocialProject>(`${SocialProjectService.API}/${id}`);
+	}
+
+	getMySocialProjects(volunteerId: number): Observable<SocialProjectDTO[]> {
+		let params = new HttpParams().set("volunteerId", volunteerId.toString());
+		return this.http.get<SocialProjectDTO[]>(`${SocialProjectService.API}/by-volunteer`, {
+			params: params
+		});
 	}
 
 }

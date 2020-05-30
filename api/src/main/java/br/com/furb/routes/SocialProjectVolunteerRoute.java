@@ -1,7 +1,9 @@
 package br.com.furb.routes;
 
+import br.com.furb.domain.SocialProject;
 import br.com.furb.domain.SocialProjectVolunteer;
 import br.com.furb.domain.SocialProjectVolunteerType;
+import br.com.furb.domain.Volunteer;
 import br.com.furb.service.SocialProjectVolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,11 @@ public class SocialProjectVolunteerRoute {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> save(@RequestBody SocialProjectVolunteer socialProjectVolunteer) {
-		return ResponseEntity.ok(socialProjectVolunteerService.save(socialProjectVolunteer));
+		socialProjectVolunteer = socialProjectVolunteerService.save(socialProjectVolunteer);
+		socialProjectVolunteer.setVolunteer(new Volunteer(socialProjectVolunteer.getVolunteer().getId()));
+		socialProjectVolunteer.setSocialProject(new SocialProject(socialProjectVolunteer.getSocialProject().getId()));
+
+		return ResponseEntity.ok(socialProjectVolunteer);
 	}
 
 	@PutMapping(path="/{id}", produces = MediaType.APPLICATION_JSON)
@@ -37,10 +43,16 @@ public class SocialProjectVolunteerRoute {
 		return ResponseEntity.ok(socialProjectVolunteerService.findById(id));
 	}
 
-	@DeleteMapping(path="/{id}")
+//	@DeleteMapping(path="/{id}")
+//	public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
+//		socialProjectVolunteerService.deleteById(id);
+//		return ResponseEntity.ok(String.format("Voluntário do projeto social de id %d removido com sucesso!", id));
+//	}
+
+	@GetMapping(path="/delete/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
 		socialProjectVolunteerService.deleteById(id);
-		return ResponseEntity.ok(String.format("Voluntário do projeto social de id %d removido com sucesso!", id));
+		return ResponseEntity.ok(String.format("\"Voluntário do projeto social de id %d removido com sucesso!\"", id));
 	}
 
 	@GetMapping("/volunteer-type")

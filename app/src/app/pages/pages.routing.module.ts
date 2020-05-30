@@ -5,7 +5,8 @@ import { AuthGuard } from '../security/auth/auth.guard';
 import { InstitutionListComponent } from './institution/institution-list/institution-list.component';
 import { InstitutionComponent } from './institution/institution.component';
 import { SocialProjectComponent } from './social-project/social-project.component';
-import { SocialProjectListComponent } from './social-project/social-project-list/social-project-list.component';
+import { MySocialProjectsComponent } from './my-social-projects/my-social-projects.component';
+import { SocialProjectSearchComponent } from './social-project-search/social-project-search.component';
 
 const routes: Routes = [
   {
@@ -32,11 +33,6 @@ const routes: Routes = [
     path: 'social-projects',
     children: [
       {
-        path: 'list',
-        component: SocialProjectListComponent,
-        canActivate: [RolesGuard, AuthGuard]
-      },
-      {
         path: '',
         component: SocialProjectComponent,
         canActivate: [RolesGuard, AuthGuard],
@@ -47,6 +43,16 @@ const routes: Routes = [
         canActivate: [RolesGuard, AuthGuard]
       }
     ]
+  },
+  {
+    path: 'my-social-projects',
+    component: MySocialProjectsComponent,
+    canActivate: [RolesGuard, AuthGuard]
+  },
+  {
+    path: 'search-social-projects',
+    component: SocialProjectSearchComponent,
+    canActivate: [RolesGuard, AuthGuard]
   }
 ];
 

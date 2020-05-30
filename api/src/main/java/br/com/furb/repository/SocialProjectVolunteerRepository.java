@@ -2,7 +2,6 @@ package br.com.furb.repository;
 
 import br.com.furb.domain.SocialProjectVolunteer;
 import br.com.furb.domain.SocialProjectVolunteerType;
-import br.com.furb.domain.Volunteer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

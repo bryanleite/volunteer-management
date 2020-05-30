@@ -26,7 +26,7 @@ public class User extends IdentityCommonObject{
     @Column(name = "USU_LOGIN", unique = true)
     private String login;
 
-    @Column(name = "USU_PASSWORD", unique = true)
+    @Column(name = "USU_PASSWORD")
     private String password;
 
     @Column(name = "USU_EMAIL", unique = true)

@@ -48,4 +48,10 @@ public class VolunteerRoute {
 		return ResponseEntity.ok(String.format("Voluntário de id %d removido com sucesso!", id));
 	}
 
+	@GetMapping("/volunteers-to-invite")
+	public ResponseEntity<?> getVolunteersToInvite(@RequestParam(value = "formalName", required = false) String formalName,
+	                                               @RequestParam(value = "skillId", required = false) Long skillId,
+	                                               @RequestParam(value = "socialProjectId") Long socialProjectId) {
+		return ResponseEntity.ok(volunteerService.getVolunteersToInvite(skillId, formalName, socialProjectId));
+	}
 }

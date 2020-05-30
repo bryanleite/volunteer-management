@@ -33,7 +33,7 @@ export class SocialProjectVolunteerService {
     }
 
     delete(socialProjectVolunteerId: number): Observable<string> {
-        return this.http.delete<string>(`${SocialProjectVolunteerService.API}/${socialProjectVolunteerId}`);
+        return this.http.get<string>(`${SocialProjectVolunteerService.API}/delete/${socialProjectVolunteerId}`);
     }
 
 }

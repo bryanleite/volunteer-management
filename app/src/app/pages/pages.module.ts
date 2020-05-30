@@ -7,7 +7,8 @@ import { PagesRoutingModule } from './pages.routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { VolunteerComponent } from './volunteer/volunteer.component';
 import { SocialProjectComponent } from './social-project/social-project.component';
-import { SocialProjectListComponent } from './social-project/social-project-list/social-project-list.component';
+import { MySocialProjectsComponent } from './my-social-projects/my-social-projects.component';
+import { SocialProjectSearchComponent } from './social-project-search/social-project-search.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { SocialProjectListComponent } from './social-project/social-project-list
     InstitutionListComponent,
     VolunteerComponent,
     SocialProjectComponent,
-    SocialProjectListComponent
+    MySocialProjectsComponent,
+    SocialProjectSearchComponent
   ]
 })
 export class PagesModule { }
