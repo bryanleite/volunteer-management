@@ -14,4 +14,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query(" from User where login = :login ")
 	Optional<User> loadUserByLogin(@Param("login") String username);
 
+	@Query(" select usu from User usu " +
+		" left join fetch usu.institution int " +
+		" where usu.id = :userId ")
+	Optional<User> getUserWithInstitution(@Param("userId") Long userId);
+
 }

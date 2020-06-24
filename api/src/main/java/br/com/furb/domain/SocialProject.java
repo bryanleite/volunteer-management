@@ -29,7 +29,7 @@ public class SocialProject extends IdentityCommonObject {
 	@Column(name = "SPT_NAME", nullable = false)
 	private String name;
 
-	@Column(name = "SPT_DESCRIPTION")
+	@Column(name = "SPT_DESCRIPTION", length = 4000)
 	private String description;
 
 	@Column(name = "SPT_INIDATE")

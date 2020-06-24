@@ -7,37 +7,45 @@ import { AuthService } from '../security/auth/auth.service';
 import { LayoutService } from './layout.service';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.less']
+	selector: 'app-layout',
+	templateUrl: './layout.component.html',
+	styleUrls: ['./layout.component.less']
 })
 export class LayoutComponent implements OnInit {
-  isCollapsed = false;
-  triggerTemplate = null;
-  @ViewChild('trigger') customTrigger: TemplateRef<void>;
+	isCollapsed = false;
+	triggerTemplate = null;
+	@ViewChild('trigger') customTrigger: TemplateRef<void>;
 
-  public user: User;
-  public version: string;
+	public user: User;
+	public version: string;
+	private admin: boolean = false;
 
+	constructor(
+		public router: Router,
+		private _storageService: StorageService,
+		private _authService: AuthService,
+		private _layoutService: LayoutService) { }
 
-  constructor(
-    public router: Router,
-    private _storageService: StorageService,
-    private _authService: AuthService,
-    private _layoutService: LayoutService) { }
+	ngOnInit() {
+		this.user = JSON.parse(this._storageService.getLocalItem(StorageKeys.USER_KEY));
+		this.version = this._layoutService.getVersion();
+	}
 
-  ngOnInit() {
-    this.user = JSON.parse(this._storageService.getLocalItem(StorageKeys.USER_KEY));
-    this.version = this._layoutService.getVersion();
-  }
+	/** custom trigger can be TemplateRef **/
+	changeTrigger(): void {
+		this.triggerTemplate = this.customTrigger;
+	}
 
-  /** custom trigger can be TemplateRef **/
-  changeTrigger(): void {
-    this.triggerTemplate = this.customTrigger;
-  }
+	logout() {
+		this._authService.logout();
+	}
 
-  logout() {
-    this._authService.logout();
-  }
+	isAdmin(): boolean {
+		return this.admin;
+	}
+
+	redirectTo(route: string) {
+		this.router.navigate([route]);		
+	}
 
 }

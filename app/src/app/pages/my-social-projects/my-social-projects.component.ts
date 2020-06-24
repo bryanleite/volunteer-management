@@ -4,6 +4,7 @@ import { SocialProjectService } from '../social-project/social-project.service';
 import { Volunteer } from 'src/app/domain/volunteer';
 import { SocialProjectDTO } from 'src/app/domain/social-project-dto';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SocialProjectVolunteerType } from 'src/app/domain/socialProjectVolunteerType';
 
 @Component({
 	selector: 'app-my-social-projects',
@@ -12,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MySocialProjectsComponent implements OnInit {
 
+	public isManager: boolean;
 	public socialProjects: SocialProjectDTO[] = [];
 	private currentVolunteer: Volunteer;
 
@@ -23,6 +25,7 @@ export class MySocialProjectsComponent implements OnInit {
 	ngOnInit() {
 		let user = JSON.parse(this.storageService.getUser());
 		this.currentVolunteer = user.volunteer;
+		this.isManager = user.institution && user.institution.id;
 		if (this.currentVolunteer && this.currentVolunteer.id) {
 			this.socialProjectService.getMySocialProjects(this.currentVolunteer.id).subscribe(res => {
 				if (res) {
@@ -32,12 +35,26 @@ export class MySocialProjectsComponent implements OnInit {
 		}
 	}
 
-	edit(socialProjectId: number) {
-		this.router.navigate(['../social-projects', { id: socialProjectId }], {relativeTo: this.route});
+	edit(socialProjectId?: number) {
+		let params = [];
+		params.push('../social-projects');
+		if(socialProjectId) {
+			params.push({ id: socialProjectId });
+		}
+		
+		this.router.navigate(params, {relativeTo: this.route});
 	}
 
 	getSubTitle(socialProjectDTO: SocialProjectDTO): string {
 		return socialProjectDTO.institutionName + " - " + socialProjectDTO.institutionCity;
+	}
+
+	getSocialProjectVolunteerTypeName(socialProjectVolunteerType: SocialProjectVolunteerType): string {
+		return SocialProjectVolunteerType.getSocialProjectVolunteerTypeName(socialProjectVolunteerType);
+	}
+
+	getSocialProjectVolunteerTypeColor(socialProjectVolunteerType: SocialProjectVolunteerType): string {
+		return SocialProjectVolunteerType.getSocialProjectVolunteerTypeColor(socialProjectVolunteerType);
 	}
 
 }

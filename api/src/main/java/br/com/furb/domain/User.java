@@ -37,6 +37,9 @@ public class User extends IdentityCommonObject{
     @ManyToOne(fetch = FetchType.LAZY)
     private Institution institution;
 
+    @Column(name = "USU_ISADM")
+    private boolean admin;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<UserProfile> userProfiles;
@@ -44,6 +47,4 @@ public class User extends IdentityCommonObject{
     @JsonBackReference
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Volunteer volunteer;
-
-
 }

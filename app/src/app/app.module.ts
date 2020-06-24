@@ -22,9 +22,9 @@ import { PagesModule } from './pages/pages.module';
 
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NgZorroAntdModule, NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd';
-import { EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline } from '@ant-design/icons-angular/icons';
+import { EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline, BellFill, ProjectFill } from '@ant-design/icons-angular/icons';
 
-const icons: IconDefinition[] = [ EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline ];
+const icons: IconDefinition[] = [ EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline, BellFill, ProjectFill ];
 
 registerLocaleData(pt);
 

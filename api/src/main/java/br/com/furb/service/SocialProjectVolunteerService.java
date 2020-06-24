@@ -35,7 +35,8 @@ public class SocialProjectVolunteerService extends AbstractService<SocialProject
 						spv.getVolunteer().getOccupation(),
 						spv.getSocialProjectVolunteerType(),
 						spv.getId(),
-						null))
+						null,
+						spv.getVolunteer().getUser().getId()))
 				.collect(Collectors.toList());
 		}
 

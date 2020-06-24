@@ -29,7 +29,8 @@ public class VolunteerService extends AbstractService<Volunteer> {
 					v.getOccupation(),
 					null,
 					null,
-					v.getDescription()))
+					v.getDescription(),
+					v.getUser().getId()))
 				.collect(Collectors.toList());
 		}
 

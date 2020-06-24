@@ -6,6 +6,9 @@ public enum SocialProjectVolunteerType {
 	VOLUNTEER,
 	CANDIDATE,
 	INVITED,
-	NO_VOLUNTEER
+	NO_VOLUNTEER;
 
+	public boolean isActive() {
+		return this.equals(MANAGER) || this.equals(VOLUNTEER);
+	}
 }

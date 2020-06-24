@@ -1,0 +1,106 @@
+<nz-drawer [nzVisible]="isVisible" [nzWidth]="640" [nzClosable]="false" (nzOnClose)="close()">
+	<nz-divider nzText="Perfil do usuário"></nz-divider>
+	<div *ngIf="userInformations && !isEditable">
+		<div nz-row>
+			<div nz-col nzSpan="12">
+				<div class="item-wrap">
+					<p class="label">Nome completo:</p>{{ userInformations.volunteer.formalName }}
+				</div>
+			</div>
+			<div nz-col nzSpan="12">
+				<div class="item-wrap">
+					<p class="label">Nascimento:</p>{{ userInformations.volunteer.birthDate }}
+				</div>
+			</div>
+		</div>
+		<div nz-row>
+			<div nz-col nzSpan="12">
+				<div class="item-wrap">
+					<p class="label">E-mail:</p>{{ userInformations.user.email }}
+				</div>
+			</div>
+			<div nz-col nzSpan="12">
+				<div class="item-wrap">
+					<p class="label">Ocupação:</p>{{ userInformations.volunteer.occupation }}
+				</div>
+			</div>
+		</div>
+		<div nz-row>
+			<div nz-col nzSpan="24">
+				<div class="item-wrap">
+					<p class="label">Descrição:</p>{{ userInformations.volunteer.description }}
+				</div>
+			</div>
+		</div>
+		<div *ngIf="userInformations.volunteer.volunteerSkills && userInformations.volunteer.volunteerSkills.length > 0">
+			<nz-divider nzText="Competências"></nz-divider>
+			<!-- <div class="item-wrap" *ngFor="volunteerSkill of userInformations.volunteer.volunteerSkills">
+				<p>{{ volunteerSkill.skill.skillName }}</p>
+			</div> -->
+		</div>
+		<div *ngIf="userInformations.institution">
+			<nz-divider nzText="Instituição"></nz-divider>
+			<div nz-row>
+				<div nz-col nzSpan="12">
+					<div class="item-wrap">
+						<p class="label">Nome:</p>{{ userInformations.institution.name }}
+					</div>
+				</div>
+				<div nz-col nzSpan="12">
+					<div class="item-wrap">
+						<p class="label">Estado:</p>{{ userInformations.institution.state }}
+					</div>
+				</div>
+			</div>
+			<div nz-row>
+				<div nz-col nzSpan="12">
+					<div class="item-wrap">
+						<p class="label">Cidade:</p>{{ userInformations.institution.city }}
+					</div>
+				</div>
+				<div nz-col nzSpan="12">
+					<div class="item-wrap">
+						<p class="label">CEP:</p>{{ userInformations.institution.cep }}
+					</div>
+				</div>
+			</div>
+			<div nz-row>
+				<div nz-col nzSpan="12">
+					<div class="item-wrap">
+						<p class="label">Rua:</p>{{ userInformations.institution.street }}
+					</div>
+				</div>
+				<div nz-col nzSpan="12">
+					<div class="item-wrap">
+						<p class="label">Número:</p>{{ userInformations.institution.number }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="userInformations.socialProjects">
+			<nz-divider nzText="Projetos sociais"></nz-divider>
+			<nz-list [nzDataSource]="userInformations.socialProjects" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
+				<ng-template #item let-item>
+					<nz-list-item [nzContent]="item.description" [nzActions]="[more]">
+						<nz-list-item-meta
+							nzAvatar="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg"
+							[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
+
+							<ng-template #nzTitle>
+								<a (click)="openSocialProject(item.id)">{{item.name}}</a>
+								&nbsp;
+								<nz-tag
+									[nzColor]="getSocialProjectVolunteerTypeColor(item.socialProjectVolunteerType)">
+									{{getSocialProjectVolunteerTypeName(item.socialProjectVolunteerType)}}
+								</nz-tag>
+							</ng-template>
+							<ng-template #more>
+								<a (click)="openSocialProject(item.id)">Saber mais</a>
+							</ng-template>
+						</nz-list-item-meta>
+					</nz-list-item>
+				</ng-template>
+			</nz-list>
+		</div>
+	</div>
+</nz-drawer>

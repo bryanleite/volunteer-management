@@ -9,6 +9,7 @@ import { VolunteerComponent } from './volunteer/volunteer.component';
 import { SocialProjectComponent } from './social-project/social-project.component';
 import { MySocialProjectsComponent } from './my-social-projects/my-social-projects.component';
 import { SocialProjectSearchComponent } from './social-project-search/social-project-search.component';
+import { UserInformationsComponent } from '../user-informations/user-informations.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { SocialProjectSearchComponent } from './social-project-search/social-pro
     VolunteerComponent,
     SocialProjectComponent,
     MySocialProjectsComponent,
-    SocialProjectSearchComponent
+    SocialProjectSearchComponent,
+    UserInformationsComponent
   ]
 })
 export class PagesModule { }

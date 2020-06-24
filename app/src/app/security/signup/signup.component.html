@@ -1,107 +1,111 @@
-<div style="text-align: center;">
-	<img class="logo" src="./assets/img/login-logo.png">
-</div>
-<div class="steps">
-	<nz-steps [nzCurrent]="currentStep">
-		<nz-step nzTitle="Usuário"></nz-step>
-		<nz-step nzTitle="Informações cadastrais"></nz-step>
-		<nz-step nzTitle="Habilidades"></nz-step>
-	</nz-steps>
-</div>
-
-<div class="steps-content">
-	<!-- User -->
-	<form nz-form [formGroup]="fgUser" *ngIf="fgUser && currentStep == 0">
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="email" id="email">
-				<nz-form-explain *ngIf="fgUser.get('email').dirty && fgUser.get('email').errors">O e-mail é
-					invalido!
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">Usuário</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="username" id="username">
-				<nz-form-explain *ngIf="fgUser.get('username').dirty && fgUser.get('username').errors">O usuário é
-					invalido!
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">Senha</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="password" id="password" type="password">
-				<nz-form-explain *ngIf="fgUser.get('password').dirty && fgUser.get('password').errors">A senha é
-					inválida!
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="confirmPassword">Confirmar senha</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="confirmPassword" id="confirmPassword" type="password">
-				<nz-form-explain
-					*ngIf="fgUser.get('confirmPassword').dirty && fgUser.get('confirmPassword').errors">A
-					senha é inválida!
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-	</form>
-	<!-- Volunteer -->
-	<form nz-form [formGroup]="fgVolunteer" *ngIf="fgUser && currentStep == 1">
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="formalName">Nome completo</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="formalName" id="formalName">
-				<nz-form-explain
-					*ngIf="fgVolunteer.get('formalName').dirty && fgVolunteer.get('formalName').errors">O nome completo é inválido!
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="birthDate">Data de nascimento</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<nz-date-picker formControlName="birthDate" id="birthDate"></nz-date-picker>
-				<nz-form-explain
-					*ngIf="fgVolunteer.get('birthDate').dirty && fgVolunteer.get('birthDate').errors">A
-					data de nascimento é inválida!
-				</nz-form-explain>
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzFor="occupation">Profissão</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="occupation" id="occupation">
-			</nz-form-control>
-		</nz-form-item>
-		<nz-form-item>
-			<nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">Descrição</nz-form-label>
-			<nz-form-control [nzSm]="14" [nzXs]="24">
-				<input nz-input formControlName="description" id="description" maxlength="255">
-			</nz-form-control>
-		</nz-form-item>						
-	</form>
-	<!-- Skills -->
-	<form nz-form [formGroup]="fgVolunteerSkills" *ngIf="fgVolunteerSkills && currentStep == 2">
-		<div formArrayName="values">
-			<div class="ui grid" *ngFor="let item of fgVolunteerSkills.get('values')['controls']; let i = index;" [formGroupName]="i">
-				<input class="width-90" placeholder="Busque por uma habilidade" nz-input formControlName="skillControl" [nzAutocomplete]="auto" />
-				<nz-autocomplete #auto >
-				  <nz-auto-option *ngFor="let option of skills" [nzValue]="option" [nzLabel]="option.skillName">
-					{{ option.skillName }}
-				  </nz-auto-option>
-				</nz-autocomplete>
-			</div>
+<div id="full-page">
+	<div style="text-align: center;">
+		<img class="logo" src="./assets/img/logo.png">
+	</div>
+	<nz-card nzTitle="Cadastro de usuário">
+		<div class="steps">
+			<nz-steps [nzCurrent]="currentStep">
+				<nz-step nzTitle="Usuário"></nz-step>
+				<nz-step nzTitle="Informações cadastrais"></nz-step>
+				<nz-step nzTitle="Competências"></nz-step>
+			</nz-steps>
 		</div>
-		<button class="width-90" nz-button nzType="dashed" nzBlock on-click="addVolunteerSkill()">Adicionar habilidade</button>
-	</form>
-</div>
-<div class="action-buttons">
-	<button nz-button nzType="danger" on-click="redirectToLogin()">Cancelar</button>&nbsp;&nbsp;
-	<button nz-button nzType="secondary" on-click="previousStep()" *ngIf="currentStep > 0">Anterior</button>&nbsp;&nbsp;
-	<button nz-button nzType="primary" on-click="nextStep()" *ngIf="currentStep < 2">Próximo</button>
-	<button nz-button nzType="primary" on-click="register()" *ngIf="currentStep == 2">Finalizar cadastro</button>
+		
+		<div class="steps-content">
+			<!-- User -->
+			<form nz-form [formGroup]="fgUser" *ngIf="fgUser && currentStep == 0">
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="email" id="email">
+						<nz-form-explain *ngIf="fgUser.get('email').dirty && fgUser.get('email').errors">O e-mail é
+							invalido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">Usuário</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="username" id="username">
+						<nz-form-explain *ngIf="fgUser.get('username').dirty && fgUser.get('username').errors">O usuário é
+							invalido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">Senha</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="password" id="password" type="password">
+						<nz-form-explain *ngIf="fgUser.get('password').dirty && fgUser.get('password').errors">A senha é
+							inválida!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="confirmPassword">Confirmar senha</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="confirmPassword" id="confirmPassword" type="password">
+						<nz-form-explain
+							*ngIf="fgUser.get('confirmPassword').dirty && fgUser.get('confirmPassword').errors">A
+							senha é inválida!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+			</form>
+			<!-- Volunteer -->
+			<form nz-form [formGroup]="fgVolunteer" *ngIf="fgUser && currentStep == 1">
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="formalName">Nome completo</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="formalName" id="formalName">
+						<nz-form-explain
+							*ngIf="fgVolunteer.get('formalName').dirty && fgVolunteer.get('formalName').errors">O nome completo é inválido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="birthDate">Data de nascimento</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<nz-date-picker formControlName="birthDate" id="birthDate"></nz-date-picker>
+						<nz-form-explain
+							*ngIf="fgVolunteer.get('birthDate').dirty && fgVolunteer.get('birthDate').errors">A
+							data de nascimento é inválida!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzFor="occupation">Profissão</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="occupation" id="occupation">
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">Descrição</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="description" id="description" maxlength="255">
+					</nz-form-control>
+				</nz-form-item>						
+			</form>
+			<!-- Skills -->
+			<form nz-form [formGroup]="fgVolunteerSkills" *ngIf="fgVolunteerSkills && currentStep == 2">
+				<div formArrayName="values">
+					<div class="ui grid" *ngFor="let item of fgVolunteerSkills.get('values')['controls']; let i = index;" [formGroupName]="i">
+						<input class="width-90" placeholder="Busque por uma competência" nz-input formControlName="skillControl" [nzAutocomplete]="auto" />
+						<nz-autocomplete #auto >
+						  <nz-auto-option *ngFor="let option of skills" [nzValue]="option" [nzLabel]="option.skillName">
+							{{ option.skillName }}
+						  </nz-auto-option>
+						</nz-autocomplete>
+					</div>
+				</div>
+				<button class="width-90" nz-button nzType="dashed" nzBlock on-click="addVolunteerSkill()">Adicionar competência</button>
+			</form>
+		</div>
+		<div class="action-buttons">
+			<button nz-button nzType="danger" on-click="redirectToLogin()">Cancelar</button>&nbsp;&nbsp;
+			<button nz-button nzType="secondary" on-click="previousStep()" *ngIf="currentStep > 0">Anterior</button>&nbsp;&nbsp;
+			<button nz-button nzType="primary" on-click="nextStep()" *ngIf="currentStep < 2">Próximo</button>
+			<button nz-button nzType="primary" on-click="register()" *ngIf="currentStep == 2">Finalizar cadastro</button>
+		</div>
+	</nz-card>
 </div>

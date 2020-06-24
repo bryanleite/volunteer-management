@@ -97,7 +97,7 @@
 					<nz-form-label nzRequired nzFor="description">
 						{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION' | translate }}</nz-form-label>
 					<nz-form-control>
-						<textarea nz-input rows="4" formControlName="description" id="description" [readonly]="!isManager()"></textarea>
+						<textarea maxlength="3999" nz-input rows="6" formControlName="description" id="description" [readonly]="!isManager()"></textarea>
 						<nz-form-explain *ngIf="fgSp.get('description').dirty && fgSp.get('description').errors">
 							{{ 'PAGES.SOCIAL_PROJECT.DESCRIPTION_INVALID' | translate }}
 						</nz-form-explain>
@@ -143,7 +143,7 @@
 							nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
 							[nzDescription]="volunteer.occupation">
 							<ng-template #nzTitle>
-								<a href="">{{ volunteer.formalName }}</a>
+								<a (click)="openUserInformations(volunteer.userId)">{{ volunteer.formalName }}</a>
 							</ng-template>
 						</nz-list-item-meta>
 						<!-- Content -->
@@ -166,7 +166,7 @@
 							nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
 							[nzDescription]="volunteerInactive.occupation">
 							<ng-template #nzTitleInactive>
-								<a href="">{{ volunteerInactive.formalName }}</a>
+								<a (click)="openUserInformations(volunteerInactive.userId)">{{ volunteerInactive.formalName }}</a>
 							</ng-template>
 						</nz-list-item-meta>
 						<!-- Content -->
@@ -204,8 +204,8 @@
 				<input nz-input formControlName="formalName" />
 			</div>
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
-				<label>Habilidade</label>
-				<nz-select formControlName="skill" nzPlaceHolder="Busque por uma habilidade" nzAllowClear>
+				<label>Competência</label>
+				<nz-select formControlName="skill" nzPlaceHolder="Busque por uma competência" nzAllowClear>
 					<nz-option *ngFor="let option of skills" [nzValue]="option" [nzLabel]="option.skillName">
 					</nz-option>
 				</nz-select>
@@ -236,7 +236,7 @@
 					nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
 					[nzDescription]="volInvite.occupation">
 					<ng-template #nzTitle>
-						<a href="">{{ volInvite.formalName }}</a>
+						<a (click)="openUserInformations(volInvite.userId)">{{ volInvite.formalName }}</a>
 					</ng-template>
 				</nz-list-item-meta>
 				<!-- Content -->
@@ -246,5 +246,5 @@
 			</nz-list-item>
 		</ng-template>
 	</nz-list>
-
 </nz-modal>
+<user-informations></user-informations>

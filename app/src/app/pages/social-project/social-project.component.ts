@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Institution } from 'src/app/domain/institution';
 import { StorageService } from 'src/app/shared/storage/storage.service';
@@ -14,6 +14,7 @@ import { SocialProjectVolunteerType } from 'src/app/domain/socialProjectVoluntee
 import { Skill } from 'src/app/domain/skill';
 import { SkillService } from '../volunteer/skill.service';
 import { VolunteerService } from '../volunteer/volunteer.service';
+import { UserInformationsComponent } from 'src/app/user-informations/user-informations.component';
 
 @Component({
 	selector: 'app-social-project',
@@ -32,6 +33,8 @@ export class SocialProjectComponent implements OnInit {
 	public isModalVisible: boolean = false;
 	public skills: Skill[] = [];
 	public volunteersToInvite: Volunteer[];
+	@ViewChild(UserInformationsComponent)
+	private userInformations: UserInformationsComponent;
 
 	constructor(private activatedRouter: ActivatedRoute,
 				private storageService: StorageService,
@@ -267,6 +270,10 @@ export class SocialProjectComponent implements OnInit {
 		this.translateService.get(msg).subscribe(message => {
 			this.notification.create('success', 'Sucesso', message);
 		});
+	}
+
+	openUserInformations(userId: number) {
+		this.userInformations.loadUserAndOpen(userId, false);
 	}
 
 	isManager(): boolean {

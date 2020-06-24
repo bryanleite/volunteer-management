@@ -17,7 +17,9 @@ public class SocialProjectRoute {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> save(@RequestBody SocialProject socialProject) {
-		return ResponseEntity.ok(socialProjectService.save(socialProject));
+		SocialProject socialProjectSaved = socialProjectService.save(socialProject);
+		socialProjectSaved.setInstitution(null);
+		return ResponseEntity.ok(socialProjectSaved);
 	}
 
 	@PutMapping(path="/{id}", produces = MediaType.APPLICATION_JSON)

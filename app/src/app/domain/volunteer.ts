@@ -10,6 +10,7 @@ export class Volunteer {
     occupation: string;
     description: string;
     volunteerSkills: Array<VolunteerSkill>;    
+    userId: number;
 
     // Dados para uso dentro do projeto corrente
     socialProjectVolunteerType: SocialProjectVolunteerType;

@@ -1,82 +1,111 @@
 <nz-layout>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate" [nzBreakpoint]="'lg'">
-    <div class="logo">
-      <img *ngIf="!isCollapsed" src="../../assets/img/menu-large-logo.png">
-      <img *ngIf="isCollapsed" src="../../assets/img/menu-small-logo.png">
-    </div>
-    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item (click)="router.navigate(['/home'])">
-        <span title>
-          <i nz-icon type="home" theme="outline"></i>
-          <span class="nav-text">{{ 'LAYOUT.HOME' | translate }}</span>
-        </span>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="setting" theme="outline"></i>
-          <span class="nav-text">{{ 'LAYOUT.SETTINGS' | translate}}</span>
-        </span>
-        <ul>
-          <li nz-menu-item (click)="router.navigate(['/admin-settings/profiles/list'])">
-            <i nz-icon type="profile" theme="outline"></i>
-            {{ 'LAYOUT.PROFILES' | translate }}
-          </li>
-          <li nz-menu-item (click)="router.navigate(['/admin-settings/users/list'])">
-            <i nz-icon type="user" theme="outline"></i>
-            {{ 'LAYOUT.USERS' | translate }}
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="setting" theme="outline"></i>
-          <span class="nav-text">{{ 'LAYOUT.PAGES' | translate}}</span>
-        </span>
-        <ul>
-          <li nz-menu-item (click)="router.navigate(['/pages/institutions/list'])">
-            <i nz-icon type="profile" theme="outline"></i>
-            {{ 'LAYOUT.INSTITUTIONS' | translate }}
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header style="background: #fff;">
-      <div class="wrap">
-        <i class="trigger" nz-icon type="menu-fold" theme="outline" *ngIf="!isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
-        <i class="trigger" nz-icon type="menu-unfold" theme="outline" *ngIf="isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
-        <ul class="menu">
-          <li>
-            <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomRight'">
-              <div class="item d-flex align-items-center px-sm ant-dropdown-trigger" nz-dropdown>
-                <nz-avatar nzIcon="anticon anticon-user" nzSrc="../../assets/img/nouser.png"></nz-avatar>
-                <span>{{ user.username }}</span>
-              </div>
-              <ul nz-menu>
-                <li nz-menu-item>
-                  <i nz-icon type="setting" theme="outline"></i>{{ 'LAYOUT.PREFERENCES' | translate }}</li>
-                <li nz-menu-divider></li>
-                <li nz-menu-item (click)="logout()">
-                  <i nz-icon type="logout" theme="outline"></i>{{ 'LAYOUT.QUIT' | translate }}</li>
-              </ul>
-            </nz-dropdown>
-          </li>
-        </ul>
-      </div>
-    </nz-header>
-    <nz-content style="margin:16px 16px;">
-      <router-outlet></router-outlet>
-    </nz-content>
-    <nz-footer class="layout-footer">
-      <a target="_blank" rel="noopener noreferrer" href="">
-        <img src="../../../assets/img/login-logo.png">
-      </a>
-      <span>Copyright &copy; Volunteer Management 2020. {{ 'SECURITY.LOGIN.ALL_RIGHTS_RESERVED' | translate }}
-      </span>
-    </nz-footer>
-  </nz-layout>
+	<nz-sider *ngIf="isAdmin()" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate"
+		[nzBreakpoint]="'lg'">
+		<div class="logo">
+			<img *ngIf="!isCollapsed" src="../../assets/img/menu-large-logo.png">
+			<img *ngIf="isCollapsed" src="../../assets/img/menu-small-logo.png">
+		</div>
+		<ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+			<li nz-menu-item (click)="router.navigate(['/home'])">
+				<span title>
+					<i nz-icon type="home" theme="outline"></i>
+					<span class="nav-text">{{ 'LAYOUT.HOME' | translate }}</span>
+				</span>
+			</li>
+			<li nz-submenu>
+				<span title>
+					<i nz-icon type="setting" theme="outline"></i>
+					<span class="nav-text">{{ 'LAYOUT.SETTINGS' | translate}}</span>
+				</span>
+				<ul>
+					<li nz-menu-item (click)="router.navigate(['/admin-settings/profiles/list'])">
+						<i nz-icon type="profile" theme="outline"></i>
+						{{ 'LAYOUT.PROFILES' | translate }}
+					</li>
+					<li nz-menu-item (click)="router.navigate(['/admin-settings/users/list'])">
+						<i nz-icon type="user" theme="outline"></i>
+						{{ 'LAYOUT.USERS' | translate }}
+					</li>
+				</ul>
+			</li>
+			<li nz-submenu>
+				<span title>
+					<i nz-icon type="setting" theme="outline"></i>
+					<span class="nav-text">{{ 'LAYOUT.PAGES' | translate}}</span>
+				</span>
+				<ul>
+					<li nz-menu-item (click)="router.navigate(['/pages/institutions/list'])">
+						<i nz-icon type="profile" theme="outline"></i>
+						{{ 'LAYOUT.INSTITUTIONS' | translate }}
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</nz-sider>
+	<nz-layout>
+		<nz-header style="background: #ff7851;">
+			<div class="wrap">
+				<i class="trigger" nz-icon type="menu-fold" theme="outline" *ngIf="isAdmin() && !isCollapsed"
+					(click)="isCollapsed=!isCollapsed"></i>
+				<i class="trigger" nz-icon type="menu-unfold" theme="outline" *ngIf="isAdmin() && isCollapsed"
+					(click)="isCollapsed=!isCollapsed"></i>
+				<div class="logo">
+					<img src="../../assets/img/logo-header.png">
+				</div>
+				<ul class="menu">
+					<li>
+						<a (click)="redirectTo('/pages/search-social-projects')">
+							<span class="nav-icon">
+								<i nz-icon type="search" theme="outline"></i>
+							</span>
+							<span class="nav-item-title">Buscar projetos</span>
+						</a>
+					</li>
+					<li>
+						<a (click)="redirectTo('/pages/my-social-projects')">
+							<span class="nav-icon">
+								<i nz-icon type="project" theme="fill"></i>
+							</span>
+							<span class="nav-item-title">Meus projetos</span>
+						</a>
+					</li>
+					<li>
+						<a>
+							<span class="nav-icon">
+								<i nz-icon type="bell" theme="fill"></i>
+							</span>
+							<span class="nav-item-title">Notificações</span>
+						</a>
+					</li>
+					<li id="nav-user-item">
+						<nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomRight'">
+							<div class="item d-flex align-items-center px-sm ant-dropdown-trigger" nz-dropdown>
+								<nz-avatar nzIcon="anticon anticon-user" nzSrc="../../assets/img/nouser.png">
+								</nz-avatar>
+								<span>{{ user.username }}</span>
+							</div>
+							<ul nz-menu>
+								<li nz-menu-item>
+									<i nz-icon type="setting" theme="outline"></i>{{ 'LAYOUT.PREFERENCES' | translate }}
+								</li>
+								<li nz-menu-divider></li>
+								<li nz-menu-item (click)="logout()">
+									<i nz-icon type="logout" theme="outline"></i>{{ 'LAYOUT.QUIT' | translate }}</li>
+							</ul>
+						</nz-dropdown>
+					</li>
+				</ul>
+			</div>
+		</nz-header>
+		<nz-content style="margin:16px 16px;">
+			<router-outlet></router-outlet>
+		</nz-content>
+		<nz-footer class="layout-footer">
+			<span>Copyright &copy; Volapp 2020. {{ 'SECURITY.LOGIN.ALL_RIGHTS_RESERVED' | translate }}
+			</span>
+		</nz-footer>
+	</nz-layout>
 </nz-layout>
 <ng-template #trigger>
-  <i nz-icon type="up" theme="outline"></i>
+	<i nz-icon type="up" theme="outline"></i>
 </ng-template>

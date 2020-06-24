@@ -15,4 +15,5 @@ public class SocialProjectVolunteerDTO {
 	private SocialProjectVolunteerType socialProjectVolunteerType;
 	private Long socialProjectVolunteerId;
 	private String description;
+	private Long userId;
 }
