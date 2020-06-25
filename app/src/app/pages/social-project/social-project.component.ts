@@ -52,12 +52,17 @@ export class SocialProjectComponent implements OnInit {
 			name: new FormControl(null, [Validators.required]),
 			description: new FormControl(null, [Validators.required]),
 			initialDate: new FormControl(null, [Validators.required]),
-			finalDate: new FormControl(null)
+			finalDate: new FormControl(null),
+			state: new FormControl(null, [Validators.required]),
+			city: new FormControl(null, [Validators.required]),
+			cep: new FormControl(null),
+			street: new FormControl(null),
+			number: new FormControl(null)
 		});
 		this.fgVs = new FormGroup({
 			formalName: new FormControl(null),
 			skill: new FormControl(null)
-		})
+		});
 	}
 
 	ngOnInit() {

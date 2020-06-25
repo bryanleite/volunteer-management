@@ -29,4 +29,8 @@ export class SocialProjectService {
 		});
 	}
 
+	getSocialProjectByFilters(state?: string, city?:string, institution?: string ): Observable<SocialProjectDTO[]> {
+		return this.http.get<SocialProjectDTO[]>(`${SocialProjectService.API}`);		
+	}
+
 }

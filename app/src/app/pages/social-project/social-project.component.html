@@ -105,6 +105,59 @@
 				</nz-form-item>
 			</div>
 		</div>
+		<nz-divider nzText="Endereço principal do projeto"></nz-divider>
+		<div nz-row nzGutter="16">
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<nz-form-item>
+					<nz-form-label nzRequired nzFor="state">Estado
+					</nz-form-label>
+					<nz-form-control>
+						<input nz-input formControlName="state" id="state" [readonly]="!isManager()">
+						<nz-form-explain *ngIf="fgSp.get('state').dirty && fgSp.get('state').errors">
+							O campo estado é inválido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<nz-form-item>
+					<nz-form-label nzRequired nzFor="state">Cidade
+					</nz-form-label>
+					<nz-form-control>
+						<input nz-input formControlName="city" id="city" [readonly]="!isManager()">
+						<nz-form-explain *ngIf="fgSp.get('city').dirty && fgSp.get('city').errors">
+							O campo cidade é inválido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+		<!-- </div>
+		<div nz-row nzGutter="16"> -->
+			<div nz-col [nzXs]="12" [nzSm]="6" [nzMd]="6" [nzLg]="3">
+				<nz-form-item>
+					<nz-form-label nzFor="cep">CEP</nz-form-label>
+					<nz-form-control>
+						<input nz-input formControlName="city" id="city" [readonly]="!isManager()">
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<nz-form-item>
+					<nz-form-label nzFor="street">Rua</nz-form-label>
+					<nz-form-control>
+						<input nz-input formControlName="street" id="street" [readonly]="!isManager()">
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div nz-col [nzXs]="12" [nzSm]="6" [nzMd]="6" [nzLg]="3">
+				<nz-form-item>
+					<nz-form-label nzFor="number">Número</nz-form-label>
+					<nz-form-control>
+						<input nz-input formControlName="number" id="number" [readonly]="!isManager()">
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+		</div>
 		<nz-divider *ngIf="isManager()"></nz-divider>
 		<button nz-button nzType="primary" *ngIf="isManager()" (click)="saveSp()"
 			[disabled]="fgSp.invalid">Salvar</button>

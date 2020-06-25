@@ -48,7 +48,10 @@ export class SignupComponent implements OnInit, OnDestroy {
 			formalName: new FormControl(null, [Validators.required]),
 			birthDate: new FormControl(null, [Validators.required]),
 			occupation: new FormControl(null),
-			description: new FormControl(null)
+			description: new FormControl(null),
+			state: new FormControl(null, [Validators.required]),
+			city: new FormControl(null, [Validators.required]),
+			cep: new FormControl(null, [Validators.required])
 		});
 		this.fgVolunteerSkills = this.fb.group({
 			values: this.fb.array([])

@@ -1,3 +1,42 @@
-<p>
-  social-project-search works!
-</p>
+<nz-card nzTitle="Buscar projetos sociais">
+	<form nz-form [formGroup]="fgSearch">
+		<div nz-row nzGutter="16">
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<label>Estado</label>
+				<input nz-input formControlName="state" />
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<label>Cidade</label>
+				<input nz-input formControlName="city" />
+			</div>
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<label>Instituição</label>
+				<nz-select formControlName="institution" nzPlaceHolder="Busque por uma instituição" nzAllowClear>
+				</nz-select>
+			</div>
+			<div>
+				<button style="margin-top: 20px;" nz-button nzType="primary" (click)="searchSocialProjects()">
+					<i nz-icon type="search"></i>Buscar
+				</button>
+			</div>
+		</div>
+	</form>
+	<nz-divider nzText="Resultados"></nz-divider>
+	<nz-list [nzDataSource]="socialProjects" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
+		<ng-template #item let-item>
+			<nz-list-item [nzContent]="item.description" [nzExtra]="extra">
+				<nz-list-item-meta
+					nzAvatar="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg"
+					[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
+					<ng-template #nzTitle>
+						<a (click)="edit(item.id)">{{item.name}}</a>
+					</ng-template>
+				</nz-list-item-meta>
+				<ng-template #extra>
+					<img width="272" alt="logo"
+						src="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg">
+				</ng-template>
+			</nz-list-item>
+		</ng-template>
+	</nz-list>
+</nz-card>

@@ -1,0 +1,18 @@
+<nz-drawer [nzVisible]="isVisible" [nzWidth]="640" [nzClosable]="true" (nzOnClose)="close()">
+	<div *ngIf="notifications">
+		<nz-divider nzText="Notificações"></nz-divider>
+		<nz-list [nzDataSource]="notifications" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
+			<ng-template #item let-item>
+				<nz-list-item [nzContent]="item.description">
+					<nz-list-item-meta [nzTitle]="nzTitle">
+						<ng-template #nzTitle>
+							<a (click)="redirectToNotification(item)">{{item.title}}</a>
+							&nbsp;-&nbsp;<span>{{ item.dateTime | date: 'dd/MM/yyyy hh:mm' }}</span>&nbsp;
+							<i *ngIf="!item.read" nz-icon type="info-circle" style="font-size: 20px; color: #fc6136" theme="outline"></i>
+						</ng-template>
+					</nz-list-item-meta>
+				</nz-list-item>
+			</ng-template>
+		</nz-list>
+	</div>
+</nz-drawer>

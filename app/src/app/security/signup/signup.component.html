@@ -84,7 +84,35 @@
 					<nz-form-control [nzSm]="14" [nzXs]="24">
 						<input nz-input formControlName="description" id="description" maxlength="255">
 					</nz-form-control>
-				</nz-form-item>						
+				</nz-form-item>
+				<nz-divider nzText="Endereço" ></nz-divider>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">Estado</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="state" id="state">
+						<nz-form-explain
+							*ngIf="fgVolunteer.get('state').dirty && fgVolunteer.get('state').errors">O estado é inválido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city">Cidade</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="city" id="city">
+						<nz-form-explain
+							*ngIf="fgVolunteer.get('city').dirty && fgVolunteer.get('city').errors">A cidade é inválida!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
+				<nz-form-item>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cep">CEP</nz-form-label>
+					<nz-form-control [nzSm]="14" [nzXs]="24">
+						<input nz-input formControlName="cep" id="cep">
+						<nz-form-explain
+							*ngIf="fgVolunteer.get('cep').dirty && fgVolunteer.get('cep').errors">O CEP é inválido!
+						</nz-form-explain>
+					</nz-form-control>
+				</nz-form-item>
 			</form>
 			<!-- Skills -->
 			<form nz-form [formGroup]="fgVolunteerSkills" *ngIf="fgVolunteerSkills && currentStep == 2">

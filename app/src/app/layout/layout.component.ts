@@ -5,6 +5,7 @@ import { User } from '../security/auth/user';
 import { StorageKeys } from '../shared/storage/storage-keys.enum';
 import { AuthService } from '../security/auth/auth.service';
 import { LayoutService } from './layout.service';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
 	selector: 'app-layout',
@@ -19,6 +20,9 @@ export class LayoutComponent implements OnInit {
 	public user: User;
 	public version: string;
 	private admin: boolean = false;
+
+	@ViewChild(NotificationsComponent)
+	private notificationsComponent: NotificationsComponent;
 
 	constructor(
 		public router: Router,
@@ -46,6 +50,10 @@ export class LayoutComponent implements OnInit {
 
 	redirectTo(route: string) {
 		this.router.navigate([route]);		
+	}
+
+	openNotifications() {
+		this.notificationsComponent.open();
 	}
 
 }

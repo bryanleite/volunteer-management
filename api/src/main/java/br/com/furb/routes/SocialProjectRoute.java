@@ -29,7 +29,9 @@ public class SocialProjectRoute {
 
 	@GetMapping
 	public ResponseEntity<?> findAll() {
-		return ResponseEntity.ok(socialProjectService.findAll());
+		//TODO
+		return findSocialProjectsByVolunteerId(1L);
+//		return ResponseEntity.ok(socialProjectService.findAll());
 	}
 
 	@GetMapping(path="/{id}")

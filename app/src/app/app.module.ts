@@ -22,9 +22,10 @@ import { PagesModule } from './pages/pages.module';
 
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NgZorroAntdModule, NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd';
-import { EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline, BellFill, ProjectFill } from '@ant-design/icons-angular/icons';
+import { EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline, BellFill, ProjectFill, InfoCircleOutline } from '@ant-design/icons-angular/icons';
+import { NotificationsComponent } from './notifications/notifications.component';
 
-const icons: IconDefinition[] = [ EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline, BellFill, ProjectFill ];
+const icons: IconDefinition[] = [ EditOutline, ProfileOutline, SettingOutline, HomeOutline, UserOutline, LogoutOutline, UpOutline, DeleteOutline, MenuFoldOutline, MenuUnfoldOutline, SearchOutline, BellFill, ProjectFill, InfoCircleOutline ];
 
 registerLocaleData(pt);
 
@@ -36,7 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LayoutComponent,
-    HomeComponent
+    HomeComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
