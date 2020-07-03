@@ -1,5 +1,5 @@
 <nz-layout>
-	<nz-sider *ngIf="isAdmin()" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate"
+	<!-- <nz-sider *ngIf="isAdmin()" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate"
 		[nzBreakpoint]="'lg'">
 		<div class="logo">
 			<img *ngIf="!isCollapsed" src="../../assets/img/menu-large-logo.png">
@@ -41,18 +41,26 @@
 				</ul>
 			</li>
 		</ul>
-	</nz-sider>
+	</nz-sider> -->
 	<nz-layout>
 		<nz-header style="background: #ff7851;">
 			<div class="wrap">
-				<i class="trigger" nz-icon type="menu-fold" theme="outline" *ngIf="isAdmin() && !isCollapsed"
+				<!-- <i class="trigger" nz-icon type="menu-fold" theme="outline" *ngIf="isAdmin() && !isCollapsed"
 					(click)="isCollapsed=!isCollapsed"></i>
 				<i class="trigger" nz-icon type="menu-unfold" theme="outline" *ngIf="isAdmin() && isCollapsed"
-					(click)="isCollapsed=!isCollapsed"></i>
+					(click)="isCollapsed=!isCollapsed"></i> -->
 				<div class="logo">
 					<img src="../../assets/img/logo-header.png">
 				</div>
 				<ul class="menu">
+					<li *ngIf="isAdmin()">
+						<a (click)="redirectTo('/pages/institutions/list')">
+							<span class="nav-icon">
+								<i nz-icon type="bank" theme="outline"></i>
+							</span>
+							<span class="nav-item-title">Instituições</span>
+						</a>
+					</li>
 					<li>
 						<a (click)="redirectTo('/pages/search-social-projects')">
 							<span class="nav-icon">
@@ -82,7 +90,6 @@
 							<div class="item d-flex align-items-center px-sm ant-dropdown-trigger" nz-dropdown>
 								<nz-avatar nzIcon="anticon anticon-user" nzSrc="../../assets/img/nouser.png">
 								</nz-avatar>
-								<span>{{ user.username }}</span>
 							</div>
 							<ul nz-menu>
 								<li nz-menu-item>

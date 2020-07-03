@@ -24,5 +24,6 @@ public class AuthenticationResponseDTO {
 	private List<GrantedAuthorirtyImpl> authorities;
 	private Institution institution;
 	private Volunteer volunteer;
+	private Boolean admin;
 
 }

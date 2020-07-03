@@ -1,5 +1,9 @@
 package br.com.furb.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +36,8 @@ public class Notification extends IdentityCommonObject{
 	@Column(name = "NOT_DESCRIPTION")
 	private String description;
 
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@Column(name = "NOT_DATETIME", nullable = false)
 	private LocalDateTime dateTime;
 

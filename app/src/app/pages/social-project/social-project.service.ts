@@ -29,8 +29,14 @@ export class SocialProjectService {
 		});
 	}
 
-	getSocialProjectByFilters(state?: string, city?:string, institution?: string ): Observable<SocialProjectDTO[]> {
-		return this.http.get<SocialProjectDTO[]>(`${SocialProjectService.API}`);		
+	getSocialProjectByFilters(state?: string, city?: string, institutionId?: number): Observable<SocialProjectDTO[]> {
+		let params = new HttpParams();
+		params = state ? params.set('state', state) : params;
+		params = city ? params.set('city', city) : params;
+		params = institutionId ? params.set('institutionId', institutionId.toString()) : params;
+		return this.http.get<SocialProjectDTO[]>(`${SocialProjectService.API}/by-filters`, {
+			params: params
+		});		
 	}
 
 }

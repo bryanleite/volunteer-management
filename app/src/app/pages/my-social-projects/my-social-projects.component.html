@@ -11,6 +11,7 @@
 						[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
 						<ng-template #nzTitle>
 							<a (click)="edit(item.id)">{{item.name}}</a>
+						 	- {{item.city}} ({{item.state}})
 							&nbsp;
 							<nz-tag
 								[nzColor]="getSocialProjectVolunteerTypeColor(item.socialProjectVolunteerType)">

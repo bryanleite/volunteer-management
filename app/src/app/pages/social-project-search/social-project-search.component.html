@@ -3,15 +3,20 @@
 		<div nz-row nzGutter="16">
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
 				<label>Estado</label>
-				<input nz-input formControlName="state" />
+				<nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado" nzAllowClear>
+					<nz-option *ngFor="let state of states" [nzValue]="state.sigla" [nzLabel]="state.nome"></nz-option>
+				</nz-select>
 			</div>
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
 				<label>Cidade</label>
-				<input nz-input formControlName="city" />
+				<nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade" nzAllowClear>
+					<nz-option *ngFor="let city of cities" [nzValue]="city.nome" [nzLabel]="city.nome"></nz-option>
+				</nz-select>
 			</div>
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
 				<label>Instituição</label>
-				<nz-select formControlName="institution" nzPlaceHolder="Busque por uma instituição" nzAllowClear>
+				<nz-select formControlName="institution" id="city" nzPlaceHolder="Selecione uma instituição" nzAllowClear>
+					<nz-option *ngFor="let institution of institutions" [nzValue]="institution" [nzLabel]="institution.name"></nz-option>
 				</nz-select>
 			</div>
 			<div>
@@ -30,6 +35,7 @@
 					[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
 					<ng-template #nzTitle>
 						<a (click)="edit(item.id)">{{item.name}}</a>
+						 - {{item.city}} ({{item.state}})
 					</ng-template>
 				</nz-list-item-meta>
 				<ng-template #extra>

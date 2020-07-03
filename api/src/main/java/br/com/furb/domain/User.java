@@ -20,6 +20,10 @@ import java.util.Set;
 public class User extends IdentityCommonObject{
 	private static final long serialVersionUID = 1L;
 
+	public User(Long id) {
+	    this.setId(id);
+    }
+
     @Column(name = "USU_NAME")
     private String username;
 

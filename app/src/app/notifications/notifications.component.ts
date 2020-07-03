@@ -37,6 +37,6 @@ export class NotificationsComponent implements OnInit {
 	redirectToNotification(notification: Notification) {
 		this.notificationsService.updateNotificationToRead(notification.id);
 		this.close();
-		this.router.navigate(["pages/" + notification.pageLink, { id: notification.queryParamId }]);
+		this.router.navigate([notification.pageLink, { id: notification.queryParamId }]);
 	}
 }

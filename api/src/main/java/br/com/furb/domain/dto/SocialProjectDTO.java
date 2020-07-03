@@ -19,6 +19,8 @@ public class SocialProjectDTO {
 	private String description;
 	private LocalDate initialDate;
 	private LocalDate finalDate;
+	private String state;
+	private String city;
 	private String institutionName;
 	private String institutionCity;
 	private SocialProjectVolunteerType socialProjectVolunteerType;

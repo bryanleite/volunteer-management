@@ -38,6 +38,7 @@ export class AuthService {
                     user.username = res['username'];
                     user.institution = res['institution'];
                     user.volunteer = res['volunteer'];
+                    user.admin = res['admin'];
                     this._storageService.setLocalItem(StorageKeys.USER_KEY, JSON.stringify(user));
                 }
                 return null;

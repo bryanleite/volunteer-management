@@ -29,6 +29,8 @@ public class SocialProjectService extends AbstractService<SocialProject> {
 					sp.getDescription(),
 					sp.getInitialDate(),
 					sp.getFinalDate(),
+					sp.getState(),
+					sp.getCity(),
 					sp.getInstitution().getName(),
 					sp.getInstitution().getCity(),
 					sp.getSocialProjectVolunteers().stream().filter(spv ->
@@ -36,6 +38,28 @@ public class SocialProjectService extends AbstractService<SocialProject> {
 						.findFirst()
 						.get()
 						.getSocialProjectVolunteerType())
+			).collect(Collectors.toList());
+		}
+
+		return socialProjectDTOS;
+	}
+
+	public List<SocialProjectDTO> findSocialProjectByFilters(String state, String city, Long institutionId) {
+		List<SocialProjectDTO> socialProjectDTOS = new ArrayList<>();
+		List<SocialProject> socialProjects = socialProjectRepository.findSocialProjectByFilters(state, city, institutionId);
+
+		if(!CollectionUtils.isEmpty(socialProjects)) {
+			socialProjectDTOS = socialProjects.stream().map(sp ->
+				new SocialProjectDTO(sp.getId(),
+					sp.getName(),
+					sp.getDescription(),
+					sp.getInitialDate(),
+					sp.getFinalDate(),
+					sp.getState(),
+					sp.getCity(),
+					sp.getInstitution().getName(),
+					sp.getInstitution().getCity(),
+					null)
 			).collect(Collectors.toList());
 		}
 

@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 		if (this.loginForm.valid) {
 			this._authService.login(this.loginForm.value).subscribe(
 				(res) => {
-					this._router.navigate(['/home']);
+					this._router.navigate(['/pages/search-social-projects']);
 				}, (e) => {
 					this.translate.get('SECURITY.LOGIN.INVALID_CREDENTIALS').subscribe(msg => {
 						this._messageService.error(msg);

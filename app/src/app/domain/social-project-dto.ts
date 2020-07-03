@@ -8,5 +8,7 @@ export class SocialProjectDTO {
 	finalDate: Date;
 	institutionName: string;
 	institutionCity: string;
+	state: string;
+	city: string;
 	socialProjectVolunteerType: SocialProjectVolunteerType;
 }

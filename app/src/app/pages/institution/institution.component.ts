@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Institution } from '../../domain/institution';
 import { InstitutionService } from './institution.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
+import { LocationService } from 'src/app/shared/locations/locations.service';
+import { State } from 'src/app/domain/state';
+import { City } from 'src/app/domain/city';
 
 @Component({
     selector: 'app-institution',
@@ -15,11 +18,15 @@ export class InstitutionComponent implements OnInit {
 
     public formGroup: FormGroup;
 
-    constructor(private builder: FormBuilder,
-                private _activatedRouter: ActivatedRoute,
-                private institutionService: InstitutionService,
+    public states: State[] = [];
+	public cities: City[] = [];
+
+    constructor(private institutionService: InstitutionService,
                 private _translateService: TranslateService,
-                private _messageService: NzMessageService) { 
+                private locationService: LocationService,
+                private _messageService: NzMessageService,
+                private activatedRouter: ActivatedRoute,
+				private router: Router) { 
 
         this.formGroup = new FormGroup({
             id: new FormControl(null,),
@@ -35,7 +42,8 @@ export class InstitutionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._activatedRouter.params.subscribe(p => {
+        this.getStates();
+        this.activatedRouter.params.subscribe(p => {
             if(p.id) {
                 this.institutionService.edit(p.id).subscribe((institution: Institution) => {
                     this.buildForm(institution);
@@ -67,12 +75,9 @@ export class InstitutionComponent implements OnInit {
 
     public delete() {
         const id = this.formGroup.get('id').value;
-        this.institutionService.delete(id).subscribe(success => {
-            if(success) {
-                this.showMessage('PAGES.INSTITUTION.SUCCESS_DELETE');
-            } else {
-                this.showMessage('PAGES.INSTITUTION.FAIL_DELETE');
-            }
+        this.institutionService.delete(id).subscribe(res => {
+            this.showMessage('PAGES.INSTITUTION.SUCCESS_DELETE');
+            this.router.navigate(['pages/institutions/list']);
         });
     }
 
@@ -80,5 +85,23 @@ export class InstitutionComponent implements OnInit {
         this._translateService.get(message).subscribe(msg => {
             this._messageService.success(msg);
         });
+    }
+
+    getStates() {
+		this.locationService.getAllStates().subscribe(states => {
+			this.states = states;
+			this.states.sort((a,b) => a.nome.localeCompare(b.nome));
+		});
+	}
+
+	onSelectState(uf: string) {
+		this.locationService.getCitiesByUF(uf).subscribe(cities => {
+			this.cities = cities;
+			this.cities.sort((a,b) => a.nome.localeCompare(b.nome));
+		});
+    }
+    
+    cancel() {
+        this.router.navigate(['pages/institutions/list']);
     }
 }

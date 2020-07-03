@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialProjectService } from '../social-project/social-project.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SocialProjectDTO } from 'src/app/domain/social-project-dto';
 import { City } from 'src/app/domain/city';
 import { State } from 'src/app/domain/state';
 import { LocationService } from 'src/app/shared/locations/locations.service';
+import { Institution } from 'src/app/domain/institution';
+import { InstitutionService } from '../institution/institution.service';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
 	selector: 'app-social-project-search',
@@ -18,9 +21,13 @@ export class SocialProjectSearchComponent implements OnInit {
 	public socialProjects: SocialProjectDTO[] = [];
 	public states: State[] = [];
 	public cities: City[] = [];
+	public institutions: Institution[];
 
 	constructor(private socialProjectService: SocialProjectService,
 				private locationService: LocationService,
+				private institutionService: InstitutionService,
+				private storageService: StorageService,
+				private route: ActivatedRoute,
 				private router: Router) {
 		this.fgSearch = new FormGroup({
 			state: new FormControl(null),
@@ -30,17 +37,39 @@ export class SocialProjectSearchComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getStates();
+		this.getInstitutions();
+		this.setStateAndCityByCurrentUser();
 		this.searchSocialProjects();
 	}
 	
+	edit(socialProjectId?: number) {
+		let params = [];
+		params.push('../social-projects');
+		if(socialProjectId) {
+			params.push({ id: socialProjectId });
+		}
+		
+		this.router.navigate(params, {relativeTo: this.route});
+	}
+
 	searchSocialProjects() {
-		this.socialProjectService.getSocialProjectByFilters().subscribe(socialProjects => {
+		const state = this.fgSearch.get('state').value;
+		const city = this.fgSearch.get('city').value;
+		const institutionId = this.fgSearch.get('institution').value ? this.fgSearch.get('institution').value.id : undefined;
+		this.socialProjectService.getSocialProjectByFilters(state, city, institutionId).subscribe(socialProjects => {
 			this.socialProjects = socialProjects;
 		});
 	}
 
 	getSubTitle(socialProjectDTO: SocialProjectDTO): string {
 		return socialProjectDTO.institutionName + " - " + socialProjectDTO.institutionCity;
+	}
+
+	getInstitutions() {
+		this.institutionService.getInstitutions().subscribe(institutions => {
+			this.institutions = institutions;
+		});
 	}
 
 	getStates() {
@@ -55,6 +84,15 @@ export class SocialProjectSearchComponent implements OnInit {
 			this.cities = cities;
 			this.cities.sort((a,b) => a.nome.localeCompare(b.nome));
 		});
+	}
+
+	setStateAndCityByCurrentUser() {
+		let user = JSON.parse(this.storageService.getUser());
+		if(user.volunteer && user.volunteer.state) {
+			this.fgSearch.get('state').setValue(user.volunteer.state);
+			this.fgSearch.get('city').setValue(user.volunteer.city);
+			this.onSelectState(user.volunteer.state);
+		}
 	}
 
 }

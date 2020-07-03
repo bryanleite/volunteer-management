@@ -162,9 +162,7 @@ export class SocialProjectComponent implements OnInit {
 			socialProject.name = this.fgSp.get('name') ? this.fgSp.get('name').value : undefined;
 			socialProject.description = this.fgSp.get('description') ? this.fgSp.get('description').value : undefined;
 			socialProject.initialDate = this.fgSp.get('initialDate') ? this.fgSp.get('initialDate').value : undefined;
-			socialProject.initialDate.setHours = null;
 			socialProject.finalDate = this.fgSp.get('finalDate') ? this.fgSp.get('finalDate').value : undefined;
-			socialProject.finalDate.setHours = null;
 			socialProject.state = this.fgSp.get('state') ? this.fgSp.get('state').value : undefined;
 			socialProject.city = this.fgSp.get('city') ? this.fgSp.get('city').value : undefined;
 			socialProject.cep = this.fgSp.get('cep') ? this.fgSp.get('cep').value : undefined;

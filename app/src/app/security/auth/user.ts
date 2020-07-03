@@ -14,4 +14,5 @@ export class User {
     active: boolean;
     institution: Institution;
     volunteer: Volunteer;
+    admin: boolean;
 }

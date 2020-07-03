@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 		" where usu.id = :userId ")
 	Optional<User> getUserWithInstitution(@Param("userId") Long userId);
 
+	@Query("select usu.id from User usu where usu.volunteer.id = :volunteerId")
+	Optional<Long> getUserIdByVolunteerId(@Param("volunteerId") Long volunteerId);
+
 }

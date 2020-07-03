@@ -43,7 +43,7 @@ public class AuthenticationService {
 		try {
 			Optional<User> user = userRepository.loadUserByLogin(username);
 			if(user.isPresent()) {
-				userSv = new UserSV(user.get().getLogin(), user.get().getPassword());
+				userSv = new UserSV(user.get().getLogin(), user.get().getPassword(), user.get().getAdmin());
 
 				List<ProfileType> profileTypes = profileRepository.getProfileTypesByLogin(username);
 				if(profileTypes != null && !CollectionUtils.isEmpty(profileTypes)) {

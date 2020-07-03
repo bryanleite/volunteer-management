@@ -29,16 +29,21 @@ private static final long serialVersionUID = 1L;
 	@Setter
 	private Volunteer volunteer;
 
+	@Getter
+	@Setter
+	private Boolean admin;
+
 	@Setter
 	private List<GrantedAuthorirtyImpl> grantedAuthorirties;
 	
 	public UserSV() {
 	}
 	
-	public UserSV(String username, String password) {
+	public UserSV(String username, String password, Boolean admin) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.admin = admin;
 	}
 
 	@Override

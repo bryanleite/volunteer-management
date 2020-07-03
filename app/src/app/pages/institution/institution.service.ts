@@ -23,7 +23,7 @@ export class InstitutionService {
     }
 
     delete(id: number): Observable<any> {
-        return this.http.post(`${InstitutionService.API}/delete/${id}`, {});
+        return this.http.get(`${InstitutionService.API}/delete/${id}`, {});
     }
 
     edit(id: number): Observable<Institution> {

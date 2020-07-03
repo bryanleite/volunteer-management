@@ -36,9 +36,9 @@ public class InstitutionRoute {
 		return ResponseEntity.ok(institutionService.findById(id));
 	}
 	
-	@PostMapping(path="/delete/{id}")
+	@GetMapping(path="/delete/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
 		institutionService.deleteById(id);
-		return ResponseEntity.ok(String.format("Instituição de id %d removido com sucesso!", id));
+		return ResponseEntity.ok(String.format("\"Instituição de id %d removido com sucesso!\"", id));
 	}
 }

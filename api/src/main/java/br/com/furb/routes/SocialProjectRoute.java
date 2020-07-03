@@ -29,9 +29,7 @@ public class SocialProjectRoute {
 
 	@GetMapping
 	public ResponseEntity<?> findAll() {
-		//TODO
-		return findSocialProjectsByVolunteerId(1L);
-//		return ResponseEntity.ok(socialProjectService.findAll());
+		return ResponseEntity.ok(socialProjectService.findAll());
 	}
 
 	@GetMapping(path="/{id}")
@@ -48,5 +46,12 @@ public class SocialProjectRoute {
 	@GetMapping("/by-volunteer")
 	public ResponseEntity<?> findSocialProjectsByVolunteerId(@RequestParam("volunteerId") Long volunteerId) {
 		return ResponseEntity.ok(socialProjectService.findSocialProjectsByVolunteerId(volunteerId));
+	}
+
+	@GetMapping("/by-filters")
+	public ResponseEntity<?> findSocialProjectByFilters(@RequestParam(value = "state", required = false) String state,
+	                                                    @RequestParam(value = "city", required = false) String city,
+	                                                    @RequestParam(value = "institutionId", required = false) Long institutionId) {
+		return ResponseEntity.ok(socialProjectService.findSocialProjectByFilters(state, city, institutionId));
 	}
 }

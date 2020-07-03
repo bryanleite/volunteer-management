@@ -17,21 +17,20 @@ export class LayoutComponent implements OnInit {
 	triggerTemplate = null;
 	@ViewChild('trigger') customTrigger: TemplateRef<void>;
 
-	public user: User;
+	public user: any;
 	public version: string;
-	private admin: boolean = false;
 
 	@ViewChild(NotificationsComponent)
 	private notificationsComponent: NotificationsComponent;
 
 	constructor(
 		public router: Router,
-		private _storageService: StorageService,
+		private storageService: StorageService,
 		private _authService: AuthService,
 		private _layoutService: LayoutService) { }
 
 	ngOnInit() {
-		this.user = JSON.parse(this._storageService.getLocalItem(StorageKeys.USER_KEY));
+		this.user = JSON.parse(this.storageService.getUser());
 		this.version = this._layoutService.getVersion();
 	}
 
@@ -45,7 +44,7 @@ export class LayoutComponent implements OnInit {
 	}
 
 	isAdmin(): boolean {
-		return this.admin;
+		return this.user.admin == true;
 	}
 
 	redirectTo(route: string) {

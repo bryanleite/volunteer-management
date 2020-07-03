@@ -82,7 +82,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			token,
 			(List<GrantedAuthorirtyImpl>) user.getAuthorities(),
 			user.getInstitution(),
-			user.getVolunteer()
+			user.getVolunteer(),
+			user.getAdmin()
 		);
 
 		return new JSONObject(response).toString();

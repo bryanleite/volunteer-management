@@ -15,6 +15,24 @@
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">Estado</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado">
+                    <nz-option *ngFor="let state of states" [nzValue]="state.sigla" [nzLabel]="state.nome"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="formGroup.get('state').dirty && formGroup.get('state').errors">O estado é inválido!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>        
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city">Cidade</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade">
+                    <nz-option *ngFor="let city of cities" [nzValue]="city.nome" [nzLabel]="city.nome"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="formGroup.get('city').dirty && formGroup.get('city').errors">A cidade é inválida!</nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cep">CEP</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="cep" id="cep">
@@ -42,22 +60,11 @@
                 <nz-form-explain *ngIf="formGroup.get('complement').dirty && formGroup.get('complement').errors">O complemento é inválido!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city">Cidade</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24">
-                <input nz-input formControlName="city" id="city">
-                <nz-form-explain *ngIf="formGroup.get('city').dirty && formGroup.get('city').errors">A cidade é inválida!</nz-form-explain>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">Estado</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24">
-                <input nz-input formControlName="state" id="state">
-                <nz-form-explain *ngIf="formGroup.get('state').dirty && formGroup.get('state').errors">O estado é inválido!</nz-form-explain>
-            </nz-form-control>
-        </nz-form-item>
         <nz-divider></nz-divider>
         <button nz-button nzType="primary" (click)="save()" [disabled]="formGroup.invalid">Salvar</button>
+        &nbsp;
         <button *ngIf="formGroup.get('id').value" nz-button nzType="danger" (click)="delete()">Excluir</button>
+        &nbsp;
+        <button nz-button nzType="danger" (click)="cancel()">Cancelar</button>
     </nz-card>
 </form>
