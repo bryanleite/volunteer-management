@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "npm run app-version && ng serve",
     "build": "npm run app-version && ng build",
+    "build-prd": "npm run app-version && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

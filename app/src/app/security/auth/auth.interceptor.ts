@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { StorageService } from "../../shared/storage/storage.service";
 import { HttpErrorHandler } from "../http/http-error.handler";
 import { tap } from 'rxjs/operators';
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

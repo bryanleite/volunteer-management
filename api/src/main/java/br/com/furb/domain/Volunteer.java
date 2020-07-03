@@ -40,6 +40,15 @@ public class Volunteer extends IdentityCommonObject {
 	@Column(name = "VOL_DESCRIPTION")
 	private String description;
 
+	@Column(name = "VOL_STATE")
+	private String state;
+
+	@Column(name = "VOL_CITY")
+	private String city;
+
+	@Column(name = "VOL_CEP")
+	private String cep;
+
 	@Lob
 	@Column(name = "VOL_PHOTO")
 	private byte[] photo;

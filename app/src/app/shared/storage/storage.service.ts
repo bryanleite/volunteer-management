@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { StorageKeys } from './storage-keys.enum';
-import { User } from 'src/app/security/auth/user';
-
 
 @Injectable({
 	providedIn: 'root'

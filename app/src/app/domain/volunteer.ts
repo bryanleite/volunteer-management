@@ -9,6 +9,10 @@ export class Volunteer {
     birthDate: Date;
     occupation: string;
     description: string;
+    state: string;
+    city: string;
+    cep: string;
+
     volunteerSkills: Array<VolunteerSkill>;    
     userId: number;
 

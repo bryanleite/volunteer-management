@@ -13,6 +13,9 @@ import { VolunteerService } from 'src/app/pages/volunteer/volunteer.service';
 import { AuthService } from '../auth/auth.service';
 import { Login } from '../login/login';
 import { Subscription, Observable } from 'rxjs';
+import { State } from 'src/app/domain/state';
+import { City } from 'src/app/domain/city';
+import { LocationService } from 'src/app/shared/locations/locations.service';
 
 @Component({
 	selector: 'app-signup',
@@ -25,6 +28,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 	public skills: Skill[] = [];
 	public currentStep: number = 0;
 
+	public states: State[] = [];
+	public cities: City[] = [];
+
 	public fgUser: FormGroup;
 	public fgVolunteer: FormGroup;
 	public fgVolunteerSkills: FormGroup;
@@ -36,7 +42,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 		private _skillService: SkillService,
 		private _userService: UsersService,
 		private _volunteerService: VolunteerService,
-		private _authService: AuthService) {
+		private _authService: AuthService,
+		private locationService: LocationService) {
 
 		this.fgUser = new FormGroup({
 			username: new FormControl(null, [Validators.required]),
@@ -63,6 +70,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 		this._obsTrans$ = this._skillService.findAll(true).subscribe((skills: Skill[]) => {
 			this.skills = skills;
 		});
+
+		this.getStates();
 	}
 
 	addVolunteerSkill() {
@@ -177,6 +186,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 			volunteer.birthDate = this.fgVolunteer.get('birthDate') ? this.fgVolunteer.get('birthDate').value : undefined;
 			volunteer.occupation = this.fgVolunteer.get('occupation') ? this.fgVolunteer.get('occupation').value : undefined;
 			volunteer.description = this.fgVolunteer.get('description') ? this.fgVolunteer.get('description').value : undefined;
+			volunteer.state = this.fgVolunteer.get('state') ? this.fgVolunteer.get('state').value.sigla : undefined;
+			volunteer.city = this.fgVolunteer.get('city') ? this.fgVolunteer.get('city').value.nome : undefined;
+			volunteer.cep = this.fgVolunteer.get('cep') ? this.fgVolunteer.get('cep').value : undefined;
 		}
 
 		volunteer.volunteerSkills = this.getVolunteerSkillsFromForm();
@@ -220,6 +232,19 @@ export class SignupComponent implements OnInit, OnDestroy {
 		return volunteerSkills;
 	}
 
+	getStates() {
+		this.locationService.getAllStates().subscribe(states => {
+			this.states = states;
+			this.states.sort((a,b) => a.nome.localeCompare(b.nome));
+		});
+	}
+
+	onSelectState(state: State) {
+		this.locationService.getCitiesByUF(state.sigla).subscribe(cities => {
+			this.cities = cities;
+			this.cities.sort((a,b) => a.nome.localeCompare(b.nome));
+		});
+	}
 	
 	ngOnDestroy(): void {
 		this._obsTrans$.unsubscribe();

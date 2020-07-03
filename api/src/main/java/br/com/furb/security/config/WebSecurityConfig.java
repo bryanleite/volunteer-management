@@ -32,10 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		"/eventsConsult/**",
 		"/h2/**",
 		"/favicon.ico",
-		"/app/**",
 		"/users/**",
 		"/volunteer/**",
-		"/skill/**"
+		"/skill/**",
+		"/app/**",
+		"/assets/**"
 	};
 	
 	@Override

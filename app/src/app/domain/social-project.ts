@@ -8,5 +8,10 @@ export class SocialProject {
     initialDate: Date;
     finalDate: Date;
     institution: Institution;
+    state: string;
+    city: string;
+    cep: string;
+    street: string;
+    number: number;
 
 }

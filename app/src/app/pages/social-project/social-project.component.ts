@@ -15,6 +15,9 @@ import { Skill } from 'src/app/domain/skill';
 import { SkillService } from '../volunteer/skill.service';
 import { VolunteerService } from '../volunteer/volunteer.service';
 import { UserInformationsComponent } from 'src/app/user-informations/user-informations.component';
+import { City } from 'src/app/domain/city';
+import { State } from 'src/app/domain/state';
+import { LocationService } from 'src/app/shared/locations/locations.service';
 
 @Component({
 	selector: 'app-social-project',
@@ -27,7 +30,7 @@ export class SocialProjectComponent implements OnInit {
 	
 	public institution: Institution;
 	private currentVolunteer: Volunteer;
-	private volunteers: Volunteer[];
+	public volunteers: Volunteer[];
 	public fgSp: FormGroup;
 	public fgVs: FormGroup;
 	public isModalVisible: boolean = false;
@@ -35,6 +38,9 @@ export class SocialProjectComponent implements OnInit {
 	public volunteersToInvite: Volunteer[];
 	@ViewChild(UserInformationsComponent)
 	private userInformations: UserInformationsComponent;
+
+	public states: State[] = [];
+	public cities: City[] = [];
 
 	constructor(private activatedRouter: ActivatedRoute,
 				private storageService: StorageService,
@@ -45,6 +51,7 @@ export class SocialProjectComponent implements OnInit {
 				private skillService: SkillService,
 				private volunteerService: VolunteerService,
 				private notification: NzNotificationService,
+				private locationService: LocationService,
 				private router: Router) { 
 
 		this.fgSp = new FormGroup({
@@ -84,6 +91,8 @@ export class SocialProjectComponent implements OnInit {
 		this.skillService.findAll(true).subscribe((skills: Skill[]) => {
 			this.skills = skills;
 		});
+
+		this.getStates();
 	}
 
 	private buildSocialProjectById(id: number) {
@@ -113,7 +122,10 @@ export class SocialProjectComponent implements OnInit {
             if(socialProject[control]) {
                 this.fgSp.get(control).setValue(socialProject[control]);
             }
-        });
+		});
+		if(socialProject.state) {
+			this.onSelectState(socialProject.state);
+		}
     }
 
 	saveSp() {
@@ -150,7 +162,14 @@ export class SocialProjectComponent implements OnInit {
 			socialProject.name = this.fgSp.get('name') ? this.fgSp.get('name').value : undefined;
 			socialProject.description = this.fgSp.get('description') ? this.fgSp.get('description').value : undefined;
 			socialProject.initialDate = this.fgSp.get('initialDate') ? this.fgSp.get('initialDate').value : undefined;
+			socialProject.initialDate.setHours = null;
 			socialProject.finalDate = this.fgSp.get('finalDate') ? this.fgSp.get('finalDate').value : undefined;
+			socialProject.finalDate.setHours = null;
+			socialProject.state = this.fgSp.get('state') ? this.fgSp.get('state').value : undefined;
+			socialProject.city = this.fgSp.get('city') ? this.fgSp.get('city').value : undefined;
+			socialProject.cep = this.fgSp.get('cep') ? this.fgSp.get('cep').value : undefined;
+			socialProject.street = this.fgSp.get('street') ? this.fgSp.get('street').value : undefined;
+			socialProject.number = this.fgSp.get('number') ? this.fgSp.get('number').value : undefined;
 			socialProject.institution = new Institution();
 			socialProject.institution.id = this.institution.id;
 		}
@@ -323,6 +342,20 @@ export class SocialProjectComponent implements OnInit {
 
 	hideModal() {
 		this.isModalVisible = false;
+	}
+
+	getStates() {
+		this.locationService.getAllStates().subscribe(states => {
+			this.states = states;
+			this.states.sort((a,b) => a.nome.localeCompare(b.nome));
+		});
+	}
+
+	onSelectState(uf: string) {
+		this.locationService.getCitiesByUF(uf).subscribe(cities => {
+			this.cities = cities;
+			this.cities.sort((a,b) => a.nome.localeCompare(b.nome));
+		});
 	}
 
 }

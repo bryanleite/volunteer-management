@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 })
 export class UserInformationsComponent implements OnInit {
 
-	private isVisible: boolean;
-	private isEditable: boolean;
-	private userInformations: UserInformationsDTO;
+	public isVisible: boolean;
+	public isEditable: boolean;
+	public userInformations: UserInformationsDTO;
 
 	constructor(private userInformationsService: UserInformationsService,
 				private router: Router) { }

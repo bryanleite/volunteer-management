@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class NotificationsComponent implements OnInit {
 
-	private isVisible: boolean = false;
-	private notifications: Notification[];
+	public isVisible: boolean = false;
+	public notifications: Notification[];
 
 	constructor(private notificationsService: NotificationsService,
 				private router: Router) { }
