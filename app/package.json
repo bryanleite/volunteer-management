@@ -26,6 +26,7 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "core-js": "^2.5.4",
     "less": "^2.7.2",
+    "moment": "^2.27.0",
     "ng-http-loader": "^3.0.0",
     "ng-zorro-antd": "^1.8.1",
     "rxjs": "^6.0.0",

@@ -66,7 +66,7 @@
 				<nz-form-item>
 					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="birthDate">Data de nascimento</nz-form-label>
 					<nz-form-control [nzSm]="14" [nzXs]="24">
-						<nz-date-picker formControlName="birthDate" id="birthDate"></nz-date-picker>
+						<nz-date-picker nzFormat="dd/MM/yyyy" formControlName="birthDate" id="birthDate"></nz-date-picker>
 						<nz-form-explain
 							*ngIf="fgVolunteer.get('birthDate').dirty && fgVolunteer.get('birthDate').errors">A
 							data de nascimento é inválida!
@@ -89,7 +89,7 @@
 				<nz-form-item>
 					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">Estado</nz-form-label>
 					<nz-form-control [nzSm]="14" [nzXs]="24">
-						<nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado">
+						<nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado" nzShowSearch>
 							<nz-option *ngFor="let state of states" [nzValue]="state" [nzLabel]="state.nome"></nz-option>
 						</nz-select>
 						<nz-form-explain
@@ -100,7 +100,7 @@
 				<nz-form-item>
 					<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city">Cidade</nz-form-label>
 					<nz-form-control [nzSm]="14" [nzXs]="24">
-						<nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade">
+						<nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade" nzShowSearch>
 							<nz-option *ngFor="let city of cities" [nzValue]="city" [nzLabel]="city.nome"></nz-option>
 						</nz-select>
 						<nz-form-explain

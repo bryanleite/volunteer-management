@@ -1,12 +1,15 @@
 package br.com.furb.routes;
 
 import br.com.furb.domain.SocialProject;
+import br.com.furb.security.authentication.UserSV;
 import br.com.furb.service.SocialProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.MediaType;
+import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/social-project")
@@ -43,15 +46,24 @@ public class SocialProjectRoute {
 		return ResponseEntity.ok(String.format("Projeto social de id %d removido com sucesso!", id));
 	}
 
-	@GetMapping("/by-volunteer")
-	public ResponseEntity<?> findSocialProjectsByVolunteerId(@RequestParam("volunteerId") Long volunteerId) {
-		return ResponseEntity.ok(socialProjectService.findSocialProjectsByVolunteerId(volunteerId));
+	@GetMapping("/my")
+	public ResponseEntity<?> findSocialProjectsByVolunteerId(Principal principal) {
+		UserSV user = (UserSV) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+
+		if(user != null && user.getVolunteer() != null && user.getVolunteer().getId() != null) {
+			return ResponseEntity.ok(socialProjectService.findSocialProjectsByVolunteerId(user.getVolunteer().getId()));
+		}
+		return ResponseEntity.ok(null);
 	}
 
 	@GetMapping("/by-filters")
-	public ResponseEntity<?> findSocialProjectByFilters(@RequestParam(value = "state", required = false) String state,
-	                                                    @RequestParam(value = "city", required = false) String city,
-	                                                    @RequestParam(value = "institutionId", required = false) Long institutionId) {
-		return ResponseEntity.ok(socialProjectService.findSocialProjectByFilters(state, city, institutionId));
+	public ResponseEntity<?> findSocialProjectByFilters(Principal principal,
+														@RequestParam(value = "state", required = false) String state,
+														@RequestParam(value = "city", required = false) String city,
+														@RequestParam(value = "institutionId", required = false) Long institutionId) {
+
+		UserSV user = (UserSV) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+		Long volunteerId = user != null && user.getVolunteer() != null ? user.getVolunteer().getId() : null ;
+		return ResponseEntity.ok(socialProjectService.findSocialProjectByFilters(state, city, institutionId, volunteerId));
 	}
 }

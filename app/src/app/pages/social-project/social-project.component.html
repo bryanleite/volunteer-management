@@ -1,3 +1,8 @@
+<nz-breadcrumb>
+	<nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+	<nz-breadcrumb-item><a [routerLink]="[getBeforePage()]">{{ getBeforePageName() }}</a></nz-breadcrumb-item>
+	<nz-breadcrumb-item>Projeto social</nz-breadcrumb-item>
+</nz-breadcrumb>
 <div *ngIf="isInvited()">
 	<label>Você está há um passo de apoiar em uma causa social!</label>
 	<div nz-row nzGutter="8">
@@ -111,7 +116,7 @@
 				<nz-form-item>
 					<nz-form-label nzRequired nzFor="state">Estado</nz-form-label>
 					<nz-form-control>
-						<nz-select [nzDisabled]="!isManager()" formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado">
+						<nz-select [nzDisabled]="!isManager()" formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado" nzShowSearch>
 							<nz-option *ngFor="let state of states" [nzValue]="state.sigla" [nzLabel]="state.nome"></nz-option>
 						</nz-select>
 						<nz-form-explain *ngIf="fgSp.get('state').dirty && fgSp.get('state').errors">O campo estado é inválido!
@@ -123,7 +128,7 @@
 				<nz-form-item>
 					<nz-form-label nzRequired nzFor="city">Cidade</nz-form-label>
 					<nz-form-control>
-						<nz-select [nzDisabled]="!isManager()" formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade">
+						<nz-select [nzDisabled]="!isManager()" formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade" nzShowSearch>
 							<nz-option *ngFor="let city of cities" [nzValue]="city.nome" [nzLabel]="city.nome"></nz-option>
 						</nz-select>
 						<nz-form-explain *ngIf="fgSp.get('city').dirty && fgSp.get('city').errors">O campo cidade é inválido!

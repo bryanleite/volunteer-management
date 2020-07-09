@@ -1,8 +1,7 @@
-<div *ngIf="route.children.length === 0">
+<div *ngIf="route.children.length === 0"> 
     <nz-breadcrumb>
       <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
-      <nz-breadcrumb-item>{{ 'PAGES.TITLE' | translate }}</nz-breadcrumb-item>
-      <nz-breadcrumb-item>{{ 'PAGES.INSTITUTION.TITLE' | translate }}</nz-breadcrumb-item>
+      <nz-breadcrumb-item>Buscar instituições</nz-breadcrumb-item>
     </nz-breadcrumb>
   
     <nz-card [nzTitle]="'PAGES.INSTITUTION.REGISTERED_INSTITUTIONS' | translate">

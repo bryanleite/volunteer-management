@@ -17,8 +17,10 @@ public interface SocialProjectRepository extends JpaRepository<SocialProject, Lo
 	List<SocialProject> findSocialProjectsByVolunteerId(@Param("volunteerId") Long volunteerId);
 
 	@Query("select sp from SocialProject sp " +
-		   "where (:state is null or sp.state = :state) and " +
+		   " inner join sp.socialProjectVolunteers spv " +
+		   " where (:state is null or sp.state = :state) and " +
 		   "      (:city is null or sp.city = :city) and " +
-		   "      (:institutionId is null or sp.institution.id = :institutionId) ")
+		   "      (:institutionId is null or sp.institution.id = :institutionId) " +
+		   " group by sp ")
 	List<SocialProject> findSocialProjectByFilters(@Param("state") String state, @Param("city") String city, @Param("institutionId") Long institutionId);
 }

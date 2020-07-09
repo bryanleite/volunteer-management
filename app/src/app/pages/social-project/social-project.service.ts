@@ -22,11 +22,8 @@ export class SocialProjectService {
         return this.http.get<SocialProject>(`${SocialProjectService.API}/${id}`);
 	}
 
-	getMySocialProjects(volunteerId: number): Observable<SocialProjectDTO[]> {
-		let params = new HttpParams().set("volunteerId", volunteerId.toString());
-		return this.http.get<SocialProjectDTO[]>(`${SocialProjectService.API}/by-volunteer`, {
-			params: params
-		});
+	getMySocialProjects(): Observable<SocialProjectDTO[]> {
+		return this.http.get<SocialProjectDTO[]>(`${SocialProjectService.API}/my`);
 	}
 
 	getSocialProjectByFilters(state?: string, city?: string, institutionId?: number): Observable<SocialProjectDTO[]> {

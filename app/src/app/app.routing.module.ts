@@ -12,7 +12,7 @@ import { PagesModule } from './pages/pages.module';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/pages/search-social-projects',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   {

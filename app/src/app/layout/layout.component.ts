@@ -1,11 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '../shared/storage/storage.service';
-import { User } from '../security/auth/user';
-import { StorageKeys } from '../shared/storage/storage-keys.enum';
 import { AuthService } from '../security/auth/auth.service';
 import { LayoutService } from './layout.service';
 import { NotificationsComponent } from '../notifications/notifications.component';
+import { UserInformationsComponent } from '../user-informations/user-informations.component';
 
 @Component({
 	selector: 'app-layout',
@@ -22,6 +21,9 @@ export class LayoutComponent implements OnInit {
 
 	@ViewChild(NotificationsComponent)
 	private notificationsComponent: NotificationsComponent;
+
+	@ViewChild(UserInformationsComponent)
+	private userInformations: UserInformationsComponent;
 
 	constructor(
 		public router: Router,
@@ -53,6 +55,10 @@ export class LayoutComponent implements OnInit {
 
 	openNotifications() {
 		this.notificationsComponent.open();
+	}
+
+	openUserInformations() {
+		this.userInformations.loadUserAndOpen(this.user.id, false);
 	}
 
 }

@@ -9,6 +9,9 @@ import { LocationService } from 'src/app/shared/locations/locations.service';
 import { Institution } from 'src/app/domain/institution';
 import { InstitutionService } from '../institution/institution.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { SocialProjectVolunteerType } from 'src/app/domain/socialProjectVolunteerType';
+
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-social-project-search',
@@ -47,7 +50,7 @@ export class SocialProjectSearchComponent implements OnInit {
 		let params = [];
 		params.push('../social-projects');
 		if(socialProjectId) {
-			params.push({ id: socialProjectId });
+			params.push({ id: socialProjectId, beforePage: 's' });
 		}
 		
 		this.router.navigate(params, {relativeTo: this.route});
@@ -95,4 +98,11 @@ export class SocialProjectSearchComponent implements OnInit {
 		}
 	}
 
+	getSocialProjectVolunteerTypeName(socialProjectVolunteerType: SocialProjectVolunteerType): string {
+		return SocialProjectVolunteerType.getSocialProjectVolunteerTypeName(socialProjectVolunteerType);
+	}
+
+	getSocialProjectVolunteerTypeColor(socialProjectVolunteerType: SocialProjectVolunteerType): string {
+		return SocialProjectVolunteerType.getSocialProjectVolunteerTypeColor(socialProjectVolunteerType);
+	}
 }

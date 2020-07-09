@@ -37,6 +37,15 @@
 			<!-- <div class="item-wrap" *ngFor="volunteerSkill of userInformations.volunteer.volunteerSkills">
 				<p>{{ volunteerSkill.skill.skillName }}</p>
 			</div> -->
+			<nz-list [nzDataSource]="userInformations.volunteer.volunteerSkills" [nzRenderItem]="item" [nzGrid]="{gutter: 8, span: 12}">
+				<ng-template #item let-item>
+					<nz-list-item [nzContent]="nzContent">
+					<ng-template #nzContent>
+						<span>{{ item.skill.skillName }}</span>
+					</ng-template>
+					</nz-list-item>
+				</ng-template>
+			</nz-list>
 		</div>
 		<div *ngIf="userInformations.institution">
 			<nz-divider nzText="Instituição"></nz-divider>
@@ -81,7 +90,7 @@
 			<nz-divider nzText="Projetos sociais"></nz-divider>
 			<nz-list [nzDataSource]="userInformations.socialProjects" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
 				<ng-template #item let-item>
-					<nz-list-item [nzContent]="item.description" [nzActions]="[more]">
+					<nz-list-item [nzActions]="[more]">
 						<nz-list-item-meta
 							nzAvatar="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg"
 							[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">

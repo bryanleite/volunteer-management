@@ -1,3 +1,8 @@
+<nz-breadcrumb>
+	<nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+	<nz-breadcrumb-item>Meus projetos</nz-breadcrumb-item>
+</nz-breadcrumb>
+
 <div *ngIf="isManager">
 	<button nz-button nzType="primary" (click)="edit()">Iniciar novo projeto social</button>
 	<br>
@@ -6,12 +11,13 @@
 	<nz-card nzTitle="Meus projetos sociais">
 		<nz-list [nzDataSource]="socialProjects" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
 			<ng-template #item let-item>
-				<nz-list-item [nzContent]="item.description" [nzExtra]="extra">
+				<nz-list-item [nzContent]="item.description" [nzExtra]="extra" [nzActions]="[initialDate]">
 					<nz-list-item-meta nzAvatar="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg" 
 						[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
 						<ng-template #nzTitle>
-							<a (click)="edit(item.id)">{{item.name}}</a>
-						 	- {{item.city}} ({{item.state}})
+							<a (click)="edit(item.id)">{{item.name}}
+							 - {{item.city}} ({{item.state}})
+							</a>
 							&nbsp;
 							<nz-tag
 								[nzColor]="getSocialProjectVolunteerTypeColor(item.socialProjectVolunteerType)">
@@ -19,6 +25,10 @@
 							</nz-tag>
 						</ng-template>
 					</nz-list-item-meta>
+					<ng-template #initialDate>
+						<span>{{ item.initialDate | date: 'dd/MM/yyyy' }}</span>
+						<span *ngIf="item.finalDate"> - {{ item.finalDate | date: 'dd/MM/yyyy' }}</span>
+					</ng-template>
 					<ng-template #extra>
 						<img width="272" alt="logo" src="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg">
 					</ng-template>

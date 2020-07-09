@@ -50,7 +50,7 @@
 				<i class="trigger" nz-icon type="menu-unfold" theme="outline" *ngIf="isAdmin() && isCollapsed"
 					(click)="isCollapsed=!isCollapsed"></i> -->
 				<div class="logo">
-					<img src="../../assets/img/logo-header.png">
+					<a (click)="redirectTo('/home')"><img src="../../assets/img/logo-header.png"></a>
 				</div>
 				<ul class="menu">
 					<li *ngIf="isAdmin()">
@@ -92,7 +92,7 @@
 								</nz-avatar>
 							</div>
 							<ul nz-menu>
-								<li nz-menu-item>
+								<li nz-menu-item (click)="openUserInformations()">
 									<i nz-icon type="setting" theme="outline"></i>{{ 'LAYOUT.PREFERENCES' | translate }}
 								</li>
 								<li nz-menu-divider></li>
@@ -117,3 +117,4 @@
 	<i nz-icon type="up" theme="outline"></i>
 </ng-template>
 <app-notifications></app-notifications>
+<user-informations></user-informations>

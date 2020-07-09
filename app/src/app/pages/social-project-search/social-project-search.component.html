@@ -1,21 +1,25 @@
+<nz-breadcrumb>
+	<nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
+	<nz-breadcrumb-item>Buscar projetos</nz-breadcrumb-item>
+</nz-breadcrumb>
 <nz-card nzTitle="Buscar projetos sociais">
 	<form nz-form [formGroup]="fgSearch">
 		<div nz-row nzGutter="16">
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
 				<label>Estado</label>
-				<nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado" nzAllowClear>
+				<nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado" nzAllowClear nzShowSearch>
 					<nz-option *ngFor="let state of states" [nzValue]="state.sigla" [nzLabel]="state.nome"></nz-option>
 				</nz-select>
 			</div>
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
 				<label>Cidade</label>
-				<nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade" nzAllowClear>
+				<nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade" nzAllowClear nzShowSearch>
 					<nz-option *ngFor="let city of cities" [nzValue]="city.nome" [nzLabel]="city.nome"></nz-option>
 				</nz-select>
 			</div>
 			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
 				<label>Instituição</label>
-				<nz-select formControlName="institution" id="city" nzPlaceHolder="Selecione uma instituição" nzAllowClear>
+				<nz-select formControlName="institution" id="city" nzPlaceHolder="Selecione uma instituição" nzAllowClear nzShowSearch>
 					<nz-option *ngFor="let institution of institutions" [nzValue]="institution" [nzLabel]="institution.name"></nz-option>
 				</nz-select>
 			</div>
@@ -29,15 +33,25 @@
 	<nz-divider nzText="Resultados"></nz-divider>
 	<nz-list [nzDataSource]="socialProjects" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
 		<ng-template #item let-item>
-			<nz-list-item [nzContent]="item.description" [nzExtra]="extra">
+			<nz-list-item [nzContent]="item.description" [nzExtra]="extra" [nzActions]="[initialDate]">
 				<nz-list-item-meta
 					nzAvatar="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg"
 					[nzTitle]="nzTitle" [nzDescription]="getSubTitle(item)">
 					<ng-template #nzTitle>
-						<a (click)="edit(item.id)">{{item.name}}</a>
+						<a (click)="edit(item.id)">{{item.name}}
 						 - {{item.city}} ({{item.state}})
+						</a>
+						&nbsp;
+						<nz-tag *ngIf="item.socialProjectVolunteerType"
+							[nzColor]="getSocialProjectVolunteerTypeColor(item.socialProjectVolunteerType)">
+							{{getSocialProjectVolunteerTypeName(item.socialProjectVolunteerType)}}
+						</nz-tag>
 					</ng-template>
 				</nz-list-item-meta>
+				<ng-template #initialDate>
+					<span>{{ item.initialDate | date: 'dd/MM/yyyy' }}</span>
+					<span *ngIf="item.finalDate"> - {{ item.finalDate | date: 'dd/MM/yyyy' }}</span>
+				</ng-template>
 				<ng-template #extra>
 					<img width="272" alt="logo"
 						src="https://png.pngtree.com/png-vector/20190615/ourlarge/pngtree-bankinstitutionmoneyireland-abstract-circle-background-fla-png-image_1484516.jpg">

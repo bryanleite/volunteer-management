@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InstitutionComponent } from './institution/institution.component';
 import { InstitutionListComponent } from './institution/institution-list/institution-list.component';
@@ -9,13 +9,14 @@ import { VolunteerComponent } from './volunteer/volunteer.component';
 import { SocialProjectComponent } from './social-project/social-project.component';
 import { MySocialProjectsComponent } from './my-social-projects/my-social-projects.component';
 import { SocialProjectSearchComponent } from './social-project-search/social-project-search.component';
-import { UserInformationsComponent } from '../user-informations/user-informations.component';
+import { UserInformationsModule } from '../user-informations/user-informations.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SecurityModule,
     SharedModule,
+    UserInformationsModule,
     PagesRoutingModule
   ],
   declarations: [
@@ -24,8 +25,7 @@ import { UserInformationsComponent } from '../user-informations/user-information
     VolunteerComponent,
     SocialProjectComponent,
     MySocialProjectsComponent,
-    SocialProjectSearchComponent,
-    UserInformationsComponent
+    SocialProjectSearchComponent
   ]
 })
 export class PagesModule { }

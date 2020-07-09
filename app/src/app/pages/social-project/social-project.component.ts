@@ -37,10 +37,12 @@ export class SocialProjectComponent implements OnInit {
 	public skills: Skill[] = [];
 	public volunteersToInvite: Volunteer[];
 	@ViewChild(UserInformationsComponent)
-	private userInformations: UserInformationsComponent;
+	private userInformations: UserInformationsComponent; 
 
 	public states: State[] = [];
 	public cities: City[] = [];
+
+	private beforePage: string;
 
 	constructor(private activatedRouter: ActivatedRoute,
 				private storageService: StorageService,
@@ -86,6 +88,8 @@ export class SocialProjectComponent implements OnInit {
 					this.router.navigate(['/my']);
 				}
 			}
+
+			this.beforePage = p.beforePage;
 		});
 
 		this.skillService.findAll(true).subscribe((skills: Skill[]) => {
@@ -198,6 +202,7 @@ export class SocialProjectComponent implements OnInit {
 			const volunteer: Volunteer = this.volunteers.find(v => v.id == this.currentVolunteer.id);
 			if(volunteer) {
 				this.removeVolunteer(volunteer);
+				this.socialProjectVolunteerType = SocialProjectVolunteerType.NO_VOLUNTEER;
 			}
 		}
 	}
@@ -354,6 +359,14 @@ export class SocialProjectComponent implements OnInit {
 			this.cities = cities;
 			this.cities.sort((a,b) => a.nome.localeCompare(b.nome));
 		});
+	}
+
+	getBeforePageName(): string {
+		return this.beforePage && this.beforePage == 'm' ? 'Meus projetos' : 'Buscar projetos';
+	}
+
+	getBeforePage(): string {
+		return this.beforePage && this.beforePage == 'm' ? '/pages/my-social-projects' : '/pages/search-social-projects';
 	}
 
 }

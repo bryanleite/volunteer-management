@@ -1,6 +1,8 @@
 package br.com.furb.service;
 
 import br.com.furb.domain.SocialProject;
+import br.com.furb.domain.SocialProjectVolunteer;
+import br.com.furb.domain.SocialProjectVolunteerType;
 import br.com.furb.domain.dto.SocialProjectDTO;
 import br.com.furb.repository.SocialProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,8 +23,15 @@ public class SocialProjectService extends AbstractService<SocialProject> {
 	private SocialProjectRepository socialProjectRepository;
 
 	public List<SocialProjectDTO> findSocialProjectsByVolunteerId(Long volunteerId) {
+		return mapToSocialProjectDTO(socialProjectRepository.findSocialProjectsByVolunteerId(volunteerId), volunteerId);
+	}
+
+	public List<SocialProjectDTO> findSocialProjectByFilters(String state, String city, Long institutionId, Long currentVolunteerId) {
+		return mapToSocialProjectDTO(socialProjectRepository.findSocialProjectByFilters(state, city, institutionId), currentVolunteerId);
+	}
+
+	private List<SocialProjectDTO> mapToSocialProjectDTO(List<SocialProject> socialProjects, Long volunteerId) {
 		List<SocialProjectDTO> socialProjectDTOS = new ArrayList<>();
-		List<SocialProject> socialProjects = socialProjectRepository.findSocialProjectsByVolunteerId(volunteerId);
 
 		if(!CollectionUtils.isEmpty(socialProjects)) {
 			socialProjectDTOS = socialProjects.stream().map(sp ->
@@ -33,37 +44,24 @@ public class SocialProjectService extends AbstractService<SocialProject> {
 					sp.getCity(),
 					sp.getInstitution().getName(),
 					sp.getInstitution().getCity(),
-					sp.getSocialProjectVolunteers().stream().filter(spv ->
-						volunteerId.equals(spv.getVolunteer().getId()))
-						.findFirst()
-						.get()
-						.getSocialProjectVolunteerType())
+					getSocialProjectVolunteerType(sp.getSocialProjectVolunteers(), volunteerId))
 			).collect(Collectors.toList());
 		}
 
+		Collections.sort(socialProjectDTOS);
 		return socialProjectDTOS;
 	}
 
-	public List<SocialProjectDTO> findSocialProjectByFilters(String state, String city, Long institutionId) {
-		List<SocialProjectDTO> socialProjectDTOS = new ArrayList<>();
-		List<SocialProject> socialProjects = socialProjectRepository.findSocialProjectByFilters(state, city, institutionId);
-
-		if(!CollectionUtils.isEmpty(socialProjects)) {
-			socialProjectDTOS = socialProjects.stream().map(sp ->
-				new SocialProjectDTO(sp.getId(),
-					sp.getName(),
-					sp.getDescription(),
-					sp.getInitialDate(),
-					sp.getFinalDate(),
-					sp.getState(),
-					sp.getCity(),
-					sp.getInstitution().getName(),
-					sp.getInstitution().getCity(),
-					null)
-			).collect(Collectors.toList());
+	private SocialProjectVolunteerType getSocialProjectVolunteerType(Set<SocialProjectVolunteer> socialProjectVolunteers, Long currentVolunteerId) {
+		SocialProjectVolunteerType socialProjectVolunteerType = null;
+		if(currentVolunteerId != null) {
+			socialProjectVolunteerType = socialProjectVolunteers.stream().filter(spv ->
+				currentVolunteerId.equals(spv.getVolunteer().getId()))
+				.findFirst()
+				.map(SocialProjectVolunteer::getSocialProjectVolunteerType).orElse(null);
 		}
 
-		return socialProjectDTOS;
+		return socialProjectVolunteerType;
 	}
 
 	@Override

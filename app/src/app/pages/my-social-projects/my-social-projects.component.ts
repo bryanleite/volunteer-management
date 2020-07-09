@@ -27,7 +27,7 @@ export class MySocialProjectsComponent implements OnInit {
 		this.currentVolunteer = user.volunteer;
 		this.isManager = user.institution && user.institution.id;
 		if (this.currentVolunteer && this.currentVolunteer.id) {
-			this.socialProjectService.getMySocialProjects(this.currentVolunteer.id).subscribe(res => {
+			this.socialProjectService.getMySocialProjects().subscribe(res => {
 				if (res) {
 					this.socialProjects = res;
 				}
@@ -39,7 +39,7 @@ export class MySocialProjectsComponent implements OnInit {
 		let params = [];
 		params.push('../social-projects');
 		if(socialProjectId) {
-			params.push({ id: socialProjectId });
+			params.push({ id: socialProjectId, beforePage: 'm' });
 		}
 		
 		this.router.navigate(params, {relativeTo: this.route});
