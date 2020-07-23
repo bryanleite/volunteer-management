@@ -1,16 +1,23 @@
 package br.com.furb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TB_INSTITUTION")
 public class Institution extends IdentityCommonObject{
 	private static final long serialVersionUID = 1L;
+
+	public Institution(Long id) {
+		setId(id);
+	}
 
 	@Column(name = "INT_NAME")
 	private String name;

@@ -27,4 +27,16 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 			" group by vol ")
 	List<Volunteer> getVolunteersToInvite(@Param("skillId") Long skillId, @Param("formalName") String formalName, @Param("socialProjectId") Long socialProjectId);
 
+	@Query(" select vol from Volunteer vol " +
+			" inner join vol.user usu " +
+			" where usu.institution.id = :institutionId ")
+	List<Volunteer> getVolunteersByInstitutionId(@Param("institutionId") Long institutionId);
+
+	@Query("select vol" +
+		" from Volunteer vol" +
+		" inner join vol.user usu " +
+		" where usu.institution is null and " +
+		"       (:formalName is null or lower(vol.formalName) like lower(concat('%', :formalName, '%')))")
+	List<Volunteer> getVolunteersByName(@Param("formalName") String formalName);
+
 }

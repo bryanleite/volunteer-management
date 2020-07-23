@@ -19,9 +19,20 @@ public class VolunteerService extends AbstractService<Volunteer> {
 	private VolunteerRepository volunteerRepository;
 
 	public List<SocialProjectVolunteerDTO> getVolunteersToInvite(Long skillId, String formalName, Long socialProjectId) {
-		List<SocialProjectVolunteerDTO> socialProjectVolunteers = new ArrayList<>();
-		List<Volunteer> volunteers = volunteerRepository.getVolunteersToInvite(skillId, formalName, socialProjectId);
 
+		return mapToSocialProjectVolunteerDTO(volunteerRepository.getVolunteersToInvite(skillId, formalName, socialProjectId));
+	}
+
+	public List<SocialProjectVolunteerDTO> getVolunteersByInstitutionId(Long institutionId) {
+		return mapToSocialProjectVolunteerDTO(volunteerRepository.getVolunteersByInstitutionId(institutionId));
+	}
+
+	public List<SocialProjectVolunteerDTO> getVolunteersByName(String formalName) {
+		return mapToSocialProjectVolunteerDTO(volunteerRepository.getVolunteersByName(formalName));
+	}
+
+	private List<SocialProjectVolunteerDTO> mapToSocialProjectVolunteerDTO(List<Volunteer> volunteers) {
+		List<SocialProjectVolunteerDTO> socialProjectVolunteers = new ArrayList<>();
 		if(!CollectionUtils.isEmpty(volunteers)) {
 			socialProjectVolunteers = volunteers.stream().map(v ->
 				new SocialProjectVolunteerDTO(v.getId(),

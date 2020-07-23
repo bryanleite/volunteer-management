@@ -80,9 +80,9 @@
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item>
-					<nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">Descrição</nz-form-label>
+					<nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">Conte-nos sobre você</nz-form-label>
 					<nz-form-control [nzSm]="14" [nzXs]="24">
-						<input nz-input formControlName="description" id="description" maxlength="255">
+						<textarea maxlength="254" nz-input rows="3" formControlName="description" id="description"></textarea>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-divider nzText="Endereço" ></nz-divider>

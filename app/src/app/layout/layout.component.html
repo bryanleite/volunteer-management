@@ -50,7 +50,8 @@
 				<i class="trigger" nz-icon type="menu-unfold" theme="outline" *ngIf="isAdmin() && isCollapsed"
 					(click)="isCollapsed=!isCollapsed"></i> -->
 				<div class="logo">
-					<a (click)="redirectTo('/home')"><img src="../../assets/img/logo-header.png"></a>
+					<a (click)="redirectTo('/home')"><img src="./assets/img/logo-header.png"></a>
+					<!-- <a (click)="redirectTo('/home')"><img src="../../assets/img/logo-header.png"></a> -->
 				</div>
 				<ul class="menu">
 					<li *ngIf="isAdmin()">
@@ -88,8 +89,8 @@
 					<li id="nav-user-item">
 						<nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomRight'">
 							<div class="item d-flex align-items-center px-sm ant-dropdown-trigger" nz-dropdown>
-								<nz-avatar nzIcon="anticon anticon-user" nzSrc="../../assets/img/nouser.png">
-								</nz-avatar>
+								<!-- <nz-avatar nzIcon="anticon anticon-user" nzSrc="../../assets/img/nouser.png"></nz-avatar> -->
+								<nz-avatar nzIcon="anticon anticon-user" nzSrc="./assets/img/nouser.png"></nz-avatar>
 							</div>
 							<ul nz-menu>
 								<li nz-menu-item (click)="openUserInformations()">

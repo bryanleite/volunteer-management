@@ -4,6 +4,7 @@ import br.com.furb.domain.Volunteer;
 import br.com.furb.domain.VolunteerSkill;
 import br.com.furb.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -53,5 +54,15 @@ public class VolunteerRoute {
 	                                               @RequestParam(value = "skillId", required = false) Long skillId,
 	                                               @RequestParam(value = "socialProjectId") Long socialProjectId) {
 		return ResponseEntity.ok(volunteerService.getVolunteersToInvite(skillId, formalName, socialProjectId));
+	}
+
+	@GetMapping("/managers/{institutionId}")
+	public ResponseEntity<?> getManagersByInstitutionId(@PathVariable("institutionId") Long institutionId) {
+		return ResponseEntity.ok(volunteerService.getVolunteersByInstitutionId(institutionId));
+	}
+
+	@GetMapping("/volunteers-to-make-manager")
+		public ResponseEntity<?> getManagersByInstitutionId(@RequestParam(value = "formalName", required = false) String formalName) {
+		return ResponseEntity.ok(volunteerService.getVolunteersByName(formalName));
 	}
 }

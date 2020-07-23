@@ -31,9 +31,8 @@ const icons: IconDefinition[] = [ EditOutline, ProfileOutline, SettingOutline, H
 registerLocaleData(pt);
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
 @NgModule({
   declarations: [
     AppComponent,

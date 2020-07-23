@@ -30,4 +30,17 @@ export class VolunteerService {
             params: params
         });
     }
+
+    getManagersByInstitutionId(institutionId: number): Observable<Volunteer[]> {
+        return this.http.get<Volunteer[]>(`${VolunteerService.API}/managers/${institutionId}`);
+    }
+
+    getVolunteersByNameToMakeManager(formalName?: string): Observable<Volunteer[]> {
+        let params = new HttpParams();
+        params = formalName ? params.set("formalName", formalName) : params;
+
+        return this.http.get<Volunteer[]>(`${VolunteerService.API}/volunteers-to-make-manager`, {
+            params: params
+        });
+    }
 }

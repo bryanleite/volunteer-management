@@ -1,7 +1,7 @@
 <nz-breadcrumb>
     <nz-breadcrumb-item><a [routerLink]="['/']">{{ 'HOME.TITLE' | translate }}</a></nz-breadcrumb-item>
     <nz-breadcrumb-item><a [routerLink]="['/pages/institutions/list']">Buscar instituições</a></nz-breadcrumb-item>
-	<nz-breadcrumb-item>Instituição</nz-breadcrumb-item>
+    <nz-breadcrumb-item>Instituição</nz-breadcrumb-item>
 </nz-breadcrumb>
 <form nz-form [formGroup]="formGroup">
     <nz-card nzTitle="Instituição" *ngIf="formGroup">
@@ -9,60 +9,69 @@
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Nome</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="name" id="name">
-                <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').errors">O nome é invalido!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').errors">O nome é invalido!
+                </nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="descri">Descrição</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="descri" id="descri">
-                <nz-form-explain *ngIf="formGroup.get('descri').dirty && formGroup.get('descri').errors">A descrição é invalida!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('descri').dirty && formGroup.get('descri').errors">A descrição é
+                    invalida!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">Estado</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
-                <nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)" nzPlaceHolder="Selecione um estado">
+                <nz-select formControlName="state" id="state" (ngModelChange)="onSelectState($event)"
+                    nzPlaceHolder="Selecione um estado">
                     <nz-option *ngFor="let state of states" [nzValue]="state.sigla" [nzLabel]="state.nome"></nz-option>
                 </nz-select>
-                <nz-form-explain *ngIf="formGroup.get('state').dirty && formGroup.get('state').errors">O estado é inválido!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('state').dirty && formGroup.get('state').errors">O estado é
+                    inválido!</nz-form-explain>
             </nz-form-control>
-        </nz-form-item>        
+        </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city">Cidade</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <nz-select formControlName="city" id="city" nzPlaceHolder="Selecione uma cidade">
                     <nz-option *ngFor="let city of cities" [nzValue]="city.nome" [nzLabel]="city.nome"></nz-option>
                 </nz-select>
-                <nz-form-explain *ngIf="formGroup.get('city').dirty && formGroup.get('city').errors">A cidade é inválida!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('city').dirty && formGroup.get('city').errors">A cidade é
+                    inválida!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cep">CEP</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="cep" id="cep">
-                <nz-form-explain *ngIf="formGroup.get('cep').dirty && formGroup.get('cep').errors">O CEP é invalido!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('cep').dirty && formGroup.get('cep').errors">O CEP é invalido!
+                </nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="number">Número</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="number" id="number">
-                <nz-form-explain *ngIf="formGroup.get('number').dirty && formGroup.get('number').errors">O número é inválido!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('number').dirty && formGroup.get('number').errors">O número é
+                    inválido!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="street">Rua</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="street" id="street">
-                <nz-form-explain *ngIf="formGroup.get('street').dirty && formGroup.get('street').errors">A rua é inválida!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('street').dirty && formGroup.get('street').errors">A rua é
+                    inválida!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="complement">Complemento</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24">
                 <input nz-input formControlName="complement" id="complement">
-                <nz-form-explain *ngIf="formGroup.get('complement').dirty && formGroup.get('complement').errors">O complemento é inválido!</nz-form-explain>
+                <nz-form-explain *ngIf="formGroup.get('complement').dirty && formGroup.get('complement').errors">O
+                    complemento é inválido!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
         <nz-divider></nz-divider>
@@ -73,3 +82,73 @@
         <button nz-button nzType="danger" (click)="cancel()">Cancelar</button>
     </nz-card>
 </form>
+<br>
+<nz-card nzTitle="Gestores da instituição" *ngIf="formGroup.get('id').value" [nzExtra]="buscarGestores">
+    <ng-template #buscarGestores>
+        <a (click)="showModal()">Adicionar gestor</a>
+    </ng-template>
+    <nz-list class="volunteers-list" [nzDataSource]="managers" [nzItemLayout]="'horizontal'"
+        [nzRenderItem]="volunteer">
+        <ng-template #volunteer let-volunteer>
+            <nz-list-item [nzActions]="[remove]">
+                <!-- Actions -->
+                <ng-template #remove>
+                    <a nz-popconfirm
+                        (nzOnConfirm)="removerVolunteerInstitution(volunteer)" nzPopconfirmPlacement="top"
+                        nzTitle="Deseja realmente remover o gestor da instituição?">Remover
+                    </a>
+                </ng-template>
+                <!-- Avatar -->
+                <nz-list-item-meta [nzTitle]="nzTitle"
+                    nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    [nzDescription]="volunteer.occupation">
+                    <ng-template #nzTitle>
+                        <a (click)="openUserInformations(volunteer.userId)">{{ volunteer.formalName }}</a>
+                    </ng-template>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+</nz-card>
+<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Adicionar gestor" (nzOnCancel)="hideModal()" nzWidth="1000"
+	[nzFooter]="modalFooter" [nzStyle]="{ top: '10px' }">
+	<form nz-form [formGroup]="fgVs">
+		<div nz-row nzGutter="16">
+			<div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+				<label>Nome completo</label>
+				<input nz-input formControlName="formalName" />
+			</div>
+			<div>
+				<button style="margin-top: 20px;" nz-button nzType="primary" (click)="searchVolunteersByNameToMakeManager()">
+					<i nz-icon type="search"></i>Buscar
+				</button>
+			</div>
+		</div>
+	</form>
+	<ng-template #modalFooter>
+		<button nz-button nzType="secondary" (click)="hideModal()">Fechar</button>
+	</ng-template>
+	<nz-divider *ngIf="volunteersSearch" nzText="Resultados"></nz-divider>
+	<nz-list *ngIf="volunteersSearch" class="volunteers-list" [nzDataSource]="volunteersSearch"
+		[nzItemLayout]="'horizontal'" [nzRenderItem]="volInvite">
+		<ng-template #volInvite let-volInvite>
+			<nz-list-item [nzActions]="[add]">
+				<!-- Actions -->
+				<ng-template #add>
+					<a nz-popconfirm (nzOnConfirm)="makeVolunteerToManager(volInvite)" nzPopconfirmPlacement="top"
+						nzTitle="Deseja realmente adicionar este voluntário como gestor?">Adicionar
+					</a>
+				</ng-template>
+				<!-- Avatar -->
+				<nz-list-item-meta [nzTitle]="nzTitle"
+					nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+					[nzDescription]="volInvite.occupation">
+					<ng-template #nzTitle>
+						<a (click)="openUserInformations(volInvite.userId)">{{ volInvite.formalName }}</a>
+					</ng-template>
+				</nz-list-item-meta>
+			</nz-list-item>
+		</ng-template>
+	</nz-list>
+</nz-modal>
+<user-informations></user-informations>

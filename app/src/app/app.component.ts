@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Spinkit } from 'ng-http-loader';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,6 +9,7 @@ import { Spinkit } from 'ng-http-loader';
 export class AppComponent {
   public spinkit: any = Spinkit;
   public ignoreUrls: string[] = [];
+  
 
   constructor(translate: TranslateService) {
     // this language will be used as a fallback when a translation isn't found in the current language

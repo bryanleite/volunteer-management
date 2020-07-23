@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Institution } from '../../../domain/institution';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-institution-list',
@@ -22,6 +23,7 @@ export class InstitutionListComponent implements OnInit {
   constructor(
     private _router: Router,
     private _institutionService: InstitutionService,
+    private storageService: StorageService,
     private _modalService: NzModalService,
     private _translateService: TranslateService,
     private _messageService: NzMessageService,
@@ -29,6 +31,7 @@ export class InstitutionListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.validCurrentUser();
     this.tableParams = {
       pageIndex: 1,
       pageSize: 10,
@@ -47,6 +50,13 @@ export class InstitutionListComponent implements OnInit {
 
     this.getInstitutions();
   }
+
+  validCurrentUser() {
+    let user = JSON.parse(this.storageService.getUser());
+    if(!user || !user.admin) {
+        this._router.navigate(['/forbidden']);
+    }
+}
 
   addInstitution() {
     this._router.navigate(['pages', 'institutions']);

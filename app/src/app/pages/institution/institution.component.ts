@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Institution } from '../../domain/institution';
 import { InstitutionService } from './institution.service';
@@ -8,6 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocationService } from 'src/app/shared/locations/locations.service';
 import { State } from 'src/app/domain/state';
 import { City } from 'src/app/domain/city';
+import { StorageService } from 'src/app/shared/storage/storage.service';
+import { VolunteerService } from '../volunteer/volunteer.service';
+import { UsersService } from 'src/app/admin-settings/users/users.service';
+import { Volunteer } from 'src/app/domain/volunteer';
+import { User } from 'src/app/security/auth/user';
+import { UserInformationsComponent } from 'src/app/user-informations/user-informations.component';
+import { Skill } from 'src/app/domain/skill';
 
 @Component({
     selector: 'app-institution',
@@ -17,6 +24,13 @@ import { City } from 'src/app/domain/city';
 export class InstitutionComponent implements OnInit {
 
     public formGroup: FormGroup;
+    public managers: Volunteer[] = [];
+    public volunteersSearch: Volunteer[];
+
+    @ViewChild(UserInformationsComponent)
+    private userInformations: UserInformationsComponent;
+    public fgVs: FormGroup;
+    public isModalVisible: boolean = false;
 
     public states: State[] = [];
 	public cities: City[] = [];
@@ -25,7 +39,10 @@ export class InstitutionComponent implements OnInit {
                 private _translateService: TranslateService,
                 private locationService: LocationService,
                 private _messageService: NzMessageService,
+                private storageService: StorageService,
                 private activatedRouter: ActivatedRoute,
+                private volunteerService: VolunteerService,
+                private userService: UsersService,
 				private router: Router) { 
 
         this.formGroup = new FormGroup({
@@ -38,17 +55,38 @@ export class InstitutionComponent implements OnInit {
             complement: new FormControl(null, [Validators.required]),
             city: new FormControl(null, [Validators.required]),
             state: new FormControl(null, [Validators.required])
-        });
+        });		
+        
+        this.fgVs = new FormGroup({
+			formalName: new FormControl(null)
+		});
     }
 
     ngOnInit() {
+        this.validCurrentUser();
+
         this.getStates();
         this.activatedRouter.params.subscribe(p => {
             if(p.id) {
-                this.institutionService.edit(p.id).subscribe((institution: Institution) => {
-                    this.buildForm(institution);
-                });
+                this.buildInstitutionbyId(p.id);
             }
+        });
+    }
+
+    validCurrentUser() {
+        let user = JSON.parse(this.storageService.getUser());
+        if(!user || !user.admin) {
+            this.router.navigate(['/forbidden']);
+        }
+    }
+
+    buildInstitutionbyId(id: number) {
+        this.institutionService.edit(id).subscribe((institution: Institution) => {
+            this.buildForm(institution);
+
+            this.volunteerService.getManagersByInstitutionId(id).subscribe(volunteers => {
+                this.managers = volunteers;
+            });
         });
     }
 
@@ -67,8 +105,7 @@ export class InstitutionComponent implements OnInit {
         });
 
         this.institutionService.save(institution).subscribe(institution => {
-            this.buildForm(institution);
-           
+            this.buildInstitutionbyId(institution.id);
             this.showMessage('PAGES.INSTITUTION.SUCCESS_SAVE');
         });
     }
@@ -84,6 +121,27 @@ export class InstitutionComponent implements OnInit {
     private showMessage(message: string) {
         this._translateService.get(message).subscribe(msg => {
             this._messageService.success(msg);
+        });
+    }
+
+    makeVolunteerToManager(volunteer: Volunteer) {
+        const institutionId = this.formGroup.get('id').value;
+        this.userService.makeUserToManager(volunteer.userId, institutionId).subscribe(any => {
+            this.volunteerService.getManagersByInstitutionId(institutionId).subscribe(volunteers => {
+                this.managers = volunteers;
+            });
+            this.searchVolunteersByNameToMakeManager();
+            this.showMessage('ALERTS.SAVE_SUCCESS');
+        });
+    }
+
+    removerVolunteerInstitution(volunteer: Volunteer) {
+        const institutionId = this.formGroup.get('id').value;
+        this.userService.removerUserInstitution(volunteer.userId).subscribe(any => {
+            this.showMessage('ALERTS.SAVE_SUCCESS');
+            this.volunteerService.getManagersByInstitutionId(institutionId).subscribe(volunteers => {
+                this.managers = volunteers;
+            });
         });
     }
 
@@ -103,5 +161,25 @@ export class InstitutionComponent implements OnInit {
     
     cancel() {
         this.router.navigate(['pages/institutions/list']);
+    }
+
+    showModal() {
+		this.isModalVisible = true;
+	}
+
+	hideModal() {
+		this.isModalVisible = false;
+    }
+    
+    openUserInformations(userId: number) {
+		this.userInformations.loadUserAndOpen(userId, false);
+    }
+    
+    searchVolunteersByNameToMakeManager() {
+        let formalName = this.fgVs.get('formalName') ? this.fgVs.get('formalName').value : undefined;
+        
+        this.volunteerService.getVolunteersByNameToMakeManager(formalName).subscribe(volunteers => {
+            this.volunteersSearch = volunteers;
+        });
     }
 }

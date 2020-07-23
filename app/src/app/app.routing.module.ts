@@ -26,11 +26,13 @@ const routes: Routes = [
       },
       {
         path: 'admin-settings',
+        // loadChildren: './admin-settings/admin-settings.module#AdminSettingsModule',
         loadChildren: () => AdminSettingsModule,
         canActivate: [AuthGuard]
       },
       {
         path: 'pages',
+        // loadChildren: './pages/pages.module#PagesModule',
         loadChildren: () => PagesModule,
         canActivate: [AuthGuard]
       }
@@ -38,6 +40,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    // loadChildren: './security/security.module#SecurityModule'
     loadChildren: () => SecurityModule
   },
   {
